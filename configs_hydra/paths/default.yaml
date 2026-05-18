@@ -1,0 +1,7 @@
+# @package _global_
+
+working_dir: .
+data_dir: data
+checkpoint_dir: checkpoints
+results_dir: results
+log_dir: logs

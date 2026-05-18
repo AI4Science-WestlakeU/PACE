@@ -1,0 +1,16 @@
+# @package _global_
+
+flow_model: ode
+
+hidden_dims_flow: [64, 128, 64, 64]
+activation_flow: relu
+
+epochs: 100
+flow_lr: 1.0e-3
+flow_weight_decay: 1.0e-5
+flow_optimizer: adamw
+patience: 25
+
+eval_sample_cap: 512
+eval_interpolant_midpoints: false
+eval_a2t_rollout: false

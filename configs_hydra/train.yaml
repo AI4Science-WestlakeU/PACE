@@ -1,0 +1,34 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - data: eb_phate
+  - model/stage1: pace_sinkhorn
+  - model/stage2: ode
+  - method: pace
+  - trainer: default
+  - paths: default
+  - hydra: default
+  - optional experiment: null
+  - optional debug: null
+
+task_name: pace
+run_name: null
+tags: []
+
+seed: 42
+seeds: [42]
+
+train: true
+test: true
+
+stage1_enabled: true
+stage1_style: formal
+
+subsample_fraction_train: 1.0
+subsample_fraction_test: 1.0
+
+enable_progress_bar: true
+
+load_stage1_ckpt: null
+load_stage2_ckpt: null

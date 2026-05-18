@@ -1,0 +1,50 @@
+# @package _global_
+
+# Stage 1 model config: PACE with metric-guided Hungarian matching
+# (replaces the pace_uot.yaml stub which had incorrect UOT parameters)
+
+stage1_name: pace_hungarian
+
+# ---------- GeoPath (psi) network architecture ----------
+geopath_arch: mlp
+time_geopath: true
+hidden_dims_geopath: [64, 64, 64]
+activation_geopath: gelu   # GELU matches original pace.py TimeConditionedPsiNet
+
+# ---------- Stage 1 training schedule ----------
+total_epochs_stage1: 60
+rematch_every: 10          # Re-solve Hungarian matching every N epochs
+stage1_batch_size: 256     # Mini-batch size for psi training (per step)
+geopath_lr: 0.03           # Adam LR  (matches original pace.py)
+geopath_weight_decay: 1.0e-5
+geopath_optimizer: adam
+
+# ---------- Loss weights ----------
+lambda_metric: 1.0         # Riemannian energy term
+lambda_global: 3.0         # Cross-segment velocity alignment term
+lambda_ortho: 0.0          # Normal-velocity orthogonality term  (= 1 - lambda_metric)
+
+# ---------- Manifold geometry estimation ----------
+k_neighbors_local: 25              # k-NN count for PCA normal estimation
+geometry_window_segments: 2        # Adjacent segments used in bandwidth estimation
+metric_alpha: 8.0                  # alpha in G = I + alpha * C_N
+
+# ---------- Matching algorithm ----------
+matching_method: hungarian       # {hungarian, emd, sinkhorn, uot}
+matching_postprocess: argmax     # {argmax, sample} — how to convert soft plan to hard matching
+
+# ---------- Sinkhorn / UOT regularisation (ignored when matching_method=hungarian) ----------
+sinkhorn_reg: 0.05               # Entropic regularisation ε for Sinkhorn
+uot_reg: 0.05                   # Entropic regularisation ε for Unbalanced OT
+uot_reg_m: 1.0                  # Marginal relaxation parameter for Unbalanced OT
+
+# ---------- Initial matching (before first training round) ----------
+alpha_dist_init: 1.0       # Distance cost weight in initial assignment
+gamma_normal_init: 0.35    # Normal-projection penalty weight
+
+# ---------- Interpolation sampling ----------
+T_steps: 20                # Number of time steps per segment during training
+t_probe_steps: 5           # Number of probe points for metric-path cost
+
+# ---------- Flow matcher noise ----------
+sigma: 0.1

@@ -1,0 +1,20 @@
+# @package _global_
+
+defaults:
+  - override /model/stage1: pace_hungarian
+  - override /model/stage2: ode
+
+method:
+  name: pace
+  stages: 2
+  default_run_name: pace
+
+stage1_enabled: true
+
+# Stage 2 mini-batch OT pairing, copied locally from the original Stage 2 flow
+# training path. Set to "None" to disable.
+optimal_transport_method: exact
+
+# If true, Stage 2 reuses the final PACE Stage 1 matchings instead of the
+# mini-batch OT sampler above.
+use_stage1_matching: false

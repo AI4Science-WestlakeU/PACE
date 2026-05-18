@@ -1,0 +1,10 @@
+# @package _global_
+
+hydra:
+  run:
+    dir: ${oc.env:PWD,.}/logs/hydra/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: ${oc.env:PWD,.}/logs/hydra/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra:job.num}
+  job:
+    chdir: false

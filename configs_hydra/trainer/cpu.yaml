@@ -1,0 +1,8 @@
+# @package _global_
+
+accelerator: cpu
+devices: 1
+check_val_every_n_epoch: 10
+
+seed: 42
+working_dir: .

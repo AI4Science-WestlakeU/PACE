@@ -1,0 +1,50 @@
+# @package _global_
+
+# Stage 1 model config: PACE with Sinkhorn (entropic-regularised) OT matching
+# Inherits all architecture / training settings from pace_hungarian
+# and overrides matching_method to sinkhorn.
+
+stage1_name: pace_sinkhorn
+
+# ---------- GeoPath (psi) network architecture ----------
+geopath_arch: mlp
+time_geopath: true
+hidden_dims_geopath: [64, 128, 128, 64]
+activation_geopath: gelu
+hidden_dims_flow: [64, 128, 64]
+
+# ---------- Stage 1 training schedule ----------
+total_epochs_stage1: 60
+rematch_every: 10
+stage1_batch_size: 256
+geopath_lr: 0.03
+geopath_weight_decay: 1.0e-5
+geopath_optimizer: adam
+
+# ---------- Loss weights ----------
+lambda_metric: 1
+lambda_global: 3.0
+lambda_ortho: 0.0
+
+# ---------- Manifold geometry estimation ----------
+k_neighbors_local: 25
+geometry_window_segments: 2
+metric_alpha: 8.0
+
+# ---------- Matching algorithm ----------
+matching_method: sinkhorn
+matching_postprocess: argmax
+sinkhorn_reg: 0.05
+uot_reg: 0.05
+uot_reg_m: 1.0
+
+# ---------- Initial matching ----------
+alpha_dist_init: 1.0
+gamma_normal_init: 0.35
+
+# ---------- Interpolation sampling ----------
+T_steps: 20
+t_probe_steps: 5
+
+# ---------- Flow matcher noise ----------
+sigma: 0.1

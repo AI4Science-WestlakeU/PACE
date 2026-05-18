@@ -1,0 +1,37 @@
+# @package _global_
+
+# Embryoid body (EB) 2-D PHATE embedding from `data/eb_velocity_v5.npz`.
+#
+# Current structure:
+# - pcs.shape == (16819, 100)      — principal components
+# - phate.shape == (16819, 2)      — 2-D PHATE embedding
+# - sample_labels: 5 timepoints [0, 1, 2, 3, 4]
+# - per-timepoint counts: 0→2381, 1→4163, 2→3278, 3→3665, 4→3332
+#
+# dim=2 automatically selects the PHATE embedding.
+
+data_name: eb_phate
+data_path: data/eb_velocity_v5.npz
+data_type: scrna_embedding
+
+dim: 2
+whiten: true
+
+split_ratios: [1.0, 0.0]
+batch_size: 256
+
+# Train on four timepoints, hold out one middle timepoint for testing.
+# The held-out timepoint must NOT be an endpoint (0 or 4).
+train_timepoint_labels: [0, 1, 2, 4]
+test_timepoint_labels: [3]
+
+samples_per_timepoint: 256
+equalize_timepoint_counts: false
+allow_replacement: false
+
+preserve_frame_order: false
+full_frame_batches: false
+test_full_frame_batches: false
+drop_last: false
+num_workers: 0
+pin_memory: false
