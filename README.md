@@ -4,7 +4,26 @@ PACE is a two-stage flow-matching pipeline for time-resolved single-cell
 trajectory inference.  This directory is a self-contained distribution that
 ships PACE and the embryoid-body PHATE dataset (`data/eb_velocity_v5.npz`).
 
+This repository is an active public-release snapshot. The current version
+contains the core PACE implementation, Hydra configurations, EB PHATE example
+data, training scripts, and evaluation utilities. The README and release
+assets will be expanded alongside the paper release with the complete paper
+datasets, preprocessing details, baseline implementations or adapters, and the
+corresponding reproduced baseline results.
+
 ![PACE overview](assert/fig1.png)
+
+## Current status
+
+The code in this repository is sufficient to run the included EB PHATE example
+end-to-end and inspect the produced trajectory, distribution, and velocity
+metrics. Some publication-facing materials are still being organized and will
+be added in future updates:
+
+- complete datasets and download/preprocessing instructions used in the paper
+- baseline methods, wrappers, and configuration files used for comparison
+- reproduced baseline metrics and plotting scripts for paper tables/figures
+- additional experiment documentation for reproducing all reported results
 
 ## Layout
 
@@ -133,3 +152,8 @@ python train.py experiment=eb_phate_pace_ode model/stage1=pace_hungarian
 - `sample_labels`  : 5 timepoints `[0, 1, 2, 3, 4]`
 
 `dim=2` selects PHATE; `dim>2` selects the leading PCA components.
+
+## License
+
+This project is released under the MIT License. See [LICENSE](LICENSE) for
+details.
