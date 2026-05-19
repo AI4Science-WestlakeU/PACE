@@ -1,8 +1,12 @@
 # PACE
 
+[![arXiv](https://img.shields.io/badge/arXiv-2605.18587-b31b1b.svg)](https://arxiv.org/abs/2605.18587)
+
 PACE is a two-stage flow-matching pipeline for time-resolved single-cell
 trajectory inference.  This directory is a self-contained distribution that
 ships PACE and the embryoid-body PHATE dataset (`data/eb_velocity_v5.npz`).
+The corresponding preprint is available on arXiv:
+[arXiv:2605.18587](https://arxiv.org/abs/2605.18587).
 
 This repository is an active public-release snapshot. The current version
 contains the core PACE implementation, Hydra configurations, EB PHATE example
