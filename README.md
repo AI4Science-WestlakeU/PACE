@@ -157,6 +157,22 @@ python train.py experiment=eb_phate_pace_ode model/stage1=pace_hungarian
 
 `dim=2` selects PHATE; `dim>2` selects the leading PCA components.
 
+## Citation
+
+If you find PACE useful, please cite:
+
+```bibtex
+@misc{yu2026pacegeometryawarebridgetransport,
+  title={PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference},
+  author={Chenglei Yu* and Chuanrui Wang* and Bangyan Liao and Tailin Wu},
+  year={2026},
+  eprint={2605.18587},
+  archivePrefix={arXiv},
+  primaryClass={q-bio.GN},
+  url={https://arxiv.org/abs/2605.18587},
+}
+```
+
 ## License
 
 This project is released under the MIT License. See [LICENSE](LICENSE) for
