@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - override /data: larry_pca2
+  - override /method: pace
+  - override /model/stage1: pace_hungarian
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [larry, hematopoiesis, pace, ode]
+
+task_name: larry_pca2_pace
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+epochs: 350
+samples_per_timepoint: 1024
+total_epochs_stage1: 120
+lambda_ortho: 1
+lambda_global: 3
+lambda_metric: 1
+k_neighbors_local: 32
+optimal_transport_method: exact
+use_stage1_matching: false
+model/stage1: pace_hungarian
+rematch_every: 20
+geopath_lr: 0.003

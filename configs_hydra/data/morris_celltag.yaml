@@ -1,0 +1,37 @@
+# @package _global_
+
+# Morris/Biddy CellTag direct reprogramming data.
+# Preprocessed from /wangchuanrui2/data/2flow/morris_celltag/cellrank/reprogramming_morris.h5ad
+# Timepoints: 0, 3, 6, 9, 12, 15, 21, 28 (reprogramming_day)
+# Days 0 and 3 are too small; train on day 6 onwards and hold out day 15.
+
+data_name: morris_celltag
+data_path: /wangchuanrui2/code/references/maincode/PACE_rebuttal/data/morris_celltag.npz
+data_type: temporal_point_cloud
+
+dim: 2
+whiten: false
+
+split_ratios: [1.0, 0.0]
+batch_size: 256
+
+# Train on day 6, 9, 12, 21, 28; hold out day 15.
+train_timepoint_labels: [6, 9, 12, 21, 28]
+test_timepoint_labels: [15]
+
+samples_per_timepoint: 400
+equalize_timepoint_counts: true
+allow_replacement: false
+
+preserve_frame_order: false
+full_frame_batches: false
+test_full_frame_batches: false
+drop_last: false
+num_workers: 0
+pin_memory: false
+
+position_key: positions
+timepoint_key: timepoints
+clone_id_key: clone_ids
+fate_label_key: cell_type
+lineage_label_key: clone_ids

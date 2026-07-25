@@ -88,6 +88,13 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
         self.val_frames: dict[Any, torch.Tensor] = {}
         self.test_frames: dict[Any, torch.Tensor] = {}
 
+        # Original indices of selected/split frames, useful for mapping back to
+        # per-cell metadata such as lineage barcodes.
+        self.selected_train_indices: dict[Any, np.ndarray] = {}
+        self.train_indices: dict[Any, np.ndarray] = {}
+        self.val_indices: dict[Any, np.ndarray] = {}
+        self.test_indices: dict[Any, np.ndarray] = {}
+
         self.train_dataloaders: dict[str, DataLoader] = {}
         self.val_dataloaders: dict[str, DataLoader] = {}
         self.test_dataloaders: dict[str, DataLoader] = {}
@@ -119,20 +126,22 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
         selected_train = {label: raw_frames[label].copy() for label in train_labels}
         selected_test = {label: raw_frames[label].copy() for label in test_labels}
 
-        balanced_train = self._subsample_frames(
+        balanced_train, self.selected_train_indices = self._subsample_frames(
             frames=selected_train,
             requested_count=self.train_samples_per_timepoint,
             split_name="train",
             seed=self.seed,
         )
-        balanced_test = self._subsample_frames(
+        balanced_test, self.test_indices = self._subsample_frames(
             frames=selected_test,
             requested_count=self.test_samples_per_timepoint,
             split_name="test",
             seed=self.seed + 1,
         )
 
-        split_train, split_val = self._split_train_val_frames(balanced_train)
+        split_train, split_val, self.train_indices, self.val_indices = self._split_train_val_frames(
+            balanced_train, self.selected_train_indices
+        )
 
         if self.whiten:
             fit_data = np.concatenate(list(split_train.values()), axis=0)
@@ -241,15 +250,22 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
         return transformed
 
     def _split_train_val_frames(
-        self, frames: dict[Any, np.ndarray]
-    ) -> tuple[dict[Any, np.ndarray], dict[Any, np.ndarray]]:
+        self,
+        frames: dict[Any, np.ndarray],
+        indices: dict[Any, np.ndarray] | None = None,
+    ) -> tuple[dict[Any, np.ndarray], dict[Any, np.ndarray], dict[Any, np.ndarray], dict[Any, np.ndarray]]:
         train_frames: dict[Any, np.ndarray] = {}
         val_frames: dict[Any, np.ndarray] = {}
+        train_indices: dict[Any, np.ndarray] = {}
+        val_indices: dict[Any, np.ndarray] = {}
         for label, frame in frames.items():
+            idx = indices[label] if indices is not None else np.arange(frame.shape[0])
             if self.train_ratio >= 1.0:
                 # No validation split requested
                 train_frames[label] = frame.copy()
                 val_frames[label] = frame[:0]  # empty array with correct shape
+                train_indices[label] = idx.copy()
+                val_indices[label] = idx[:0]
                 continue
             if frame.shape[0] < 2:
                 raise ValueError(
@@ -260,7 +276,9 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
             split_index = min(max(split_index, 1), frame.shape[0] - 1)
             train_frames[label] = frame[:split_index]
             val_frames[label] = frame[split_index:]
-        return train_frames, val_frames
+            train_indices[label] = idx[:split_index]
+            val_indices[label] = idx[split_index:]
+        return train_frames, val_frames, train_indices, val_indices
 
     def _subsample_frames(
         self,
@@ -268,16 +286,17 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
         requested_count: int | None,
         split_name: str,
         seed: int,
-    ) -> dict[Any, np.ndarray]:
+    ) -> tuple[dict[Any, np.ndarray], dict[Any, np.ndarray]]:
         if not frames:
-            return {}  # no frames to subsample (e.g. no test labels)
+            return {}, {}  # no frames to subsample (e.g. no test labels)
 
         effective_count = requested_count
         if effective_count is None and self.equalize_timepoint_counts:
             effective_count = min(frame.shape[0] for frame in frames.values())
 
         if effective_count is None:
-            return {label: frame.copy() for label, frame in frames.items()}
+            indices = {label: np.arange(frame.shape[0]) for label, frame in frames.items()}
+            return {label: frame.copy() for label, frame in frames.items()}, indices
 
         if effective_count <= 0:
             raise ValueError(
@@ -286,6 +305,7 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
 
         rng = np.random.default_rng(seed)
         sampled: dict[Any, np.ndarray] = {}
+        sampled_indices: dict[Any, np.ndarray] = {}
         for label, frame in frames.items():
             num_points = frame.shape[0]
             if num_points < effective_count and not self.allow_replacement:
@@ -297,13 +317,15 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
             replace = num_points < effective_count
             if not replace and num_points == effective_count:
                 sampled[label] = frame.copy()
+                sampled_indices[label] = np.arange(num_points)
                 continue
 
             indices = rng.choice(num_points, size=effective_count, replace=replace)
             if self.preserve_frame_order:
                 indices = np.sort(indices)
             sampled[label] = frame[indices]
-        return sampled
+            sampled_indices[label] = indices
+        return sampled, sampled_indices
 
     def _build_loader_map(
         self,
