@@ -79,6 +79,9 @@ def _build_datamodule(
     elif "curved_pitchfork" in data_name.lower():
         from src.dataloaders.curved_pitchfork_data import CurvedPitchforkDataModule
         base = CurvedPitchforkDataModule(args)
+    elif "toggle_switch" in data_name.lower() or "toggle" in data_name.lower():
+        from src.dataloaders.toggle_switch_data import ToggleSwitchDataModule
+        base = ToggleSwitchDataModule(args)
     elif "larry" in data_name or "hematopoiesis" in data_name or "morris" in data_name or "celltag" in data_name:
         from src.dataloaders.larry_data import LARRYDataModule
         base = LARRYDataModule(args)

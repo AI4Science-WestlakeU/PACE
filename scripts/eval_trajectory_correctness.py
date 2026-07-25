@@ -122,6 +122,12 @@ def make_datamodule(cfg: dict[str, Any]):
     if "curved_pitchfork" in data_name:
         from src.dataloaders.curved_pitchfork_data import CurvedPitchforkDataModule
         return CurvedPitchforkDataModule(args)
+    if "toggle_switch" in data_name or "toggle" in data_name:
+        from src.dataloaders.toggle_switch_data import ToggleSwitchDataModule
+        return ToggleSwitchDataModule(args)
+    if "larry" in data_name or "hematopoiesis" in data_name or "morris" in data_name or "celltag" in data_name:
+        from src.dataloaders.larry_data import LARRYDataModule
+        return LARRYDataModule(args)
     if "larray" in data_name or "spring" in data_name:
         from src.dataloaders.larray_data import LArrayDataModule
         return LArrayDataModule(args)
@@ -377,17 +383,20 @@ def compute_clone_compatible_endpoint_mass(
     into the correct target clone basin.
     """
     valid = _valid_barcode_mask(source_clones)
-    if not valid.any():
+    valid_target = _valid_barcode_mask(target_clones)
+    if not valid.any() or not valid_target.any():
         return {"compatible_mass": float("nan"), "n_eval": 0}
 
     eval_idx = np.where(valid)[0]
-    tree = scipy_spatial_cKDTree(target_positions)
+    tgt_idx = np.where(valid_target)[0]
+    tree = scipy_spatial_cKDTree(target_positions[tgt_idx])
     _, nn_idx = tree.query(pred_endpoints[eval_idx], k=1)
-    hits = source_clones[eval_idx] == target_clones[nn_idx]
+    hits = source_clones[eval_idx] == target_clones[tgt_idx[nn_idx]]
     return {
         "compatible_mass": float(hits.mean()),
         "n_eval": int(len(eval_idx)),
         "n_hits": int(hits.sum()),
+        "n_target_barcoded": int(len(tgt_idx)),
     }
 
 
@@ -430,6 +439,63 @@ def compute_terminal_branch_consistency(
         "consistency": float(np.average(correct, weights=sizes)),
         "macro_consistency": float(np.mean(correct)),
         "n_groups": len(correct),
+    }
+
+
+
+
+def compute_clone_fate_consistency(
+    source_clones: np.ndarray,
+    source_fates: np.ndarray,
+    pred_endpoints: np.ndarray,
+    target_positions: np.ndarray,
+    target_clones: np.ndarray,
+    target_fates: np.ndarray,
+    min_cells: int = 3,
+) -> dict[str, float]:
+    """Clone-conditioned terminal fate consistency (biological lineage metric).
+
+    For each clone present at source and target, predict the terminal fate of
+    its rolled cells by kNN-majority vote in the target frame, and compare to
+    the clone's true majority fate at target.  Report size-weighted (micro)
+    and unweighted (macro) accuracy.  Clones with fewer than ``min_cells``
+    cells at source are skipped.
+    """
+    from collections import Counter
+
+    source_clones = np.asarray(source_clones, dtype=object)
+    target_fates = np.asarray(target_fates, dtype=object)
+    if source_clones.size == 0 or target_fates.size == 0:
+        return {"clone_fate_micro": float("nan"), "clone_fate_macro": float("nan"), "n_clones": 0}
+
+    tree = scipy_spatial_cKDTree(target_positions)
+    _, nn_idx = tree.query(pred_endpoints, k=1)
+    pred_fates = target_fates[nn_idx]
+
+    correct, sizes = [], []
+    for clone in np.unique(source_clones):
+        if str(clone).startswith("unassigned") or str(clone).lower() in ("nan", "none"):
+            continue
+        mask = source_clones == clone
+        if mask.sum() < min_cells:
+            continue
+        # majority predicted fate among this clone's rolled cells
+        pred_maj = Counter(pred_fates[mask].tolist()).most_common(1)[0][0]
+        # the clone's true majority fate at the TARGET day (its lineage fate).
+        tgt_c_mask = target_clones == clone
+        if tgt_c_mask.sum() < min_cells:
+            continue
+        true_maj = Counter(target_fates[tgt_c_mask].tolist()).most_common(1)[0][0]
+        correct.append(float(pred_maj == true_maj))
+        sizes.append(int(mask.sum()))
+
+    if not correct:
+        return {"clone_fate_micro": float("nan"), "clone_fate_macro": float("nan"), "n_clones": 0}
+    return {
+        "clone_fate_micro": float(np.average(correct, weights=sizes)),
+        "clone_fate_macro": float(np.mean(correct)),
+        "n_clones": len(correct),
+        "n_cells": int(sum(sizes)),
     }
 
 
@@ -744,32 +810,41 @@ def eval_curved_pitchfork(
     branch_labels = np.asarray(cp["branch_labels"], dtype=object)  # (N,)
     committed = branch_labels != "trunk"
     gt_terminal = gt_at_labels[-1]
-    tree_terminal = scipy_spatial_cKDTree(gt_terminal[committed])
-    _, nn_idx = tree_terminal.query(pred_at_labels[-1], k=1)
-    terminal_branch_labels = branch_labels[committed]
-    pred_branch = terminal_branch_labels[nn_idx]
+    if committed.sum() > 0:
+        tree_terminal = scipy_spatial_cKDTree(gt_terminal[committed])
+        _, nn_idx = tree_terminal.query(pred_at_labels[-1], k=1)
+        terminal_branch_labels = branch_labels[committed]
+        pred_branch = terminal_branch_labels[nn_idx]
 
-    errors: dict[str, list[float]] = {}
-    leakage: dict[str, float] = {}
-    for b in ("left", "right"):
-        mask_b = committed & (branch_labels == b)
-        if mask_b.any():
-            errors[b] = (pred_branch[mask_b] != b).astype(float).tolist()
-    for b_src, b_dst in (("left", "right"), ("right", "left")):
-        mask_b = committed & (branch_labels == b_src)
-        if mask_b.any():
-            leakage[f"{b_src}_to_{b_dst}"] = float((pred_branch[mask_b] == b_dst).mean())
+        errors: dict[str, list[float]] = {}
+        leakage: dict[str, float] = {}
+        for b in ("left", "right"):
+            mask_b = committed & (branch_labels == b)
+            if mask_b.any():
+                errors[b] = (pred_branch[mask_b] != b).astype(float).tolist()
+        for b_src, b_dst in (("left", "right"), ("right", "left")):
+            mask_b = committed & (branch_labels == b_src)
+            if mask_b.any():
+                leakage[f"{b_src}_to_{b_dst}"] = float((pred_branch[mask_b] == b_dst).mean())
 
-    all_err = np.concatenate([np.asarray(v) for v in errors.values()]) if errors else np.array([float("nan")])
-    sqrt_a1 = float(np.sqrt(max(float(cp["a1"]), 0.0))) if "a1" in cp else 1.0
-    pred_uncommitted = np.abs(pred_at_labels[-1][:, 0]) < 0.5 * sqrt_a1
-    out["branch_error"] = {
-        "micro": float(all_err.mean()),
-        "macro": float(np.mean([np.mean(v) for v in errors.values()])) if errors else float("nan"),
-        "n_committed": int(committed.sum()),
-        "leakage": leakage,
-        "pred_uncommitted_frac_committed": float(pred_uncommitted[committed].mean()),
-    }
+        all_err = np.concatenate([np.asarray(v) for v in errors.values()]) if errors else np.array([float("nan")])
+        sqrt_a1 = float(np.sqrt(max(float(cp["a1"]), 0.0))) if "a1" in cp else 1.0
+        pred_uncommitted = np.abs(pred_at_labels[-1][:, 0]) < 0.5 * sqrt_a1
+        out["branch_error"] = {
+            "micro": float(all_err.mean()),
+            "macro": float(np.mean([np.mean(v) for v in errors.values()])) if errors else float("nan"),
+            "n_committed": int(committed.sum()),
+            "leakage": leakage,
+            "pred_uncommitted_frac_committed": float(pred_uncommitted[committed].mean()),
+        }
+    else:
+        out["branch_error"] = {
+            "micro": float("nan"),
+            "macro": float("nan"),
+            "n_committed": 0,
+            "leakage": {},
+            "pred_uncommitted_frac_committed": float("nan"),
+        }
 
     # ------------------------------------------------------------------
     # 3. Per-particle oracle normal-motion fraction (analytic projector)
@@ -951,23 +1026,6 @@ def main() -> None:
     fate_label_key = str(cfg.get("fate_label_key", "fate_labels"))
     fate_frames = load_per_label_array(cfg, dm, fate_label_key)
 
-    if clone_frames is not None:
-        log.info("Computing clone-compatible endpoint mass...")
-        source_label = labels[0]
-        target_label = labels[-1]
-        output["clone_compatible_mass"] = compute_clone_compatible_endpoint_mass(
-            source_positions=frames[source_label],
-            source_clones=clone_frames[source_label],
-            pred_endpoints=build_predicted_trajectories(
-                model, frames, particle_id_frames or {l: np.arange(len(frames[l])) for l in labels},
-                labels, args.n_ode_steps, args.device
-            )[0] if particle_id_frames is None else None,
-            target_positions=frames[target_label],
-            target_clones=clone_frames[target_label],
-        )
-        # Need pred_endpoints for source particles. If no particle IDs, build from order.
-        # Recompute above using source order.
-
     # Actually compute pred_endpoints cleanly:
     sorted_labels = labels
     label_to_t = {label: labels_to_timesteps(sorted_labels)[i] for i, label in enumerate(sorted_labels)}
@@ -982,13 +1040,112 @@ def main() -> None:
     pred_endpoints = traj[-1].detach().cpu().numpy()
 
     if clone_frames is not None:
-        output["clone_compatible_mass"] = compute_clone_compatible_endpoint_mass(
-            source_positions=frames[sorted_labels[0]],
-            source_clones=clone_frames[sorted_labels[0]],
-            pred_endpoints=pred_endpoints,
-            target_positions=frames[sorted_labels[-1]],
-            target_clones=clone_frames[sorted_labels[-1]],
-        )
+        test_labs = sorted(dm.unique_test_labels) if hasattr(dm, "unique_test_labels") else []
+        train_labs = sorted(dm.unique_train_labels) if hasattr(dm, "unique_train_labels") else []
+        clone_results = {}
+        for tl in test_labs:
+            prev = max((tr for tr in train_labs if tr < tl), default=None)
+            nxt = min((tr for tr in train_labs if tr > tl), default=None)
+            if prev is None or nxt is None or prev not in clone_frames or tl not in clone_frames:
+                continue
+            ratio = (tl - prev) / (nxt - prev) if nxt != prev else 0.5
+            seg_traj = _run_ode_rollout(
+                flow_net=model,
+                source=torch.from_numpy(frames[prev]).float(),
+                t_source=label_to_t[prev],
+                t_target=label_to_t[nxt],
+                n_steps=args.n_ode_steps,
+                device=args.device,
+            )
+            q_idx = min(int(round(ratio * (seg_traj.shape[0] - 1))), seg_traj.shape[0] - 1)
+            seg_pred = seg_traj[q_idx].detach().cpu().numpy()
+            clone_results[str(tl)] = compute_clone_compatible_endpoint_mass(
+                source_positions=frames[prev],
+                source_clones=clone_frames[prev],
+                pred_endpoints=seg_pred,
+                target_positions=frames[tl],
+                target_clones=clone_frames[tl],
+            )
+        if clone_results:
+            output["clone_compatible_mass"] = clone_results
+
+    # Clone-conditioned terminal fate consistency on FULL frames (the metric
+    # needs clone structure that subsampled frames destroy).
+    if clone_frames is not None and fate_frames is not None:
+        fate_results = {}
+        raw = np.load(resolve_data_path(cfg), allow_pickle=True)
+        pos_key = str(cfg.get("position_key", "positions"))
+        tp_key = str(cfg.get("timepoint_key", "timepoints"))
+        pos_all = np.asarray(raw[pos_key], dtype=np.float32)
+        tp_all = raw[tp_key]
+        cl_all = raw[str(cfg.get("clone_id_key", "clone_ids"))]
+        ft_all = raw[str(cfg.get("fate_label_key", "fate_labels"))]
+        # Map raw time labels to the datamodule's numeric labels.
+        if hasattr(dm, "timepoint_label_map") and dm.timepoint_label_map:
+            lab_map = dm.timepoint_label_map
+        else:
+            uniq = sorted(np.unique(tp_all), key=lambda v: float(v) if np.issubdtype(np.asarray(v).dtype, np.number) else str(v))
+            lab_map = {v: i for i, v in enumerate(uniq)}
+
+        def _frame_raw(label):
+            mask = np.array([lab_map.get(v, lab_map.get(str(v))) for v in tp_all]) == label
+            if not mask.any():
+                # numeric timepoints: direct compare
+                mask = tp_all == label
+            return mask
+
+        if getattr(dm, "scaler", None) is not None:
+            pos_eval = dm.scaler.transform(pos_all).astype(np.float32)
+        else:
+            pos_eval = pos_all
+
+        for tl in test_labs:
+            prev = max((tr for tr in train_labs if tr < tl), default=None)
+            nxt = min((tr for tr in train_labs if tr > tl), default=None)
+            if prev is None or nxt is None:
+                continue
+            src_m, tgt_m = _frame_raw(prev), _frame_raw(tl)
+            if not src_m.any() or not tgt_m.any():
+                continue
+            ratio = (tl - prev) / (nxt - prev) if nxt != prev else 0.5
+            seg_traj = _run_ode_rollout(
+                flow_net=model,
+                source=torch.from_numpy(pos_eval[src_m]).float(),
+                t_source=label_to_t[prev],
+                t_target=label_to_t[nxt],
+                n_steps=args.n_ode_steps,
+                device=args.device,
+            )
+            q_idx = min(int(round(ratio * (seg_traj.shape[0] - 1))), seg_traj.shape[0] - 1)
+            seg_pred = seg_traj[q_idx].detach().cpu().numpy()
+            res = compute_clone_fate_consistency(
+                source_clones=cl_all[src_m],
+                source_fates=ft_all[src_m],
+                pred_endpoints=seg_pred,
+                target_positions=pos_eval[tgt_m],
+                target_clones=cl_all[tgt_m],
+                target_fates=ft_all[tgt_m],
+            )
+            if res.get("n_clones", 0) < 10:
+                # Too few clones pass the >=3 filter (e.g. LARRY day2); fall back
+                # to singletons and flag the protocol honestly.
+                res1 = compute_clone_fate_consistency(
+                    source_clones=cl_all[src_m],
+                    source_fates=ft_all[src_m],
+                    pred_endpoints=seg_pred,
+                    target_positions=pos_eval[tgt_m],
+                    target_clones=cl_all[tgt_m],
+                    target_fates=ft_all[tgt_m],
+                    min_cells=1,
+                )
+                res1["min_cells_used"] = 1
+                if res1.get("n_clones", 0) > res.get("n_clones", 0):
+                    res = res1
+            else:
+                res["min_cells_used"] = 3
+            fate_results[str(tl)] = res
+        if fate_results:
+            output["clone_fate_consistency"] = fate_results
 
     if fate_frames is not None:
         log.info("Computing terminal branch consistency...")
