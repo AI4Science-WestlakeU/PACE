@@ -1,1 +1,9 @@
 .DS_Store
+
+# Rebuttal working documents (keep locally, do not push)
+rebuttal/
+*.md
+!README.md
+Biocircuit101_notebook.ipynb
+_bokeh_cursor_plot.html
+sol_comment/
