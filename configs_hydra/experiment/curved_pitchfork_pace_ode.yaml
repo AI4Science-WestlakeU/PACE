@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - override /data: curved_pitchfork
+  - override /method: pace
+  - override /model/stage1: pace_hungarian
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [curved_pitchfork, synthetic, pace, ode]
+
+task_name: curved_pitchfork_pace
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+epochs: 200
+samples_per_timepoint: null
+total_epochs_stage1: 100
+lambda_ortho: 1
+lambda_global: 1
+lambda_metric: 1
+k_neighbors_local: 25
+optimal_transport_method: exact
+use_stage1_matching: true
+model/stage1: pace_hungarian
+rematch_every: 10
+geopath_lr: 0.003
+metric_alpha: 8.0

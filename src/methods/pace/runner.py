@@ -73,9 +73,18 @@ def _build_datamodule(
     if "eb" in data_name:
         from src.dataloaders.eb_data import EBDataModule
         base = EBDataModule(args)
+    elif "sphere_rot" in data_name:
+        from src.dataloaders.sphere_rot_data import SphereRotDataModule
+        base = SphereRotDataModule(args)
+    elif "curved_pitchfork" in data_name.lower():
+        from src.dataloaders.curved_pitchfork_data import CurvedPitchforkDataModule
+        base = CurvedPitchforkDataModule(args)
+    elif "larry" in data_name or "hematopoiesis" in data_name or "morris" in data_name or "celltag" in data_name:
+        from src.dataloaders.larry_data import LARRYDataModule
+        base = LARRYDataModule(args)
     else:
         raise ValueError(
-            f"Unknown data_name: {data_name}. PACE distribution only ships with eb_phate."
+            f"Unknown data_name: {data_name}. Supported: eb_phate, larry_*, morris_*, sphere_rot."
         )
 
     return PaceDataModuleWrapper(base)
@@ -88,17 +97,25 @@ def _build_datamodule(
 def _build_train_anchors(
     datamodule: PaceDataModuleWrapper,
     device: torch.device,
-) -> tuple[torch.Tensor, list[int]]:
+) -> tuple[torch.Tensor, list[int], dict[Any, np.ndarray]]:
     """Stack per-timepoint training frames into [T, N, dim] anchor tensor.
 
     All snapshots are trimmed to the minimum particle count across timepoints.
+    Also returns the original indices of the selected cells for downstream
+    evaluation (e.g. barcode recovery).
     """
     train_labels = sorted(datamodule.unique_train_labels)
     frames = datamodule.selected_train_frames if hasattr(datamodule, "selected_train_frames") else datamodule.train_frames
 
     min_n = min(frames[l].shape[0] for l in train_labels)
     anchors = torch.stack([frames[l][:min_n].float() for l in train_labels], dim=0)
-    return anchors.to(device), train_labels
+
+    selected_indices = {}
+    if hasattr(datamodule, "selected_train_indices"):
+        for label in train_labels:
+            selected_indices[label] = datamodule.selected_train_indices[label][:min_n]
+
+    return anchors.to(device), train_labels, selected_indices
 
 
 def _build_sequential_rollout_predictions(
@@ -205,12 +222,15 @@ def run_pace(cfg: DictConfig) -> dict:
 
     device = torch.device("cuda" if torch.cuda.is_available() and accelerator != "cpu" else "cpu")
 
+    stage1_dir = os.path.join(output_dir, "checkpoints", "stage1_psi")
+    os.makedirs(stage1_dir, exist_ok=True)
+
     if stage1_ckpt is None:
         log.info("=" * 60)
         log.info("STAGE 1: PACE Psi network training (alternating matching)")
         log.info("=" * 60)
 
-        train_anchors, train_idx = _build_train_anchors(datamodule, device)
+        train_anchors, train_idx, selected_indices = _build_train_anchors(datamodule, device)
         rematch_candidate_topk = cfg.get("rematch_candidate_topk", None)
 
         psi_model = PACEPsiTrain(
@@ -248,8 +268,6 @@ def run_pace(cfg: DictConfig) -> dict:
 
         total_epochs = int(cfg.get("total_epochs_stage1", 60))
 
-        stage1_dir = os.path.join(output_dir, "checkpoints", "stage1_psi")
-        os.makedirs(stage1_dir, exist_ok=True)
         stage1_callbacks = [
             ModelCheckpoint(
                 dirpath=stage1_dir,
@@ -283,7 +301,7 @@ def run_pace(cfg: DictConfig) -> dict:
         log.info(f"Loading Stage 1 checkpoint: {stage1_ckpt}")
         results["stage1_ckpt"] = stage1_ckpt
 
-        train_anchors, train_idx = _build_train_anchors(datamodule, device)
+        train_anchors, train_idx, selected_indices = _build_train_anchors(datamodule, device)
         psi_model = PACEPsiTrain.load_from_checkpoint(
             stage1_ckpt,
             psi_net=psi_net,
@@ -302,6 +320,24 @@ def run_pace(cfg: DictConfig) -> dict:
         for m in getattr(psi_model, "matchings", [])
         if m is not None
     ]
+
+    # Save Stage 1 matchings for downstream evaluation (e.g. barcode recovery)
+    stage1_matchings_path = os.path.join(stage1_dir, "stage1_matchings.npz")
+    try:
+        matchings_dict = {
+            f"matching_t{train_idx[i]}_to_t{train_idx[i+1]}": m.numpy()
+            for i, m in enumerate(stage1_matchings)
+        }
+        indices_dict = {
+            f"indices_t{label}": idx
+            for label, idx in selected_indices.items()
+        }
+        np.savez(stage1_matchings_path, **matchings_dict, **indices_dict)
+        results["stage1_matchings"] = stage1_matchings_path
+        log.info(f"Stage 1 matchings saved to {stage1_matchings_path}")
+    except Exception as e:
+        log.warning(f"Failed to save Stage 1 matchings: {e}")
+
     if cfg.get("use_stage1_matching", False) and not stage1_matchings:
         log.info(
             "No cached Stage 1 matchings found; rebuilding initial matchings for "
