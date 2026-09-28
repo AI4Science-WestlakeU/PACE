@@ -1,8 +1,20 @@
 <div align="center">
   <img src="assets/pace-logo.png" alt="PACE" width="510" />
-  <h3>Geometry-Aware Bridge Transport<br>for Single-Cell Trajectory Inference</h3>
-  <p>From unpaired snapshots to continuous cell-state dynamics.</p>
+  <h1>PACE: Geometry-Aware Bridge Transport<br>for Single-Cell Trajectory Inference</h1>
+  <p><strong>Official implementation · NeurIPS 2026 (Poster)</strong></p>
   <p>
+    Chenglei Yu<sup>*1,2</sup>,
+    <a href="https://wang-cr.github.io/">Chuanrui Wang</a><sup>*1</sup>,
+    Bangyan Liao<sup>1,2</sup> &amp;
+    <a href="https://tailin.org/">Tailin Wu</a><sup>†1</sup>
+  </p>
+  <p>
+    <sup>1</sup>Department of Artificial Intelligence, School of Engineering, Westlake University<br>
+    <sup>2</sup>Zhejiang University<br>
+    <sup>*</sup>Equal contribution · <sup>†</sup>Corresponding author
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/NeurIPS_2026-Poster-68478D.svg" alt="NeurIPS 2026 Poster">
     <a href="https://arxiv.org/abs/2605.18587"><img src="https://img.shields.io/badge/arXiv-2605.18587-b31b1b.svg" alt="arXiv paper"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-102744.svg" alt="MIT code license"></a>
     <a href="notebooks/01_data_tour.ipynb"><img src="https://img.shields.io/badge/start-notebooks-168B9D.svg" alt="Tutorial notebooks"></a>
@@ -165,14 +177,16 @@ assets/         logo, paper figure, and reproducible animations
 
 ## Citation
 
-Chenglei Yu and Chuanrui Wang contributed equally.
+Accepted at **NeurIPS 2026 (Poster)**. Chenglei Yu and Chuanrui Wang contributed equally.
 
 ```bibtex
-@article{yu2026pace,
+@inproceedings{yu2026pace,
   title={PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference},
   author={Yu, Chenglei and Wang, Chuanrui and Liao, Bangyan and Wu, Tailin},
-  journal={arXiv preprint arXiv:2605.18587},
-  year={2026}
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2026},
+  note={Poster},
+  url={https://arxiv.org/abs/2605.18587}
 }
 ```
 

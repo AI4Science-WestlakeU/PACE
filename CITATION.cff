@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use PACE, please cite the accompanying paper."
+message: "If you use PACE, please cite the accompanying NeurIPS 2026 paper (Poster)."
 title: "PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference"
 type: software
 authors:
@@ -15,7 +15,7 @@ repository-code: "https://github.com/AI4Science-WestlakeU/PACE"
 url: "https://arxiv.org/abs/2605.18587"
 license: MIT
 preferred-citation:
-  type: article
+  type: conference-paper
   title: "PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference"
   authors:
     - family-names: Yu
@@ -27,5 +27,8 @@ preferred-citation:
     - family-names: Wu
       given-names: Tailin
   year: 2026
-  journal: arXiv
-  doi: "10.48550/arXiv.2605.18587"
+  collection-title: "Advances in Neural Information Processing Systems"
+  conference:
+    name: "NeurIPS 2026"
+  notes: "Accepted at NeurIPS 2026 (Poster)."
+  url: "https://arxiv.org/abs/2605.18587"
