@@ -1,4 +1,6 @@
 # @package _global_
+# Historical score used a saved Stage 1 model; this preset trains from scratch.
+# See configs_archive and docs/recovered-results.md for the replay recipe.
 
 defaults:
   - override /data: wot_fle_three_interpolation

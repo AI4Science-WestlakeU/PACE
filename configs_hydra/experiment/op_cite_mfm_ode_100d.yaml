@@ -15,4 +15,4 @@ hidden_dims_geopath: [64, 128, 128, 64]
 hidden_dims_flow: [64, 128, 128, 64]
 samples_per_timepoint: null
 
-epochs: 350
+epochs: 340

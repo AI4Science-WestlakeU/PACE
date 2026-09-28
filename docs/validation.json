@@ -18,7 +18,7 @@
     }
   },
   "checks": {
-    "pytest": "62 passed: 59 configurations and 3 bridge/time-scaling/holdout tests",
+    "pytest": "63 passed: 59 configurations, 3 bridge/time-scaling/holdout tests, and Stage 2 replay with an unavailable historical Stage 1 checkpoint",
     "data_checksums": "8 files verified",
     "training_smoke": "PACE: 3 bridge epochs with rematching + 2 flow epochs; MFM: 2 + 2 epochs; finite stage2 metrics at all 4 Ocean holdouts",
     "velocity_evaluation": "8 finite result rows, PACE/MFM on Ocean holdouts",
@@ -36,11 +36,14 @@
     "archived_ocean_demo_inference": "Old CPU, GPU control, and selected GPU checkpoints independently evaluated locally on an identical 801-point continuous Euler grid and 101-point bracket grids; selected config and checkpoint hash verified",
     "archived_ocean_demo_artifacts": "New GIF, t=7 poster, before/after comparison, portable config and complete 22-trial report generated from real model outputs",
     "archived_initial_biological_demo_training": "Fresh H800 runs: EB 120 bridge + 350 flow epochs; WOT 80 bridge + 600 flow epochs (Stage 1 batch 128). Both seed 42, successful exits; no biological hyperparameter sweep.",
-    "asset_consolidation": "assert/fig1.png and fig1.pdf moved intact into assets/; original directory removed, README references and local preview updated; no asserts directory existed. README/docs links verified."
+    "asset_consolidation": "assert/fig1.png and fig1.pdf moved intact into assets/; original directory removed, README references and local preview updated; no asserts directory existed. README/docs links verified.",
+    "paper_recovery": "All 30 paper-suite and 5 WOT ablation checkpoints re-evaluated; 27 main runs match published MMD/W1/W2 at four decimal places; three OP runs differ by at most 1.464%. See recovered-results.json.",
+    "ot_convergence": "All 20 high-dimensional historical runs warn at the inherited OT limit; all 20 complete without OT nonconvergence warnings at 1000000 iterations. Diagnostics stored separately from paper and replay values.",
+    "historical_configs": "35 normalized resolved configs, checkpoint epochs and hashes verified; seven historical warm-start recipes require explicit Stage 1 weights for training. Both fresh and warm-start archive configs parsed through the Hydra CLI."
   },
   "not_verified": [
-    "Numerical equality to all published tables",
-    "Full GPU/high-dimensional training suite",
+    "Independent training-from-scratch numerical reproduction of the full suite",
+    "Exact equality of the three remaining OP runs to the paper; GW, RNA-velocity and multi-seed table recovery",
     "GitHub Actions execution on a remote runner"
   ]
 }

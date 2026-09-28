@@ -25,10 +25,12 @@ This repository includes **PACE** (called `imfm` in the development code) and
 datasets**, experiment configurations, and executable tutorials. Other methods
 compared in the paper are outside this release's implementation scope.
 
-> **Reproducibility status.** The release follows the representations and splits
-> in [the paper](https://arxiv.org/html/2605.18587v2). Current development runs are
-> not all identical to the published tables. See the concrete differences and
-> validation scope in [the reproduction notes](docs/reproducibility.md).
+> **Recovered results.** All 30 paper-suite checkpoints and five WOT ablations
+> have been re-evaluated on the bundled data. Historical replay matches 27/30
+> paper runs at four decimal places; the other three differ by at most 1.464%.
+> [Resolved configs, checkpoint hashes and scores](docs/recovered-results.md)
+> include the high-dimensional OT convergence limitation and distinguish
+> historical warm starts from fresh training.
 
 ## How PACE works
 
@@ -156,6 +158,7 @@ src/dataloaders/ shared sampling and training-only standardization
 src/plot/       bridge and rollout visualizations
 notebooks/      three guided tutorials
 scripts/        experiment suite, validation, data export, and demo rendering
+configs_archive/ resolved configs tied to recovered paper checkpoints
 docs/           method mapping, experiments, and reproducibility notes
 assets/         logo, paper figure, and reproducible animations
 ```

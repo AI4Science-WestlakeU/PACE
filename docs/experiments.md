@@ -15,9 +15,10 @@ python scripts/run_paper.py --method mfm --run  # train 15 runs
 Five 2D experiments + eight single-holdout iPSC experiments + two 100D OP
 experiments = 15 runs per method. The two iPSC dimensions each aggregate four
 holdouts, accounting for nine reported benchmark settings.
-`--seed` isolates suite runs in a seed-specific output directory. The numerical
-identity of these runs to published results remains subject to the audit in
-[reproducibility.md](reproducibility.md).
+`--seed` isolates suite runs in a seed-specific output directory. These commands train from scratch with corrected numerical presets. For the
+35 resolved historical configurations, replayed scores, and seven Stage 1
+warm-start dependencies, see [the recovery report](recovered-results.md).
+A fresh run is not guaranteed to reproduce an archived checkpoint exactly.
 
 ## Dimensional and supplementary variants
 

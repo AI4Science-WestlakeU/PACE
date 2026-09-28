@@ -1,0 +1,2081 @@
+{
+  "scope": "Read-only replay of 30 paper-suite checkpoints and five WOT ablations. Historical scores are distinct from converged-OT diagnostics and from training from scratch.",
+  "date": "2026-09-28",
+  "paper": "https://arxiv.org/html/2605.18587v2",
+  "paper_html_sha256": "f6ac3c56d516ec279783ab6cab3aaff0f19444582e7651ab6bb4b322e9d28938",
+  "selection": "Recovered checkpoint/log/config correspondence; selected earlier Ocean and iPSC2 checkpoints when later directory contents had changed. No new training or holdout hyperparameter tuning in this recovery.",
+  "environment": {
+    "python": "3.11.13",
+    "torch": "2.7.1+cu126",
+    "pytorch-lightning": "1.9.5",
+    "POT": "0.9.5",
+    "numpy": "2.2.6",
+    "torchdyn": "1.0.6",
+    "evaluation_device": "cpu"
+  },
+  "replay_script": "scripts/evaluate_checkpoint.py",
+  "replay_script_sha256": "a3d3858500d969e6fcd85c8e23b63c0707074d9455631e798fc9a402701c2eb0",
+  "protocol": "101-point observed-anchor Euler grid; all configured frame samples; seeded data selection and training-only standardization; MMD, W1, W2. Historical OT uses the inherited 100000 iteration limit.",
+  "summary": {
+    "paper_runs": 30,
+    "ablation_runs": 5,
+    "datasets": 7,
+    "matches_paper_at_4_decimals": 27,
+    "max_relative_difference_to_paper": 0.014639483927019047,
+    "historical_ot_warning_runs": 20,
+    "convergence_diagnostics_completed": 20,
+    "warm_start_runs": 7,
+    "new_training_runs": 0
+  },
+  "experiments": [
+    {
+      "experiment": "oceans_positions_pace_ode",
+      "dataset": "oceans_positions",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/oceans_positions_pace_ode.yaml",
+      "resolved_config_sha256": "43c983aadb162242d7984a98413956bb491ba743b2b8673b22221452b6e3a7ff",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-28/13-46-14/train.log",
+      "checkpoint_file": "flow-epoch=099-v3.ckpt",
+      "checkpoint_sha256": "9d2019afdceea48e7d0d58779730939f96c3e09e903ee1a98798747b9b3ee28e",
+      "checkpoint_epoch_count": 100,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "c30a3e80fd3bcc62ec00e87afb83bcf722bfbd3566afc25bc98a79176951fc5a",
+      "metrics": [
+        {
+          "label": 1.0,
+          "replayed": {
+            "mmd": 0.4504448175430298,
+            "w1": 0.03992632830301549,
+            "w2": 0.044047052760600156
+          },
+          "paper": {
+            "mmd": 0.4504,
+            "w1": 0.0399,
+            "w2": 0.044
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        },
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.25882866978645325,
+            "w1": 0.03975233316278873,
+            "w2": 0.04340775327339091
+          },
+          "paper": {
+            "mmd": 0.2588,
+            "w1": 0.0398,
+            "w2": 0.0434
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        },
+        {
+          "label": 5.0,
+          "replayed": {
+            "mmd": 0.07346077263355255,
+            "w1": 0.026764069814423752,
+            "w2": 0.036152739835685156
+          },
+          "paper": {
+            "mmd": 0.0735,
+            "w1": 0.0268,
+            "w2": 0.0362
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        },
+        {
+          "label": 7.0,
+          "replayed": {
+            "mmd": 0.27785006165504456,
+            "w1": 0.05054575025821356,
+            "w2": 0.05337262406688496
+          },
+          "paper": {
+            "mmd": 0.2779,
+            "w1": 0.0505,
+            "w2": 0.0534
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.993834495542471e-05,
+      "max_relative_difference_to_paper": 0.0013406785662779404,
+      "paper_table_anchor": "S3.T1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "toy_bifurcation_pace_ode",
+      "dataset": "toy_bifurcation",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/toy_bifurcation_pace_ode.yaml",
+      "resolved_config_sha256": "47021f274335bcb0ca48b1d81b26263f84dd42403d565e29ed34651334ad5d5d",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/06-55-33/train.log",
+      "checkpoint_file": "flow-epoch=549.ckpt",
+      "checkpoint_sha256": "9e96f3b8e46e1a875bc71fe784199a9e4a3d9cd8f5a2da5f5b267d2f5ded6eb6",
+      "checkpoint_epoch_count": 550,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "f5b07945d4e6e63404ed0c8f7c8858509c90cc25271159b892d412bbf5182387",
+      "metrics": [
+        {
+          "label": 1.0,
+          "replayed": {
+            "mmd": 0.19682882726192474,
+            "w1": 0.13857673980965046,
+            "w2": 0.16861203929029445
+          },
+          "paper": {
+            "mmd": 0.1968,
+            "w1": 0.1386,
+            "w2": 0.1686
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 64,
+          "n_reference": 64
+        },
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.014583188109099865,
+            "w1": 0.17522237226512516,
+            "w2": 0.2236082250162822
+          },
+          "paper": {
+            "mmd": 0.0146,
+            "w1": 0.1752,
+            "w2": 0.2236
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 64,
+          "n_reference": 64
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 2.8827261924740943e-05,
+      "max_relative_difference_to_paper": 0.001151499376721587,
+      "paper_table_anchor": "A1.T2.fig1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "eb_phate_pace_ode",
+      "dataset": "eb_phate",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/eb_phate_pace_ode.yaml",
+      "resolved_config_sha256": "f88b03c42dde6d607a5f855fbbc87cd583a7cbbb3e9a432cfe5b8cf1dde9ae12",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-28/14-24-13/train.log",
+      "checkpoint_file": "flow-epoch=349-v10.ckpt",
+      "checkpoint_sha256": "71de95db118d76c0ec312e39182ad3012fa66fc770b4f3dbe77850d02dd93f0e",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "17623d16dd4fe7b679aad80916d130cb2863a4cd4ee742f139a3c2eed91ba230",
+      "metrics": [
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.06738192588090897,
+            "w1": 0.20871537475187552,
+            "w2": 0.2803045246616824
+          },
+          "paper": {
+            "mmd": 0.0674,
+            "w1": 0.2087,
+            "w2": 0.2803
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 1024,
+          "n_reference": 1024
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 1.8074119091035512e-05,
+      "max_relative_difference_to_paper": 0.0002681620043180343,
+      "paper_table_anchor": "A1.T5.fig1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "wot_fle_three_interpolation_pace_ode",
+      "dataset": "wot_fle_three_interpolation",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/wot_fle_three_interpolation_pace_ode.yaml",
+      "resolved_config_sha256": "e41e14070d5496a74e7d5510ffc2523f3eab690f7f60c4f978d937bdab72b698",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-05-01/05-29-28/train.log",
+      "checkpoint_file": "flow-epoch=599.ckpt",
+      "checkpoint_sha256": "ccea2e54e1014455540bfd3c108c8d58ec2cdca78763eb95e7af94bde85c63d8",
+      "checkpoint_epoch_count": 600,
+      "stage1_warm_start": true,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+      "metrics": [
+        {
+          "label": 6.0,
+          "replayed": {
+            "mmd": 0.4219309389591217,
+            "w1": 0.26086847753595066,
+            "w2": 0.2668571419567114
+          },
+          "paper": {
+            "mmd": 0.4219,
+            "w1": 0.2609,
+            "w2": 0.2669
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 11.0,
+          "replayed": {
+            "mmd": 0.137336865067482,
+            "w1": 0.15902256137860604,
+            "w2": 0.20370607746990668
+          },
+          "paper": {
+            "mmd": 0.1373,
+            "w1": 0.159,
+            "w2": 0.2037
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.0659785270690918,
+            "w1": 0.20027825474176097,
+            "w2": 0.3813165766926367
+          },
+          "paper": {
+            "mmd": 0.066,
+            "w1": 0.2003,
+            "w2": 0.3813
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.285804328862941e-05,
+      "max_relative_difference_to_paper": 0.00032534743800312474,
+      "paper_table_anchor": "A1.T7",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode",
+      "dataset": "ipsc_liu",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode.yaml",
+      "resolved_config_sha256": "32a53042b7695ee39f10b3f171fefbc756599b3e027725d0fa63ab23e8e52f6e",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-18/10-35-01/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "6379d39db9ad7cee08c67b0ad54deccae1e06574797a0bff25a8758de9fab6a4",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.6807802319526672,
+            "w1": 0.5578935633825495,
+            "w2": 0.5645724062786289
+          },
+          "paper": {
+            "mmd": 0.6808,
+            "w1": 0.5579,
+            "w2": 0.5646
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 1024,
+          "n_reference": 1024
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.1962185949087143,
+            "w1": 0.4126166830175748,
+            "w2": 0.6829638945753134
+          },
+          "paper": {
+            "mmd": 0.1962,
+            "w1": 0.4126,
+            "w2": 0.683
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 1024,
+          "n_reference": 1024
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 3.610542468668321e-05,
+      "max_relative_difference_to_paper": 9.477527377309457e-05,
+      "paper_table_anchor": "A1.T6.fig1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_10d_test4",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_10d_test4.yaml",
+      "resolved_config_sha256": "27f101d50fa94a0e916afd24c5bd592c03cdd6d0d024daefb1dc605fa79e0658",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-25/14-18-54/train.log",
+      "checkpoint_file": "flow-epoch=349-v3.ckpt",
+      "checkpoint_sha256": "854d4dc58f97a6facbab284f956d1990a1554887595436695c99342dc2c0465f",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.5244202017784119,
+            "w1": 3.591750246614147,
+            "w2": 3.7484572423519507
+          },
+          "paper": {
+            "mmd": 0.5244,
+            "w1": 3.5918,
+            "w2": 3.7485
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.5244202017784119,
+            "w1": 3.574897470311376,
+            "w2": 3.722964409731857
+          },
+          "n_prediction": 3713,
+          "n_reference": 3511
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.975338585300193e-05,
+      "max_relative_difference_to_paper": 3.852360490443931e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "854d4dc58f97a6facbab284f956d1990a1554887595436695c99342dc2c0465f"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_10d_test8",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_10d_test8.yaml",
+      "resolved_config_sha256": "539fd389ceb9140b0bb8adf6b7ada0eb6e5c441a07782f429333a4fbec3badb0",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-25/10-33-52/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "68d89a360804be03ace39aab4f81d8caf9d17fa00abdc4e8ac980e45119f2d7b",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 8.0,
+          "replayed": {
+            "mmd": 0.5153007507324219,
+            "w1": 3.2507008240026276,
+            "w2": 3.575541493666032
+          },
+          "paper": {
+            "mmd": 0.5153,
+            "w1": 3.2507,
+            "w2": 3.5755
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.5153007507324219,
+            "w1": 3.227242431278827,
+            "w2": 3.5338238374405777
+          },
+          "n_prediction": 3511,
+          "n_reference": 3809
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.149366603201088e-05,
+      "max_relative_difference_to_paper": 1.160499679261946e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "68d89a360804be03ace39aab4f81d8caf9d17fa00abdc4e8ac980e45119f2d7b"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_10d_test12",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_10d_test12.yaml",
+      "resolved_config_sha256": "e2b621898c80b92e5c00b6cbe73e5f8c7021b538fe38025fddfe9c107cc077cb",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-25/08-48-15/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "4e2dab636a3845944323eee895166ede88cb2a906db8d274ca4ed4da7d3fd42e",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 12.0,
+          "replayed": {
+            "mmd": 0.3112550675868988,
+            "w1": 2.3184669469762373,
+            "w2": 2.786819306399527
+          },
+          "paper": {
+            "mmd": 0.3113,
+            "w1": 2.3185,
+            "w2": 2.7868
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.3112550675868988,
+            "w1": 2.2997640290329358,
+            "w2": 2.7529982699205364
+          },
+          "n_prediction": 3809,
+          "n_reference": 2963
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.493241310121743e-05,
+      "max_relative_difference_to_paper": 0.00014433797976619797,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "4e2dab636a3845944323eee895166ede88cb2a906db8d274ca4ed4da7d3fd42e"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_10d_test16",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_10d_test16.yaml",
+      "resolved_config_sha256": "f56e9a32fcdac4f71e9ec4b666ca738c0a8914512b8b2fa79103e59430e4b243",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-28/14-40-22/train.log",
+      "checkpoint_file": "flow-epoch=349-v6.ckpt",
+      "checkpoint_sha256": "2c5517f49ce6c357f58548d6ceed7382ea14c3300e27d01f65895100160aceba",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.28708094358444214,
+            "w1": 2.529355595578449,
+            "w2": 2.6406279471715606
+          },
+          "paper": {
+            "mmd": 0.2871,
+            "w1": 2.5294,
+            "w2": 2.6406
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.28708094358444214,
+            "w1": 2.4950968021936584,
+            "w2": 3.0343144389993895
+          },
+          "n_prediction": 2963,
+          "n_reference": 7084
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.440442155084767e-05,
+      "max_relative_difference_to_paper": 6.63755331169738e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "2c5517f49ce6c357f58548d6ceed7382ea14c3300e27d01f65895100160aceba"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_50d_test4",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_50d_test4.yaml",
+      "resolved_config_sha256": "f8698da444abe149c1fddbdb0a8556efc69d0c48edc4f05b88a3c8b9f3eba5af",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/15-32-40/train.log",
+      "checkpoint_file": "flow-epoch=999-v2.ckpt",
+      "checkpoint_sha256": "4e752947bc5e3a2ab57d3152f2e8210edc71d04a6b38dbdf8e69d8b103cd1dfc",
+      "checkpoint_epoch_count": 1000,
+      "stage1_warm_start": true,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.36091697216033936,
+            "w1": 7.065593874576088,
+            "w2": 7.6895989096653405
+          },
+          "paper": {
+            "mmd": 0.3609,
+            "w1": 7.0656,
+            "w2": 7.6896
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.36091697216033936,
+            "w1": 7.012997868048409,
+            "w2": 7.622925868025523
+          },
+          "n_prediction": 3713,
+          "n_reference": 3511
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 1.697216033935689e-05,
+      "max_relative_difference_to_paper": 4.7027321527727595e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "4e752947bc5e3a2ab57d3152f2e8210edc71d04a6b38dbdf8e69d8b103cd1dfc"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_50d_test8",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_50d_test8.yaml",
+      "resolved_config_sha256": "7ce41008a1c5aad2f82e1f12996a68db124a04becaff6d0fa065b4be2ed3dbcc",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/13-26-46/train.log",
+      "checkpoint_file": "flow-epoch=299-v1.ckpt",
+      "checkpoint_sha256": "52b69e2d6042b9a1161b10358807725d0d816957dec73324da78e8657f2e52ae",
+      "checkpoint_epoch_count": 300,
+      "stage1_warm_start": true,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 8.0,
+          "replayed": {
+            "mmd": 0.3003751337528229,
+            "w1": 6.819440732815011,
+            "w2": 7.079787794317666
+          },
+          "paper": {
+            "mmd": 0.3004,
+            "w1": 6.8194,
+            "w2": 7.0798
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.3003751337528229,
+            "w1": 6.7594617561433,
+            "w2": 6.996299853016184
+          },
+          "n_prediction": 3511,
+          "n_reference": 3809
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.073281501071335e-05,
+      "max_relative_difference_to_paper": 8.277712109562044e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "52b69e2d6042b9a1161b10358807725d0d816957dec73324da78e8657f2e52ae"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_50d_test12",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_50d_test12.yaml",
+      "resolved_config_sha256": "8de642b69a4679bb91b9d666ce0f10cfbfa24bef58648340d5d09061ff9de885",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/13-14-38/train.log",
+      "checkpoint_file": "flow-epoch=549.ckpt",
+      "checkpoint_sha256": "578dd0735eec8ac77cef47957371961d7cb248161e23a891641ead816f5c86d8",
+      "checkpoint_epoch_count": 550,
+      "stage1_warm_start": true,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 12.0,
+          "replayed": {
+            "mmd": 0.21926003694534302,
+            "w1": 6.871784022189547,
+            "w2": 7.57360534638412
+          },
+          "paper": {
+            "mmd": 0.2193,
+            "w1": 6.8718,
+            "w2": 7.5736
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.21926003694534302,
+            "w1": 6.8135458743765,
+            "w2": 7.496297331442384
+          },
+          "n_prediction": 3809,
+          "n_reference": 2963
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 3.996305465697736e-05,
+      "max_relative_difference_to_paper": 0.0001822300713952456,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "578dd0735eec8ac77cef47957371961d7cb248161e23a891641ead816f5c86d8"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_pace_ode_50d_test16",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_pace_ode_50d_test16.yaml",
+      "resolved_config_sha256": "691c976c8f6cc463a3135ccff6080e457fe17bdb038aa678d4e633e6e43e61d7",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/13-45-08/train.log",
+      "checkpoint_file": "flow-epoch=649.ckpt",
+      "checkpoint_sha256": "a0b0fd3e7ba68f575f43c542ef04548ecbd4aa84abcdce789b63a1df5f01510e",
+      "checkpoint_epoch_count": 650,
+      "stage1_warm_start": true,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.1396428942680359,
+            "w1": 6.258075658603838,
+            "w2": 6.791390761539913
+          },
+          "paper": {
+            "mmd": 0.1396,
+            "w1": 6.2581,
+            "w2": 6.7914
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.1396428942680359,
+            "w1": 6.148563414816493,
+            "w2": 6.649255019993127
+          },
+          "n_prediction": 2963,
+          "n_reference": 7084
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.289426803588681e-05,
+      "max_relative_difference_to_paper": 0.0003072655303430287,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "a0b0fd3e7ba68f575f43c542ef04548ecbd4aa84abcdce789b63a1df5f01510e"
+      }
+    },
+    {
+      "experiment": "op_cite_pace_ode_100d",
+      "dataset": "op_cite",
+      "dimension": 100,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/op_cite_pace_ode_100d.yaml",
+      "resolved_config_sha256": "4c019ae119aa4bd5e8e0d1401aa1ebe992fb4ce89a74893dd6af683182f92f2c",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/15-19-03/train.log",
+      "checkpoint_file": "flow-epoch=999.ckpt",
+      "checkpoint_sha256": "42563454a4214d74c1f160b734c51655cdddc3c473b67530cbaa45fad4ea282d",
+      "checkpoint_epoch_count": 1000,
+      "stage1_warm_start": true,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "420d190fea959fc2156eb9ac9f48cdec26bc29d6066d86c9562d93ccfbe81b2c",
+      "metrics": [
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.14251038432121277,
+            "w1": 10.444013717264548,
+            "w2": 10.551605331899223
+          },
+          "paper": {
+            "mmd": 0.1409,
+            "w1": 10.4574,
+            "w2": 10.5605
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.14251038432121277,
+            "w1": 10.29540493568696,
+            "w2": 10.385508941080532
+          },
+          "n_prediction": 7476,
+          "n_reference": 6999
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": false,
+      "max_absolute_difference_to_paper": 0.013386282735451616,
+      "max_relative_difference_to_paper": 0.011429271264817397,
+      "paper_table_anchor": "A8.T9",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "42563454a4214d74c1f160b734c51655cdddc3c473b67530cbaa45fad4ea282d"
+      }
+    },
+    {
+      "experiment": "op_multi_pace_ode_100d",
+      "dataset": "op_multi",
+      "dimension": 100,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/op_multi_pace_ode_100d.yaml",
+      "resolved_config_sha256": "9bca7b7f918e403a953788e28b1b8cf8a05c555e9d372d6dfbdd4b4372bbbe58",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/15-18-57/train.log",
+      "checkpoint_file": "flow-epoch=999.ckpt",
+      "checkpoint_sha256": "5a880c87693ab9cf93534d6d49a5b72590403d199e23ab147a8718dca99d9dd5",
+      "checkpoint_epoch_count": 1000,
+      "stage1_warm_start": true,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "ded027f090ea6a85df4775e52f9b03217867dab0368d44f8d2ca5374751730c4",
+      "metrics": [
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.17083634436130524,
+            "w1": 10.592209653970595,
+            "w2": 10.631622978886059
+          },
+          "paper": {
+            "mmd": 0.1693,
+            "w1": 10.5824,
+            "w2": 10.6293
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.17083634436130524,
+            "w1": 10.460091576441672,
+            "w2": 10.497643880055563
+          },
+          "n_prediction": 7264,
+          "n_reference": 8544
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": false,
+      "max_absolute_difference_to_paper": 0.009809653970595633,
+      "max_relative_difference_to_paper": 0.009074686127024398,
+      "paper_table_anchor": "A8.T9",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "5a880c87693ab9cf93534d6d49a5b72590403d199e23ab147a8718dca99d9dd5"
+      }
+    },
+    {
+      "experiment": "oceans_positions_mfm_ode",
+      "dataset": "oceans_positions",
+      "dimension": 2,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/oceans_positions_mfm_ode.yaml",
+      "resolved_config_sha256": "0b4b9878936f6e4dc052d57e60e2d5cf40262247fa64b1829a725f8cc7d4820c",
+      "config_evidence": "result-directory config, checked by checkpoint replay",
+      "training_log_id": null,
+      "checkpoint_file": "flow-epoch=099-v2.ckpt",
+      "checkpoint_sha256": "42621ebbfa19b3de80c8ae74afa2f1df51363d6167b7237b439e03bae95dd755",
+      "checkpoint_epoch_count": 100,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "c30a3e80fd3bcc62ec00e87afb83bcf722bfbd3566afc25bc98a79176951fc5a",
+      "metrics": [
+        {
+          "label": 1.0,
+          "replayed": {
+            "mmd": 0.8482003211975098,
+            "w1": 0.09600340422276438,
+            "w2": 0.09911462150008474
+          },
+          "paper": {
+            "mmd": 0.8482,
+            "w1": 0.096,
+            "w2": 0.0991
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        },
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.7859430313110352,
+            "w1": 0.14330107436792267,
+            "w2": 0.14517025255109664
+          },
+          "paper": {
+            "mmd": 0.7859,
+            "w1": 0.1433,
+            "w2": 0.1452
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        },
+        {
+          "label": 5.0,
+          "replayed": {
+            "mmd": 0.6928495764732361,
+            "w1": 0.1359101063865531,
+            "w2": 0.13853333386430386
+          },
+          "paper": {
+            "mmd": 0.6928,
+            "w1": 0.1359,
+            "w2": 0.1385
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        },
+        {
+          "label": 7.0,
+          "replayed": {
+            "mmd": 0.5823382139205933,
+            "w1": 0.1279415764787175,
+            "w2": 0.13024434805698507
+          },
+          "paper": {
+            "mmd": 0.5823,
+            "w1": 0.1279,
+            "w2": 0.1302
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 111,
+          "n_reference": 111
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.9576473236112584e-05,
+      "max_relative_difference_to_paper": 0.0003406148769973515,
+      "paper_table_anchor": "S3.T1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "toy_bifurcation_mfm_ode",
+      "dataset": "toy_bifurcation",
+      "dimension": 2,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/toy_bifurcation_mfm_ode.yaml",
+      "resolved_config_sha256": "41b16663277a0489758c6cc5a830db9bd7f3d5c5c9364870fc7e55134a1c839e",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/05-24-04/train.log",
+      "checkpoint_file": "flow-epoch=499.ckpt",
+      "checkpoint_sha256": "cd64017f4c0bd99bac50d623f18e93f698138bb9353be5511ac6137374123893",
+      "checkpoint_epoch_count": 500,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "f5b07945d4e6e63404ed0c8f7c8858509c90cc25271159b892d412bbf5182387",
+      "metrics": [
+        {
+          "label": 1.0,
+          "replayed": {
+            "mmd": 0.38171228766441345,
+            "w1": 0.16863324321457185,
+            "w2": 0.18324155055969701
+          },
+          "paper": {
+            "mmd": 0.3817,
+            "w1": 0.1686,
+            "w2": 0.1832
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 64,
+          "n_reference": 64
+        },
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.11454645544290543,
+            "w1": 0.18646525041549467,
+            "w2": 0.2115684545530153
+          },
+          "paper": {
+            "mmd": 0.1145,
+            "w1": 0.1865,
+            "w2": 0.2116
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 64,
+          "n_reference": 64
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.6455442905421473e-05,
+      "max_relative_difference_to_paper": 0.0004057243921870871,
+      "paper_table_anchor": "A1.T2.fig1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "eb_phate_mfm_ode",
+      "dataset": "eb_phate",
+      "dimension": 2,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/eb_phate_mfm_ode.yaml",
+      "resolved_config_sha256": "d4110924df0b75b431fd017cdd18d83a276ba0446145faf754a297d768b97abd",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-18/15-39-34/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "8e30c0c65e37425fd707368960df8d4607826a8ac7c2c18340414c621aec421b",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "17623d16dd4fe7b679aad80916d130cb2863a4cd4ee742f139a3c2eed91ba230",
+      "metrics": [
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.15182210505008698,
+            "w1": 0.3703556172094409,
+            "w2": 0.44509788686254775
+          },
+          "paper": {
+            "mmd": 0.1518,
+            "w1": 0.3704,
+            "w2": 0.4451
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 1024,
+          "n_reference": 1024
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.438279055912764e-05,
+      "max_relative_difference_to_paper": 0.0001456195657904124,
+      "paper_table_anchor": "A1.T5.fig1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "wot_fle_three_interpolation_mfm_ode",
+      "dataset": "wot_fle_three_interpolation",
+      "dimension": 2,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/wot_fle_three_interpolation_mfm_ode.yaml",
+      "resolved_config_sha256": "8ac5d9671900d17e961919db766f093713d0c606e5297899bf91c375530e4469",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-05-01/05-35-25/train.log",
+      "checkpoint_file": "flow-epoch=599.ckpt",
+      "checkpoint_sha256": "699982d2ed2de94cbb1d8d41c8a766a5e39e3b0cd2e5e32f590fd91364f6269e",
+      "checkpoint_epoch_count": 600,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+      "metrics": [
+        {
+          "label": 6.0,
+          "replayed": {
+            "mmd": 0.8676348924636841,
+            "w1": 2.6082997302291915,
+            "w2": 3.026463315571224
+          },
+          "paper": {
+            "mmd": 0.8676,
+            "w1": 2.6083,
+            "w2": 3.0265
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 11.0,
+          "replayed": {
+            "mmd": 0.885797917842865,
+            "w1": 1.4602224731643219,
+            "w2": 1.479321114954325
+          },
+          "paper": {
+            "mmd": 0.8858,
+            "w1": 1.4602,
+            "w2": 1.4793
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.34369051456451416,
+            "w1": 0.7004564420517454,
+            "w2": 0.8768048669318567
+          },
+          "paper": {
+            "mmd": 0.3437,
+            "w1": 0.7005,
+            "w2": 0.8768
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.3557948254613343e-05,
+      "max_relative_difference_to_paper": 6.218122520287415e-05,
+      "paper_table_anchor": "A1.T7",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode",
+      "dataset": "ipsc_liu",
+      "dimension": 2,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode.yaml",
+      "resolved_config_sha256": "0d977fab9dcf90ca6610278de68ade47d1abbc573417e06fc6df1d88ffcea423",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-18/10-39-52/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "99757e63cfaafc80a8ab0586301927101545bbf4be2c5a9c677368765d63fa67",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.8334066867828369,
+            "w1": 0.7645888139868475,
+            "w2": 0.7859903073258909
+          },
+          "paper": {
+            "mmd": 0.8334,
+            "w1": 0.7646,
+            "w2": 0.786
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 1024,
+          "n_reference": 1024
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.27310848236083984,
+            "w1": 0.5666845520721893,
+            "w2": 0.9814828852561852
+          },
+          "paper": {
+            "mmd": 0.2731,
+            "w1": 0.5667,
+            "w2": 0.9815
+          },
+          "convergence_diagnostic": null,
+          "n_prediction": 1024,
+          "n_reference": 1024
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 1.7114743814827804e-05,
+      "max_relative_difference_to_paper": 3.105954170572807e-05,
+      "paper_table_anchor": "A1.T6.fig1",
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_10d_test4",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_10d_test4.yaml",
+      "resolved_config_sha256": "ca5c53d45d42ba5958614ac75c6b2e234d22bab629bd71f09aa464995e9bc719",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-24/19-15-47/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "c35f5ea3538731b6fe726b090934cffdf028f94004f392110b6211fb7c8bb8b8",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.5864264965057373,
+            "w1": 3.597162055976109,
+            "w2": 4.020476376318095
+          },
+          "paper": {
+            "mmd": 0.5864,
+            "w1": 3.5972,
+            "w2": 4.0205
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.5864264965057373,
+            "w1": 3.5813632263674053,
+            "w2": 3.9942199994424405
+          },
+          "n_prediction": 3713,
+          "n_reference": 3511
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 3.7944023890901235e-05,
+      "max_relative_difference_to_paper": 4.518503706901834e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "c35f5ea3538731b6fe726b090934cffdf028f94004f392110b6211fb7c8bb8b8"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_10d_test8",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_10d_test8.yaml",
+      "resolved_config_sha256": "e737448595078051a3942a79f767af904ce3c1c62a3d038260602d99593eaeaa",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-25/10-55-59/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "42f9a923bc5781ad0271ab07282ffe1d73e2b1c3d2fb4897c71df0acfd726bd2",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 8.0,
+          "replayed": {
+            "mmd": 0.6673628687858582,
+            "w1": 4.023939205110873,
+            "w2": 5.065441579826744
+          },
+          "paper": {
+            "mmd": 0.6674,
+            "w1": 4.0239,
+            "w2": 5.0654
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.6673628687858582,
+            "w1": 4.0076433045516096,
+            "w2": 5.03746166901431
+          },
+          "n_prediction": 3511,
+          "n_reference": 3809
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.1579826743465276e-05,
+      "max_relative_difference_to_paper": 5.563562202852705e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "42f9a923bc5781ad0271ab07282ffe1d73e2b1c3d2fb4897c71df0acfd726bd2"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_10d_test12",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_10d_test12.yaml",
+      "resolved_config_sha256": "3b6c90277b86af7eb5a33b1d07d6f56b66d0e6707c99445e20ce500434877800",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-25/09-15-00/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "e3f54a5f4e241194df03e2bfdca8074eff56a04932228a50610246c11339aad9",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 12.0,
+          "replayed": {
+            "mmd": 0.5033076405525208,
+            "w1": 3.25152078827037,
+            "w2": 3.5968128642225046
+          },
+          "paper": {
+            "mmd": 0.5033,
+            "w1": 3.2515,
+            "w2": 3.5968
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.5033076405525208,
+            "w1": 3.233272236463563,
+            "w2": 3.5569306364603475
+          },
+          "n_prediction": 3809,
+          "n_reference": 2963
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 2.0788270369997974e-05,
+      "max_relative_difference_to_paper": 1.5180911028774745e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "e3f54a5f4e241194df03e2bfdca8074eff56a04932228a50610246c11339aad9"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_10d_test16",
+      "dataset": "ipsc_liu",
+      "dimension": 10,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_10d_test16.yaml",
+      "resolved_config_sha256": "51dab8c95bb41cf82dd66c14a9f7c4c18b5bb2ef9d731d1bd240608be446ebfe",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-25/09-23-34/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "4842fa0ea41f86e331510ff831b91195e6a1b37e927784246fef471b3b3c0d36",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.3520697355270386,
+            "w1": 2.7538551388274275,
+            "w2": 2.6699241492775108
+          },
+          "paper": {
+            "mmd": 0.3521,
+            "w1": 2.7539,
+            "w2": 2.6699
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.3520697355270386,
+            "w1": 2.718241584408286,
+            "w2": 3.1363010795932986
+          },
+          "n_prediction": 2963,
+          "n_reference": 7084
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.486117257229694e-05,
+      "max_relative_difference_to_paper": 8.595419756162979e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "4842fa0ea41f86e331510ff831b91195e6a1b37e927784246fef471b3b3c0d36"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_50d_test4",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_50d_test4.yaml",
+      "resolved_config_sha256": "14f035ca8902a0fbc5d4c60745470f503ad5407c18d6c920c659f7e1bdc42a94",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-26/19-03-14/train.log",
+      "checkpoint_file": "flow-epoch=349-v2.ckpt",
+      "checkpoint_sha256": "979c048d63497742c946596daf3b06b9fe81e7505912bc8381a35618502b2140",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 4.0,
+          "replayed": {
+            "mmd": 0.35385891795158386,
+            "w1": 7.019699696946257,
+            "w2": 7.66654736501902
+          },
+          "paper": {
+            "mmd": 0.3539,
+            "w1": 7.0197,
+            "w2": 7.6665
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.35385891795158386,
+            "w1": 6.9655832859904585,
+            "w2": 7.594605497051479
+          },
+          "n_prediction": 3713,
+          "n_reference": 3511
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.7365019019807164e-05,
+      "max_relative_difference_to_paper": 0.00011608377625354637,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "979c048d63497742c946596daf3b06b9fe81e7505912bc8381a35618502b2140"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_50d_test8",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_50d_test8.yaml",
+      "resolved_config_sha256": "838c788e1826a48bf40f276863dee923fc7f8fecd2336340435c752bf70b14fd",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-25/23-14-22/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "7765e7b7f4e197ce8f001b088c30f0c38614a62292129edfa6fc227de7db5cc2",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 8.0,
+          "replayed": {
+            "mmd": 0.3467217981815338,
+            "w1": 9.250451993294792,
+            "w2": 10.539368884020728
+          },
+          "paper": {
+            "mmd": 0.3467,
+            "w1": 9.2505,
+            "w2": 10.5394
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.3467217981815338,
+            "w1": 9.168941415469636,
+            "w2": 11.081768064492048
+          },
+          "n_prediction": 3511,
+          "n_reference": 3809
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.800670520843653e-05,
+      "max_relative_difference_to_paper": 6.287332429710212e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "7765e7b7f4e197ce8f001b088c30f0c38614a62292129edfa6fc227de7db5cc2"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_50d_test12",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_50d_test12.yaml",
+      "resolved_config_sha256": "9fa123d5a421311218278e4d88e0ef1f5bcb9b6e7198098f30d84bc79d4c4b02",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-26/10-10-13/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "d92269ae0377d10cd45cfc41d56490e6d9ce9331a76fa1b7b0f7e80c1c270cb1",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 12.0,
+          "replayed": {
+            "mmd": 0.26792627573013306,
+            "w1": 8.574556881823058,
+            "w2": 9.250220392708409
+          },
+          "paper": {
+            "mmd": 0.2679,
+            "w1": 8.5746,
+            "w2": 9.2502
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.26792627573013306,
+            "w1": 8.491365009750856,
+            "w2": 9.13284611187914
+          },
+          "n_prediction": 3809,
+          "n_reference": 2963
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.31181769418032e-05,
+      "max_relative_difference_to_paper": 9.80803663047019e-05,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "d92269ae0377d10cd45cfc41d56490e6d9ce9331a76fa1b7b0f7e80c1c270cb1"
+      }
+    },
+    {
+      "experiment": "ipsc_liu_mfm_ode_50d_test16",
+      "dataset": "ipsc_liu",
+      "dimension": 50,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/ipsc_liu_mfm_ode_50d_test16.yaml",
+      "resolved_config_sha256": "8df02717167d93a8b2dd36af3d4599bb7e888adf99ec484fab358b2b8ffdc6f4",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-27/13-32-09/train.log",
+      "checkpoint_file": "flow-epoch=349.ckpt",
+      "checkpoint_sha256": "5c8776289c966b30250c00a01883d493754e3220fa91e190c4ffd72b7674670d",
+      "checkpoint_epoch_count": 350,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+      "metrics": [
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.17275221645832062,
+            "w1": 6.324593118429508,
+            "w2": 6.725353302030272
+          },
+          "paper": {
+            "mmd": 0.1728,
+            "w1": 6.3246,
+            "w2": 6.7254
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.17275221645832062,
+            "w1": 6.2224516605121,
+            "w2": 6.595468953202455
+          },
+          "n_prediction": 2963,
+          "n_reference": 7084
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 4.778354167939147e-05,
+      "max_relative_difference_to_paper": 0.00027652512545944135,
+      "paper_table_anchor": "A8.T8",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "5c8776289c966b30250c00a01883d493754e3220fa91e190c4ffd72b7674670d"
+      }
+    },
+    {
+      "experiment": "op_cite_mfm_ode_100d",
+      "dataset": "op_cite",
+      "dimension": 100,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/op_cite_mfm_ode_100d.yaml",
+      "resolved_config_sha256": "0551d0707012fbb5617252380f495d60370b7983ea332f51475c0ffef84252f4",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-30/16-10-58/train.log",
+      "checkpoint_file": "flow-epoch=339.ckpt",
+      "checkpoint_sha256": "10d873a464bd3011695445770f06db0c2d5385d76858a78b55e6a4d1428b53be",
+      "checkpoint_epoch_count": 340,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "420d190fea959fc2156eb9ac9f48cdec26bc29d6066d86c9562d93ccfbe81b2c",
+      "metrics": [
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.14560076594352722,
+            "w1": 10.430499817133887,
+            "w2": 10.53785908277881
+          },
+          "paper": {
+            "mmd": 0.1435,
+            "w1": 10.4301,
+            "w2": 10.5409
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.14560076594352722,
+            "w1": 10.281861880532706,
+            "w2": 10.37373386399547
+          },
+          "n_prediction": 7476,
+          "n_reference": 6999
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": false,
+      "max_absolute_difference_to_paper": 0.0030409172211900426,
+      "max_relative_difference_to_paper": 0.014639483927019047,
+      "paper_table_anchor": "A8.T9",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "10d873a464bd3011695445770f06db0c2d5385d76858a78b55e6a4d1428b53be"
+      }
+    },
+    {
+      "experiment": "op_multi_mfm_ode_100d",
+      "dataset": "op_multi",
+      "dimension": 100,
+      "method": "mfm",
+      "seed": 42,
+      "resolved_config": "configs_archive/op_multi_mfm_ode_100d.yaml",
+      "resolved_config_sha256": "7863fbf9c98a603b0a81e237c475ebd8932659d232857b3793f9512df8a529d4",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-04-23/16-40-43/train.log",
+      "checkpoint_file": "flow-epoch=099.ckpt",
+      "checkpoint_sha256": "c68aed5366732f545f6e70ac7099bc27497916074828e9b26d33bb61ea47396c",
+      "checkpoint_epoch_count": 100,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "ded027f090ea6a85df4775e52f9b03217867dab0368d44f8d2ca5374751730c4",
+      "metrics": [
+        {
+          "label": 3.0,
+          "replayed": {
+            "mmd": 0.1699155569076538,
+            "w1": 10.627368468816488,
+            "w2": 10.670187058070125
+          },
+          "paper": {
+            "mmd": 0.1699,
+            "w1": 10.6274,
+            "w2": 10.6702
+          },
+          "convergence_diagnostic": {
+            "mmd": 0.1699155569076538,
+            "w1": 10.49900883429515,
+            "w2": 10.537386887470367
+          },
+          "n_prediction": 7264,
+          "n_reference": 8544
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods",
+        "numItermax reached before optimality. Try to increase numItermax."
+      ],
+      "matches_paper_at_4_decimals": true,
+      "max_absolute_difference_to_paper": 3.1531183511290806e-05,
+      "max_relative_difference_to_paper": 9.156508330672821e-05,
+      "paper_table_anchor": "A8.T9",
+      "convergence_diagnostic": {
+        "ot_max_iter": 1000000,
+        "warnings": [
+          "Setting tolerances has no effect on fixed-step methods"
+        ],
+        "checkpoint_sha256": "c68aed5366732f545f6e70ac7099bc27497916074828e9b26d33bb61ea47396c"
+      }
+    },
+    {
+      "experiment": "ablations_pace/wot_pace_ode_alpha0",
+      "dataset": "wot_fle_three_interpolation",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ablations_pace/wot_pace_ode_alpha0.yaml",
+      "resolved_config_sha256": "b3671f9aaaa49b05151fdb468eff20ca7dcfc779b5e6a84126746b1c3c87b1e1",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-05-05/09-25-16/train.log",
+      "checkpoint_file": "flow-epoch=599.ckpt",
+      "checkpoint_sha256": "2373dc5cdd61c28e73cbdaaa7641cf97392bd6ef9a0882f708ea8bd3ad6f88f9",
+      "checkpoint_epoch_count": 600,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+      "metrics": [
+        {
+          "label": 6.0,
+          "replayed": {
+            "mmd": 0.4581082761287689,
+            "w1": 0.3010416556351174,
+            "w2": 0.32968699205214885
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 11.0,
+          "replayed": {
+            "mmd": 0.20727582275867462,
+            "w1": 0.26927796124573433,
+            "w2": 0.3237942355531965
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.08341324329376221,
+            "w1": 0.2937917964338794,
+            "w2": 0.40926601811586877
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": null,
+      "max_absolute_difference_to_paper": null,
+      "max_relative_difference_to_paper": null,
+      "paper_table_anchor": null,
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ablations_pace/wot_pace_ode_knn_all",
+      "dataset": "wot_fle_three_interpolation",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ablations_pace/wot_pace_ode_knn_all.yaml",
+      "resolved_config_sha256": "24f68e48f3ed3ebafb0fa6927306ea5f9fe17351f311f5c95f7331a414e43d65",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-05-05/09-21-00/train.log",
+      "checkpoint_file": "flow-epoch=599.ckpt",
+      "checkpoint_sha256": "f51bdf530b79890de0c5bd1e575523e4c3a878fc4e0428a1e9052c68bbdb9042",
+      "checkpoint_epoch_count": 600,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+      "metrics": [
+        {
+          "label": 6.0,
+          "replayed": {
+            "mmd": 0.49100279808044434,
+            "w1": 0.31441065749356767,
+            "w2": 0.3414190237058786
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 11.0,
+          "replayed": {
+            "mmd": 0.20714378356933594,
+            "w1": 0.30404006754270085,
+            "w2": 0.360269383804497
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.13592912256717682,
+            "w1": 0.36648689189360084,
+            "w2": 0.4740155259750652
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": null,
+      "max_absolute_difference_to_paper": null,
+      "max_relative_difference_to_paper": null,
+      "paper_table_anchor": null,
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ablations_pace/wot_pace_ode_metric_spatial",
+      "dataset": "wot_fle_three_interpolation",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ablations_pace/wot_pace_ode_metric_spatial.yaml",
+      "resolved_config_sha256": "6c963cef4b2f4083509aea88f19637526f4b9e952efc773af0d6b908d64c2773",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-05-05/09-34-46/train.log",
+      "checkpoint_file": "flow-epoch=599.ckpt",
+      "checkpoint_sha256": "67cef44c348f9285757d0f6a7d58dd04c17b2bd0464790182fdc48b7babcdb38",
+      "checkpoint_epoch_count": 600,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+      "metrics": [
+        {
+          "label": 6.0,
+          "replayed": {
+            "mmd": 0.4238831102848053,
+            "w1": 0.25600353529944186,
+            "w2": 0.27805607140625255
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 11.0,
+          "replayed": {
+            "mmd": 0.1880488246679306,
+            "w1": 0.23002805844726026,
+            "w2": 0.2796987312250349
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.0939265787601471,
+            "w1": 0.32479099634429076,
+            "w2": 0.4513044633783065
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": null,
+      "max_absolute_difference_to_paper": null,
+      "max_relative_difference_to_paper": null,
+      "paper_table_anchor": null,
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ablations_pace/wot_pace_ode_metric_temporal",
+      "dataset": "wot_fle_three_interpolation",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ablations_pace/wot_pace_ode_metric_temporal.yaml",
+      "resolved_config_sha256": "3980da0a784505ffbc7e66f824f6613b1fec83addfef83d6f86fc14ca8e4a4de",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-05-05/09-34-41/train.log",
+      "checkpoint_file": "flow-epoch=599-v1.ckpt",
+      "checkpoint_sha256": "0d5cd3fd3810f1f10225071fb0de116f9fb5833b8c2fb291452fc7ff2ec44856",
+      "checkpoint_epoch_count": 600,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+      "metrics": [
+        {
+          "label": 6.0,
+          "replayed": {
+            "mmd": 0.43641868233680725,
+            "w1": 0.27985957343881296,
+            "w2": 0.3031540144847624
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 11.0,
+          "replayed": {
+            "mmd": 0.23103469610214233,
+            "w1": 0.28629517211493294,
+            "w2": 0.33894186000753207
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.06298638880252838,
+            "w1": 0.2726334444319036,
+            "w2": 0.3912566392572394
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": null,
+      "max_absolute_difference_to_paper": null,
+      "max_relative_difference_to_paper": null,
+      "paper_table_anchor": null,
+      "convergence_diagnostic": null
+    },
+    {
+      "experiment": "ablations_pace/wot_pace_ode_no_rematch",
+      "dataset": "wot_fle_three_interpolation",
+      "dimension": 2,
+      "method": "pace",
+      "seed": 42,
+      "resolved_config": "configs_archive/ablations_pace/wot_pace_ode_no_rematch.yaml",
+      "resolved_config_sha256": "adec21cccf43bb41be6168293a1d4c63f04418b2ba6e55cacaf63e9ec9620778",
+      "config_evidence": "checkpoint-linked Hydra config",
+      "training_log_id": "2026-05-05/09-19-25/train.log",
+      "checkpoint_file": "flow-epoch=599.ckpt",
+      "checkpoint_sha256": "1696cfd46206a095ddf07913324039ab06ccf4a14f9efe05c18e6dbc2b37568e",
+      "checkpoint_epoch_count": 600,
+      "stage1_warm_start": false,
+      "historical_stage1_weights_distributed": false,
+      "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+      "metrics": [
+        {
+          "label": 6.0,
+          "replayed": {
+            "mmd": 0.4547543525695801,
+            "w1": 0.2924378412290025,
+            "w2": 0.3122849435067831
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 11.0,
+          "replayed": {
+            "mmd": 0.21585151553153992,
+            "w1": 0.26052973929097334,
+            "w2": 0.3234033512741014
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        },
+        {
+          "label": 16.0,
+          "replayed": {
+            "mmd": 0.07007133960723877,
+            "w1": 0.2501889095333354,
+            "w2": 0.4526981723799384
+          },
+          "paper": null,
+          "convergence_diagnostic": null,
+          "n_prediction": 512,
+          "n_reference": 512
+        }
+      ],
+      "warnings": [
+        "Setting tolerances has no effect on fixed-step methods"
+      ],
+      "matches_paper_at_4_decimals": null,
+      "max_absolute_difference_to_paper": null,
+      "max_relative_difference_to_paper": null,
+      "paper_table_anchor": null,
+      "convergence_diagnostic": null
+    }
+  ]
+}

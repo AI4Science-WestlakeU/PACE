@@ -1,4 +1,6 @@
 # @package _global_
+# Historical score used a saved Stage 1 model; this preset trains from scratch.
+# See configs_archive and docs/recovered-results.md for the replay recipe.
 
 defaults:
   - override /data: op_multi_100d
@@ -16,7 +18,7 @@ task_name: op_multi_pace_100d
 hidden_dims_geopath: [64, 128, 128, 64]
 hidden_dims_flow: [64, 128, 128, 64]
 
-epochs: 351
+epochs: 1000
 samples_per_timepoint: null
 T_steps: 5
 t_probe_steps: 2

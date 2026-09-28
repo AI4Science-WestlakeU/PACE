@@ -1,5 +1,5 @@
 {
-  "scope": "Current development outputs collected during release preparation; these are not certified paper results. Names normalized imfm\u2192pace; environment-specific fields excluded from comparison.",
+  "scope": "Initial result-directory snapshot retained for historical context. Superseded by checkpoint-linked recovery in recovered-results.json; later config overwrites and earlier Ocean/iPSC2 checkpoints have since been resolved.",
   "source_commit": "d8fabaeefe417028ec45ea95055557d27f30f175",
   "source_had_uncommitted_changes": true,
   "experiments": [
@@ -849,5 +849,6 @@
         }
       ]
     }
-  ]
+  ],
+  "superseded_by": "recovered-results.json"
 }

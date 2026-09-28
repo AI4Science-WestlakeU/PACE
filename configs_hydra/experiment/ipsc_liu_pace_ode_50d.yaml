@@ -12,7 +12,7 @@ task_name: ipsc_liu_pace_50d
 
 hidden_dims_geopath: [64, 128, 128, 64]
 hidden_dims_flow: [64, 128, 128, 64]
-epochs: 350
+epochs: 1000
 samples_per_timepoint: null
 T_steps: 15
 total_epochs_stage1: 80
@@ -25,3 +25,4 @@ rematch_every: 20
 stage1_batch_size: 512
 
 geopath_lr: 0.03
+flow_lr: 0.0005

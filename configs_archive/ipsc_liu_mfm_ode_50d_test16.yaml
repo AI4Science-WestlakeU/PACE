@@ -1,0 +1,92 @@
+# Resolved historical configuration, recovered from the checkpoint-linked training log.
+# Paths and public method names normalized; numerical parameters preserved.
+task_name: ipsc_liu_mfm_50d
+run_name: null
+tags:
+- ipsc_liu
+- pca
+- 50d
+- mfm
+- ode
+seed: 42
+seeds:
+- 42
+train: true
+test: true
+stage1_enabled: true
+stage1_style: formal
+subsample_fraction_train: 1.0
+subsample_fraction_test: 1.0
+enable_progress_bar: true
+load_stage1_ckpt: null
+load_stage2_ckpt: null
+data_name: ipsc_liu
+data_path: data/embeddings/ipsc_liu.h5ad
+data_type: scrna_pca
+dim: 50
+whiten: true
+time_column: timepoint
+feature_key: X_pca
+train_timepoint_labels:
+- 0
+- 4
+- 8
+- 12
+- 20
+- 24
+test_timepoint_labels:
+- 16
+samples_per_timepoint: null
+split_ratios:
+- 1.0
+- 0.0
+batch_size: 256
+stage1_name: mfm_land
+geopath_arch: mlp
+time_geopath: true
+hidden_dims_geopath:
+- 64
+- 128
+- 128
+- 64
+activation_geopath: selu
+velocity_metric: land
+gammas:
+- 0.1
+rho: 0.0001
+alpha_metric: 0.3
+epochs_geopath: 200
+geopath_lr: 0.02
+geopath_weight_decay: 1.0e-05
+geopath_optimizer: adam
+patience_geopath: 25
+sigma: 0.1
+flow_model: ode
+hidden_dims_flow:
+- 64
+- 128
+- 128
+- 64
+activation_flow: relu
+epochs: 350
+flow_lr: 0.001
+flow_weight_decay: 1.0e-05
+flow_optimizer: adamw
+patience: 25
+eval_sample_cap: 512
+eval_interpolant_midpoints: false
+eval_a2t_rollout: false
+method:
+  name: mfm
+  stages: 2
+  default_run_name: mfm
+optimal_transport_method: exact
+ema_decay: null
+accelerator: gpu
+devices: 1
+check_val_every_n_epoch: 10
+working_dir: .
+data_dir: data
+checkpoint_dir: checkpoints
+results_dir: results
+log_dir: logs

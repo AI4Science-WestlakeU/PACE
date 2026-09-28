@@ -1,4 +1,6 @@
 # @package _global_
+# Historical score used a saved Stage 1 model; this preset trains from scratch.
+# See configs_archive and docs/recovered-results.md for the replay recipe.
 # Paper Table 3 / A.8: separate single-holdout run.
 defaults:
   - ipsc_liu_pace_ode_50d
@@ -6,3 +8,5 @@ defaults:
 
 train_timepoint_labels: [0, 4, 12, 16, 20, 24]
 test_timepoint_labels: [8]
+epochs: 300
+flow_lr: 0.001

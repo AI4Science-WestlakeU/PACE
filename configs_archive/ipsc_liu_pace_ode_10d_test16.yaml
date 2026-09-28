@@ -1,0 +1,103 @@
+# Resolved historical configuration, recovered from the checkpoint-linked training log.
+# Paths and public method names normalized; numerical parameters preserved.
+task_name: ipsc_liu_pace_10d
+run_name: null
+tags:
+- ipsc_liu
+- pca
+- 10d
+- pace
+- ode
+seed: 42
+seeds:
+- 42
+train: true
+test: true
+stage1_enabled: true
+stage1_style: formal
+subsample_fraction_train: 1.0
+subsample_fraction_test: 1.0
+enable_progress_bar: true
+load_stage1_ckpt: null
+load_stage2_ckpt: null
+data_name: ipsc_liu
+data_path: data/embeddings/ipsc_liu.h5ad
+data_type: scrna_pca
+dim: 10
+whiten: true
+time_column: timepoint
+feature_key: X_pca
+train_timepoint_labels:
+- 0
+- 4
+- 8
+- 12
+- 20
+- 24
+test_timepoint_labels:
+- 16
+samples_per_timepoint: null
+split_ratios:
+- 1.0
+- 0.0
+batch_size: 256
+stage1_name: pace_sinkhorn
+geopath_arch: mlp
+time_geopath: true
+hidden_dims_geopath:
+- 64
+- 128
+- 128
+- 64
+activation_geopath: gelu
+hidden_dims_flow:
+- 64
+- 128
+- 128
+- 64
+total_epochs_stage1: 80
+rematch_every: 20
+stage1_batch_size: 512
+geopath_lr: 0.03
+geopath_weight_decay: 1.0e-05
+geopath_optimizer: adam
+lambda_metric: 1
+lambda_global: 3
+lambda_ortho: 1
+k_neighbors_local: 16
+geometry_window_segments: 2
+metric_alpha: 8.0
+matching_method: sinkhorn
+matching_postprocess: argmax
+sinkhorn_reg: 0.05
+uot_reg: 0.05
+uot_reg_m: 1.0
+alpha_dist_init: 1.0
+gamma_normal_init: 0.35
+T_steps: 15
+t_probe_steps: 5
+sigma: 0.1
+flow_model: ode
+activation_flow: relu
+epochs: 350
+flow_lr: 0.001
+flow_weight_decay: 1.0e-05
+flow_optimizer: adamw
+patience: 25
+eval_sample_cap: 512
+eval_interpolant_midpoints: false
+eval_a2t_rollout: false
+method:
+  name: pace
+  stages: 2
+  default_run_name: pace
+optimal_transport_method: None
+use_stage1_matching: true
+accelerator: gpu
+devices: 1
+check_val_every_n_epoch: 10
+working_dir: .
+data_dir: data
+checkpoint_dir: checkpoints
+results_dir: results
+log_dir: logs
