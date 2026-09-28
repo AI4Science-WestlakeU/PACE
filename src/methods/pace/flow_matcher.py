@@ -19,7 +19,7 @@ import torch.nn as nn
 from torch.func import jvp
 from torchcfm.conditional_flow_matching import ConditionalFlowMatcher, pad_t_like_x
 
-from src.methods.pace.stage2.flow_matcher import labels_to_timesteps  # noqa: reexport
+from src.methods.mfm.flow_matcher import labels_to_timesteps  # noqa: reexport
 
 
 class PACEFlowMatcher(ConditionalFlowMatcher):

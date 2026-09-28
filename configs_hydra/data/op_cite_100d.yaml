@@ -1,0 +1,32 @@
+# @package _global_
+
+# Open Problems CITEseq dataset from
+# `data/embeddings/op_cite.h5ad`.
+#
+# 100D setting: use all 100 PCA components from `obsm['X_pca']`.
+
+data_name: op_cite
+data_path: data/embeddings/op_cite.h5ad
+data_type: scrna_pca
+
+dim: 100
+whiten: true
+time_column: day
+feature_key: X_pca
+
+split_ratios: [1.0, 0.0]
+batch_size: 256
+
+train_timepoint_labels: [2, 4, 7]
+test_timepoint_labels: [3]
+
+samples_per_timepoint: null
+equalize_timepoint_counts: false
+allow_replacement: false
+
+preserve_frame_order: false
+full_frame_batches: false
+test_full_frame_batches: false
+drop_last: false
+num_workers: 0
+pin_memory: false

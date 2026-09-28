@@ -1,0 +1,12 @@
+# @package _global_
+
+defaults:
+  - override /data: oceans_positions
+  - override /method: mfm
+  - override /model/stage1: mfm_land
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [oceans, positions, mfm, ode]
+
+task_name: oceans_positions_mfm

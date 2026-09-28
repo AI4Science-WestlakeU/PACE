@@ -99,9 +99,13 @@ def uot_from_cost(
     if cost_max > 0:
         cost_t = cost_t / cost_max
     a, b = _uniform_marginals_like(cost_t)
+    # POT's unbalanced solver does not accept 'sinkhorn_log' (only 'sinkhorn',
+    # 'sinkhorn_stabilized' and 'sinkhorn_reg_scaling'); passing it raises
+    # ValueError: Unknown method. The cost is normalised to [0, 1] above, so with
+    # reg=0.05 the kernel stays within exp(-20) and plain Sinkhorn-Knopp is safe.
     plan = pot.unbalanced.sinkhorn_unbalanced(
         a, b, cost_t, reg=reg, reg_m=reg_m, numItermax=5000,
-        method='sinkhorn_log',
+        method='sinkhorn',
     )
     if isinstance(plan, np.ndarray):
         plan = torch.as_tensor(plan, device=cost_t.device, dtype=cost_t.dtype)
@@ -125,15 +129,18 @@ def plan_to_sample(plan: np.ndarray | torch.Tensor, device: torch.device) -> tor
     if isinstance(plan, torch.Tensor):
         plan = plan.detach().cpu().numpy()
 
+    # float64 + explicit renormalisation: np.random.choice rejects probability
+    # vectors whose sum deviates from 1 by more than ~1.5e-8, which a float32
+    # plan divided by its own sum will frequently violate.
+    plan = np.asarray(plan, dtype=np.float64)
     n, m = plan.shape
     match_idx = np.empty(n, dtype=np.int64)
+    uniform = np.full(m, 1.0 / m)
     for i in range(n):
-        row = plan[i]
+        row = np.clip(plan[i], 0.0, None)
         total = row.sum()
-        if total > 0:
-            probs = row / total
-        else:
-            probs = np.ones(m) / m
+        probs = row / total if total > 0 else uniform
+        probs = probs / probs.sum()
         match_idx[i] = np.random.choice(m, p=probs)
     return torch.tensor(match_idx, dtype=torch.long, device=device)
 

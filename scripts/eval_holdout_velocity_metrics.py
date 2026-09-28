@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-"""Evaluate learned holdout velocities for PACE on EB PHATE.
+"""Evaluate learned holdout velocities for PACE and MFM.
 
-Supported dataset: eb_phate (data/eb_velocity_v5.npz).
-Supported methods: pace.
+Supported datasets: eb_phate and oceans_positions.
+Supported methods: pace, mfm.
 """
 
 from __future__ import annotations
@@ -25,12 +25,14 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from src.dataloaders.eb_data import EBDataModule
-from src.methods.pace.stage2.flow_matcher import labels_to_timesteps
-from src.methods.pace.stage2.networks import VelocityNet
+from src.dataloaders.oceans_data import OceansDataModule
+from src.methods.mfm.flow_matcher import labels_to_timesteps
+from src.methods.mfm.networks import VelocityNet
 
 
 SUPPORTED_VELOCITY_FIELD_METHODS = {
     "pace",
+    "mfm",
 }
 
 
@@ -122,9 +124,13 @@ def resolve_data_path(cfg: dict[str, Any]) -> Path:
 def make_datamodule(cfg: dict[str, Any]):
     data_name = str(cfg.get("data_name", ""))
     args = as_namespace({**cfg, "data_path": str(resolve_data_path(cfg))})
+    if data_name == "oceans_positions":
+        return OceansDataModule(args)
     if data_name == "eb_phate":
         return EBDataModule(args)
-    raise ValueError(f"Unsupported data_name={data_name!r}. Supported: eb_phate.")
+    raise ValueError(
+        f"Unsupported data_name={data_name!r}. Supported: oceans_positions, eb_phate."
+    )
 
 
 def sorted_labels(labels: list[Any]) -> list[Any]:
@@ -180,7 +186,26 @@ def load_reference_velocity_frames(
     allow_replacement = bool(cfg.get("allow_replacement", False))
     equalize = bool(cfg.get("equalize_timepoint_counts", False))
 
-    if data_name == "eb_phate":
+    if data_name == "oceans_positions":
+        velocities = np.asarray(data["velocities"], dtype=np.float32)
+        if velocities.ndim != 3:
+            raise ValueError(f"Expected ocean velocities shape (time, points, dim), got {velocities.shape}")
+        label_to_index = {int(label): i for i, label in enumerate(range(velocities.shape[0]))}
+        frame_sizes = {label: velocities[label_to_index[int(label)]].shape[0] for label in test_labels}
+        indices_by_label = subsample_indices_for_labels(
+            frame_sizes,
+            test_labels,
+            requested_count,
+            seed=seed,
+            preserve_frame_order=preserve,
+            allow_replacement=allow_replacement,
+            equalize=equalize,
+        )
+        out = {
+            label: velocities[label_to_index[int(label)]][indices_by_label[label], : int(cfg["dim"])]
+            for label in test_labels
+        }
+    elif data_name == "eb_phate":
         labels = np.asarray(data["sample_labels"])
         velocities = np.asarray(data["delta_embedding"], dtype=np.float32)
         frame_sizes = {

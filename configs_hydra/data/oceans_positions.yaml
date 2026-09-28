@@ -1,0 +1,36 @@
+# @package _global_
+
+# Frame-wise temporal point cloud stored in `data/oceans/oceans.npz`.
+#
+# Current structure:
+# - positions.shape == (9, 111, 2)
+# - first axis is time
+# - second axis is the number of points in each frame
+# - no explicit time label array is required; the loader falls back to 0..8
+
+data_name: oceans_positions
+data_path: data/oceans/oceans.npz
+data_type: temporal_point_cloud
+
+dim: 2
+whiten: false
+split_ratios: [1, 0]
+
+# With only 111 points per frame, using the full selected frame is usually fine.
+batch_size: 111
+
+# Train on anchor frames, evaluate on the intermediate frames.
+train_timepoint_labels: [0, 2, 4, 6, 8]
+test_timepoint_labels: [1, 3, 5, 7]
+
+# Keep the same number of points in every selected frame.
+samples_per_timepoint: 111
+equalize_timepoint_counts: false
+allow_replacement: false
+
+preserve_frame_order: false
+full_frame_batches: true
+test_full_frame_batches: true
+drop_last: false
+num_workers: 0
+pin_memory: false

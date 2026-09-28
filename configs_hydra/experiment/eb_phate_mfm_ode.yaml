@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - override /data: eb_phate
+  - override /method: mfm
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [eb, phate, mfm, ode]
+
+task_name: eb_phate_mfm
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+samples_per_timepoint: 1024
+
+epochs: 350

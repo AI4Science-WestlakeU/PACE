@@ -1,0 +1,12 @@
+# @package _global_
+
+defaults:
+  - override /data: eb_pcs
+  - override /method: pace
+  - override /model/stage1: pace_hungarian
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [eb, pcs, pace, ode]
+
+task_name: eb_pcs_pace

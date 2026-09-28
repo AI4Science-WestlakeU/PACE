@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - override /data: op_multi
+  - override /method: mfm
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [op_multi, pca, mfm, ode]
+
+task_name: op_multi_mfm
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]

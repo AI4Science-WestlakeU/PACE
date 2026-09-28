@@ -1,0 +1,17 @@
+{
+  "source_file": "op_cite_inputs_0.h5ad",
+  "source_sha256": "fa1d117df3d6c23e0b80a997a259bcac3a79ad27d581e1a6654e107c39885e4c",
+  "export_file": "op_cite.h5ad",
+  "export_sha256": "420d190fea959fc2156eb9ac9f48cdec26bc29d6066d86c9562d93ccfbe81b2c",
+  "cells": 31240,
+  "pca_dimensions": 100,
+  "pca_dtype": "float32",
+  "time_column": "day",
+  "timepoint_counts": {
+    "2": 7476,
+    "3": 6999,
+    "4": 9511,
+    "7": 7254
+  },
+  "validation": "Exact array and obs equality after H5AD round-trip; no rows removed; no PCA refit."
+}

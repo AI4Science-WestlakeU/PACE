@@ -1,0 +1,21 @@
+# @package _global_
+
+defaults:
+  - override /data: op_multi
+  - override /method: pace
+  - override /model/stage1: pace_sinkhorn
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [op_multi, pca, pace, ode]
+
+task_name: op_multi_pace
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 64]
+
+
+total_epochs_stage1: 120
+rematch_every: 20
+lambda_ortho: 1.0
+k_neighbors_local: 15

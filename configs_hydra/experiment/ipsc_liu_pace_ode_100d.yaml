@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - ipsc_liu_pace_ode
+  - override /data: ipsc_liu_100d
+  - override /model/stage1: pace_sinkhorn
+  - _self_
+
+tags: [ipsc_liu, pca, 100d, pace, ode]
+
+task_name: ipsc_liu_pace_100d
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+epochs: 350
+samples_per_timepoint: null
+T_steps: 15
+total_epochs_stage1: 80
+lambda_ortho: 1
+lambda_global: 3
+lambda_metric: 1
+k_neighbors_local: 16
+use_stage1_matching: true
+rematch_every: 20
+stage1_batch_size: 512
+
+geopath_lr: 0.03

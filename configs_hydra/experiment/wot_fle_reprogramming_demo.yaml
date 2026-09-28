@@ -1,0 +1,16 @@
+# @package _global_
+# Feedback-tuned animation; original paper preset and WOT split are preserved.
+# Full comparison and selection history: docs/reprogramming-refinement.json.
+defaults:
+  - wot_fle_three_interpolation_pace_ode
+  - _self_
+
+task_name: wot_fle_reprogramming_demo
+tags: [wot, reprogramming, pace, demo]
+stage1_batch_size: 128
+matching_method: hungarian
+sigma: 0.02
+epochs: 1000
+seed: 42
+working_dir: results/reprogramming_demo
+enable_progress_bar: false

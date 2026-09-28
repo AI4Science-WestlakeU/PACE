@@ -55,6 +55,17 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
             getattr(args, "test_samples_per_timepoint", shared_samples)
         )
 
+        # Optional proportional downscaling. Only consulted when the
+        # corresponding *_samples_per_timepoint is None, so it never silently
+        # overrides an explicit count.
+        shared_fraction = getattr(args, "sample_fraction_per_timepoint", None)
+        self.train_sample_fraction = self._normalize_sample_fraction(
+            getattr(args, "train_sample_fraction_per_timepoint", shared_fraction)
+        )
+        self.test_sample_fraction = self._normalize_sample_fraction(
+            getattr(args, "test_sample_fraction_per_timepoint", shared_fraction)
+        )
+
         self.equalize_timepoint_counts = bool(
             getattr(args, "equalize_timepoint_counts", False)
         )
@@ -124,12 +135,14 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
             requested_count=self.train_samples_per_timepoint,
             split_name="train",
             seed=self.seed,
+            fraction=self.train_sample_fraction,
         )
         balanced_test = self._subsample_frames(
             frames=selected_test,
             requested_count=self.test_samples_per_timepoint,
             split_name="test",
             seed=self.seed + 1,
+            fraction=self.test_sample_fraction,
         )
 
         split_train, split_val = self._split_train_val_frames(balanced_train)
@@ -268,38 +281,50 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
         requested_count: int | None,
         split_name: str,
         seed: int,
+        fraction: float | None = None,
     ) -> dict[Any, np.ndarray]:
         if not frames:
             return {}  # no frames to subsample (e.g. no test labels)
 
-        effective_count = requested_count
-        if effective_count is None and self.equalize_timepoint_counts:
-            effective_count = min(frame.shape[0] for frame in frames.values())
+        if requested_count is None and fraction is not None:
+            # Proportional downscaling: every timepoint keeps the same share of
+            # its own cells, so the relative masses across timepoints are
+            # preserved while the absolute sizes shrink.
+            per_label_count = {
+                label: max(1, int(round(fraction * frame.shape[0])))
+                for label, frame in frames.items()
+            }
+        else:
+            effective_count = requested_count
+            if effective_count is None and self.equalize_timepoint_counts:
+                effective_count = min(frame.shape[0] for frame in frames.values())
 
-        if effective_count is None:
-            return {label: frame.copy() for label, frame in frames.items()}
+            if effective_count is None:
+                return {label: frame.copy() for label, frame in frames.items()}
 
-        if effective_count <= 0:
-            raise ValueError(
-                f"{split_name}_samples_per_timepoint must be positive, got {effective_count}."
-            )
+            if effective_count <= 0:
+                raise ValueError(
+                    f"{split_name}_samples_per_timepoint must be positive, got {effective_count}."
+                )
+            per_label_count = {label: effective_count for label in frames}
 
         rng = np.random.default_rng(seed)
         sampled: dict[Any, np.ndarray] = {}
         for label, frame in frames.items():
+            target = per_label_count[label]
             num_points = frame.shape[0]
-            if num_points < effective_count and not self.allow_replacement:
+            if num_points < target and not self.allow_replacement:
                 raise ValueError(
                     f"Timepoint {label!r} has {num_points} samples, but "
-                    f"{effective_count} were requested for {split_name}."
+                    f"{target} were requested for {split_name}."
                 )
 
-            replace = num_points < effective_count
-            if not replace and num_points == effective_count:
+            replace = num_points < target
+            if not replace and num_points == target:
                 sampled[label] = frame.copy()
                 continue
 
-            indices = rng.choice(num_points, size=effective_count, replace=replace)
+            indices = rng.choice(num_points, size=target, replace=replace)
             if self.preserve_frame_order:
                 indices = np.sort(indices)
             sampled[label] = frame[indices]
@@ -356,6 +381,20 @@ class BalancedTimepointDataModule(pl.LightningDataModule, ABC):
         if isinstance(value, str) and value.strip().lower() in {"", "none", "null"}:
             return None
         return int(value)
+
+    @staticmethod
+    def _normalize_sample_fraction(value: Any) -> float | None:
+        """Parse an optional per-timepoint keep-fraction in (0, 1]."""
+        if value is None:
+            return None
+        if isinstance(value, str) and value.strip().lower() in {"", "none", "null"}:
+            return None
+        fraction = float(value)
+        if not 0.0 < fraction <= 1.0:
+            raise ValueError(
+                f"sample_fraction_per_timepoint must lie in (0, 1], got {fraction}."
+            )
+        return fraction
 
     @staticmethod
     def _label_key(value: Any) -> str:

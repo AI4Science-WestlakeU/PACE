@@ -15,7 +15,7 @@ activation_geopath: gelu
 # ---------- Stage 1 training schedule ----------
 total_epochs_stage1: 60
 rematch_every: 10
-stage1_batch_size: 1024
+stage1_batch_size: 256
 geopath_lr: 0.03
 geopath_weight_decay: 1.0e-5
 geopath_optimizer: adam

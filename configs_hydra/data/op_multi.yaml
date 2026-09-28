@@ -1,0 +1,36 @@
+# @package _global_
+
+# Open Problems Multiome dataset from `data/embeddings/op_multi.h5ad`.
+#
+# Structure:
+# - obsm['X_pca'].shape == (33701, 100)  — per-cell PCA scores
+# - obs['day']: 4 timepoints [2, 3, 4, 7]
+# - per-timepoint counts: 2→7264, 3→8544, 4→10933, 7→6960
+#
+# dim controls how many PCs to use (e.g. dim=50 uses first 50 PCs).
+
+data_name: op_multi
+data_path: data/embeddings/op_multi.h5ad
+data_type: scrna_pca
+
+dim: 5
+whiten: true
+time_column: day
+feature_key: X_pca
+
+split_ratios: [1.0, 0.0]
+batch_size: 256
+
+train_timepoint_labels: [2, 3, 7]
+test_timepoint_labels: [4]
+
+samples_per_timepoint: 1024
+equalize_timepoint_counts: false
+allow_replacement: false
+
+preserve_frame_order: false
+full_frame_batches: false
+test_full_frame_batches: false
+drop_last: false
+num_workers: 0
+pin_memory: false

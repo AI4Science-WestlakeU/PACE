@@ -1,0 +1,128 @@
+{
+  "description": "Fresh PACE run on WOT reprogramming data. Three independent observed-anchor reconstructions; not a continuous rollout across all 19 snapshots or measured cell lineages.",
+  "training_command": "python train.py --config-path assets --config-name reprogramming-demo-config",
+  "selection_note": "Demo configuration selected using holdout feedback; see docs/reprogramming-refinement.json.",
+  "render_command": "python scripts/render_reprogramming_demo.py results/reprogramming_demo/results/wot_fle_three_interpolation_dim2_test6-11-16/pace",
+  "configuration": "reprogramming-demo-config.yaml",
+  "seed": 42,
+  "training_accelerator": "gpu",
+  "stage1_epochs": 80,
+  "stage2_epochs": 1000,
+  "sigma": 0.02,
+  "matching_method": "hungarian",
+  "checkpoint_sha256": "da6447703ef68a31bd906a0d6ff5de600ceec89785f1cd2e9891aa559abad286",
+  "data_sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a",
+  "train_labels": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    12,
+    13,
+    14,
+    15,
+    17,
+    18
+  ],
+  "heldout_labels": [
+    6,
+    11,
+    16
+  ],
+  "integration": {
+    "solver": "Euler",
+    "points_per_interval": 201,
+    "normalized_time": "snapshot label / 18",
+    "intervals": [
+      [
+        5,
+        6,
+        7
+      ],
+      [
+        10,
+        11,
+        12
+      ],
+      [
+        15,
+        16,
+        17
+      ]
+    ],
+    "resets_within_intervals": false
+  },
+  "coordinates": "Original training-only standardization; fixed local limits per panel contain all model trajectories.",
+  "display": {
+    "particles_per_panel": [
+      512,
+      512,
+      512
+    ],
+    "selection": "All selected source cells; no quality-based filtering.",
+    "background": "Seeded training/evaluation frame samples.",
+    "encoded_frames": 141,
+    "duration_ms": 9050
+  },
+  "heldout_diagnostics": [
+    {
+      "start": 5,
+      "held_out": 6,
+      "end": 7,
+      "w2": 0.26724788571285657,
+      "mmd": 0.41188180446624756,
+      "spread_ratio": 1.1816431283950806,
+      "p95_nearest_distance": 0.1886589527130127
+    },
+    {
+      "start": 10,
+      "held_out": 11,
+      "end": 12,
+      "w2": 0.21667063970285474,
+      "mmd": 0.1789732277393341,
+      "spread_ratio": 1.104831337928772,
+      "p95_nearest_distance": 0.19915145635604858
+    },
+    {
+      "start": 15,
+      "held_out": 16,
+      "end": 17,
+      "w2": 0.3910914512372413,
+      "mmd": 0.07330889254808426,
+      "spread_ratio": 0.9138968586921692,
+      "p95_nearest_distance": 0.1257285177707672
+    }
+  ],
+  "endpoint_diagnostics": [
+    {
+      "start": 5,
+      "end": 7,
+      "w2": 0.14205597225502808,
+      "mmd": 0.1930113434791565,
+      "spread_ratio": 1.1173673868179321,
+      "p95_nearest_distance": 0.16638141870498657
+    },
+    {
+      "start": 10,
+      "end": 12,
+      "w2": 0.4046251574404699,
+      "mmd": 0.19564029574394226,
+      "spread_ratio": 1.1121481657028198,
+      "p95_nearest_distance": 0.2462168037891388
+    },
+    {
+      "start": 15,
+      "end": 17,
+      "w2": 0.4847847636420355,
+      "mmd": 0.12242574989795685,
+      "spread_ratio": 0.9543956518173218,
+      "p95_nearest_distance": 0.19345372915267944
+    }
+  ]
+}

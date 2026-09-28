@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use PACE, please cite the accompanying paper."
+title: "PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference"
+type: software
+authors:
+  - family-names: Yu
+    given-names: Chenglei
+  - family-names: Wang
+    given-names: Chuanrui
+  - family-names: Liao
+    given-names: Bangyan
+  - family-names: Wu
+    given-names: Tailin
+repository-code: "https://github.com/AI4Science-WestlakeU/PACE"
+url: "https://arxiv.org/abs/2605.18587"
+license: MIT
+preferred-citation:
+  type: article
+  title: "PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference"
+  authors:
+    - family-names: Yu
+      given-names: Chenglei
+    - family-names: Wang
+      given-names: Chuanrui
+    - family-names: Liao
+      given-names: Bangyan
+    - family-names: Wu
+      given-names: Tailin
+  year: 2026
+  journal: arXiv
+  doi: "10.48550/arXiv.2605.18587"

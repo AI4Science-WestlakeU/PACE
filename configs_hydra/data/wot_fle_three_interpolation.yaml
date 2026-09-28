@@ -1,0 +1,39 @@
+# @package _global_
+
+# WOT tutorial Schiebinger2019/WOT FLE coordinate data.
+#
+# Run:
+#   python src/data_preprocess/scnode_wot.py
+#
+# Current structure:
+# - AnnData X stores serum-filtered cells x 2 FLE coordinates
+# - time labels live in obs["day"]
+# - this config applies scNODE's three_interpolation train/test split
+
+data_name: wot_fle_three_interpolation
+data_path: data/scnode/wot_fle/wot_fle.h5ad
+data_type: wot_fle_embedding
+
+dim: 2
+whiten: true
+time_column: day
+
+split_ratios: [1.0, 0.0]
+batch_size: 256
+
+# train_timepoint_labels: [0, 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18]
+# test_timepoint_labels: [5, 10, 15]
+
+train_timepoint_labels: [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18]
+test_timepoint_labels: [6, 11, 16]
+
+samples_per_timepoint: 256
+equalize_timepoint_counts: false
+allow_replacement: false
+
+preserve_frame_order: false
+full_frame_batches: false
+test_full_frame_batches: false
+drop_last: false
+num_workers: 0
+pin_memory: false

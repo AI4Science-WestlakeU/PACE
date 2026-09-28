@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - override /data: toy_bifurcation
+  - override /method: mfm
+  - override /model/stage1: mfm_land
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [toy_bifurcation, two_branch, mfm, ode]
+
+task_name: toy_bifurcation_mfm
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+samples_per_timepoint: null
+
+epochs: 500

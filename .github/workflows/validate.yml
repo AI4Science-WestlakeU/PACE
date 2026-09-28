@@ -1,0 +1,20 @@
+name: Validate release
+on: [push, pull_request]
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python scripts/verify_data.py
+      - run: python -m pytest -q
+      - run: python scripts/smoke_test.py
+        env:
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+          MPLBACKEND: Agg

@@ -11,10 +11,9 @@ method:
 
 stage1_enabled: true
 
-# Stage 2 mini-batch OT pairing, copied locally from the original Stage 2 flow
-# training path. Set to "None" to disable.
-optimal_transport_method: exact
+# PACE uses Hungarian matching — no OT plan sampler in stage 2
+optimal_transport_method: "None"
 
-# If true, Stage 2 reuses the final PACE Stage 1 matchings instead of the
-# mini-batch OT sampler above.
-use_stage1_matching: false
+# If true, Stage 2 reuses the final matchings from Stage 1 to pair (x0, x1)
+# instead of random independent sampling per timepoint.
+use_stage1_matching: true

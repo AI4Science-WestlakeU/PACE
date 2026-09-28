@@ -1,0 +1,17 @@
+{
+  "source_file": "op_train_multi_targets_0.h5ad",
+  "source_sha256": "a16c28ef861503111bb2f4c6ab6b1d5ed3df07d49eb0baa7378515fc098af4d2",
+  "export_file": "op_multi.h5ad",
+  "export_sha256": "ded027f090ea6a85df4775e52f9b03217867dab0368d44f8d2ca5374751730c4",
+  "cells": 33701,
+  "pca_dimensions": 100,
+  "pca_dtype": "float32",
+  "time_column": "day",
+  "timepoint_counts": {
+    "2": 7264,
+    "3": 8544,
+    "4": 10933,
+    "7": 6960
+  },
+  "validation": "Exact array and obs equality after H5AD round-trip; no rows removed; no PCA refit."
+}

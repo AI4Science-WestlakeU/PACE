@@ -1,0 +1,24 @@
+# @package _global_
+# iPSC Liu PCA dataset from h5ad file.
+#
+# 50D setting: use the first 50 PCA components from `obsm["X_pca"]`.
+
+data_name: ipsc_liu
+data_path: data/embeddings/ipsc_liu.h5ad
+data_type: scrna_pca
+
+dim: 50
+whiten: true
+time_column: timepoint
+feature_key: X_pca
+
+train_timepoint_labels: [0, 8, 12, 16, 20, 24]
+test_timepoint_labels: [4]
+# train_timepoint_labels: [0, 4, 8, 16, 20, 24]
+# test_timepoint_labels: [12]
+# train_timepoint_labels: [0, 4, 8, 12, 16, 24]
+# test_timepoint_labels: [20]
+
+samples_per_timepoint: 512
+split_ratios: [1.0, 0.0]
+batch_size: 256

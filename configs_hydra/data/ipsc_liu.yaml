@@ -1,0 +1,20 @@
+# @package _global_
+# iPSC Liu PCA dataset from h5ad file.
+# Timepoints are stored as "D0", "D2", ... in obs["timepoint"] and
+# automatically converted to integers by the dataloader.
+# Set dim to any value <= 100 to select the number of PCA components.
+
+data_name: ipsc_liu
+data_path: data/embeddings/ipsc_liu.h5ad
+data_type: scrna_pca
+
+dim: 2
+whiten: true
+time_column: timepoint
+feature_key: X_pca
+
+train_timepoint_labels: [0, 8, 12, 20, 24]
+test_timepoint_labels: [4, 16]
+samples_per_timepoint: 512
+split_ratios: [1.0, 0.0]
+batch_size: 256

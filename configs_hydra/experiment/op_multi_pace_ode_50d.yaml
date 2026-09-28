@@ -1,0 +1,29 @@
+# @package _global_
+
+defaults:
+  - override /data: op_multi_50d
+  - override /method: pace
+  - override /model/stage1: pace_sinkhorn
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [op_multi, pca, 50d, pace, ode]
+
+task_name: op_multi_pace_50d
+
+# Explicit 50D PCA variant so Hydra can select the dimensionality directly
+# via experiment=... without requiring an extra data=... override.
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+
+epochs: 350
+samples_per_timepoint: 1024
+T_steps: 10
+total_epochs_stage1: 120
+lambda_ortho: 0
+lambda_global: 3
+k_neighbors_local: 15
+use_stage1_matching: true
+rematch_every: 20
+rematch_batch_i: 16
+rematch_batch_j: 32

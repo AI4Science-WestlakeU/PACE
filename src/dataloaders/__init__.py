@@ -1,5 +1,1 @@
-"""Dataloaders package."""
-
-from .eb_data import EBDataModule
-
-__all__ = ["EBDataModule"]
+"""Data loaders for the seven PACE paper benchmarks."""

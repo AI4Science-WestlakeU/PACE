@@ -43,7 +43,7 @@ alpha_dist_init: 1.0       # Distance cost weight in initial assignment
 gamma_normal_init: 0.35    # Normal-projection penalty weight
 
 # ---------- Interpolation sampling ----------
-T_steps: 20                # Number of time steps per segment during training
+T_steps: 10                # Number of time steps per segment during training
 t_probe_steps: 5           # Number of probe points for metric-path cost
 
 # ---------- Flow matcher noise ----------

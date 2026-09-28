@@ -1,0 +1,20 @@
+{
+  "source_file": "iPSC_liu_pca.h5ad",
+  "source_sha256": "5cf2efdfe4104b9eb49ca3fe3ea451d208b662c5e809cbb485c3136e419664cd",
+  "export_file": "ipsc_liu.h5ad",
+  "export_sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681",
+  "cells": 28887,
+  "pca_dimensions": 100,
+  "pca_dtype": "float32",
+  "time_column": "timepoint",
+  "timepoint_counts": {
+    "D0": 3713,
+    "D4": 3511,
+    "D8": 3809,
+    "D12": 2963,
+    "D16": 7084,
+    "D20": 4538,
+    "D24": 3269
+  },
+  "validation": "Exact array and obs equality after H5AD round-trip; no rows removed; no PCA refit."
+}

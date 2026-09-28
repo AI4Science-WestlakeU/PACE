@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - override /data: toy_bifurcation
+  - override /method: pace
+  - override /model/stage1: pace_sinkhorn
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [toy_bifurcation, two_branch, pace, ode]
+
+task_name: toy_bifurcation_pace
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+epochs: 550
+samples_per_timepoint: null
+T_steps: 15
+total_epochs_stage1: 80
+lambda_ortho: 1
+lambda_global: 1
+lambda_metric: 1
+k_neighbors_local: 16
+use_stage1_matching: true
+rematch_every: 20
+stage1_batch_size: 512
+
+geopath_lr: 0.03

@@ -2,8 +2,8 @@
 
 defaults:
   - _self_
-  - data: eb_phate
-  - model/stage1: pace_sinkhorn
+  - data: oceans_positions
+  - model/stage1: pace_uot
   - model/stage2: ode
   - method: pace
   - trainer: default

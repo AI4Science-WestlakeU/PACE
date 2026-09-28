@@ -1,0 +1,27 @@
+# @package _global_
+
+# Stage 1 model config: MFM with LAND metric (no learning required)
+
+stage1_name: mfm_land
+
+# GeoPath (psi) network architecture
+geopath_arch: mlp
+time_geopath: true
+hidden_dims_geopath: [64, 64, 64]
+activation_geopath: selu
+
+# LAND metric hyperparameters
+velocity_metric: land
+gammas: [0.1]
+rho: 0.0001
+alpha_metric: 0.3
+
+# Stage 1 training
+epochs_geopath: 200
+geopath_lr: 0.02
+geopath_weight_decay: 1.0e-5
+geopath_optimizer: adam
+patience_geopath: 25
+
+# Flow matcher noise
+sigma: 0.1

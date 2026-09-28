@@ -1,0 +1,36 @@
+# @package _global_
+# Ablation: KNN uses all available data points (k_neighbors_local set to a
+# value much larger than the per-snapshot population; the geometry helpers
+# automatically clamp via min(k_neighbors, N), so this is effectively "all").
+# Output isolated under results/.../pace_knn_all/.
+
+defaults:
+  - override /data: wot_fle_three_interpolation
+  - override /method: pace
+  - override /model/stage1: pace_sinkhorn
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [wot, scnode, schiebinger2019, three_interpolation, pace, ode, ablation, knn_all]
+
+task_name: wot_fle_three_interpolation_pace_knn_all
+
+method:
+  name: pace
+ablation_name: pace_knn_all
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+epochs: 600
+samples_per_timepoint: 512
+T_steps: 10
+total_epochs_stage1: 80
+lambda_ortho: 1
+lambda_global: 3
+lambda_metric: 1
+use_stage1_matching: true
+rematch_every: 20
+geopath_lr: 0.003
+
+# Ablation override (much larger than samples_per_timepoint; auto-clamped to N)
+k_neighbors_local: 100000

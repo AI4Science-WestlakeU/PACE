@@ -1,0 +1,45 @@
+{
+  "description": "Release input checksums; compact exports preserve every input row and all PCA components.",
+  "files": [
+    {
+      "path": "data/eb_velocity_v5.npz",
+      "bytes": 28142608,
+      "sha256": "17623d16dd4fe7b679aad80916d130cb2863a4cd4ee742f139a3c2eed91ba230"
+    },
+    {
+      "path": "data/embeddings/ipsc_liu.h5ad",
+      "bytes": 12202173,
+      "sha256": "0ef6e59e41a142e656569bfbeb57867739faa5f21aef7b084185e689e8e47681"
+    },
+    {
+      "path": "data/embeddings/op_cite.h5ad",
+      "bytes": 12651861,
+      "sha256": "420d190fea959fc2156eb9ac9f48cdec26bc29d6066d86c9562d93ccfbe81b2c"
+    },
+    {
+      "path": "data/embeddings/op_multi.h5ad",
+      "bytes": 13680826,
+      "sha256": "ded027f090ea6a85df4775e52f9b03217867dab0368d44f8d2ca5374751730c4"
+    },
+    {
+      "path": "data/oceans/oceans.npz",
+      "bytes": 32492,
+      "sha256": "c30a3e80fd3bcc62ec00e87afb83bcf722bfbd3566afc25bc98a79176951fc5a"
+    },
+    {
+      "path": "data/scnode/wot_fle/wot_fle.h5ad",
+      "bytes": 7092370,
+      "sha256": "2919cca6bc2bb8ffb0266fc54211b95164fa5ec208d41a359a5d28a27465120a"
+    },
+    {
+      "path": "data/toy_bifurcation/toy_bifurcation.csv",
+      "bytes": 44013,
+      "sha256": "ff90a6735b9077af35ecb31e823e1f08bc66c13c176bfe351d0e064601a495ae"
+    },
+    {
+      "path": "data/toy_bifurcation/toy_bifurcation.npz",
+      "bytes": 20688,
+      "sha256": "f5b07945d4e6e63404ed0c8f7c8858509c90cc25271159b892d412bbf5182387"
+    }
+  ]
+}

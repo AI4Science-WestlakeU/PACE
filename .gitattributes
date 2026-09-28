@@ -1,0 +1,2 @@
+# Keep bundled CSV bytes identical to the checksum manifest, including CRLF.
+data/toy_bifurcation/toy_bifurcation.csv -text whitespace=cr-at-eol

@@ -1,0 +1,36 @@
+# @package _global_
+# Ablation: metric kernel uses only the temporal term (drops the spatial term).
+# logits = -time_sq / h_t**2.
+# Output isolated under results/.../pace_metric_temporal/.
+
+defaults:
+  - override /data: wot_fle_three_interpolation
+  - override /method: pace
+  - override /model/stage1: pace_sinkhorn
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [wot, scnode, schiebinger2019, three_interpolation, pace, ode, ablation, metric_temporal]
+
+task_name: wot_fle_three_interpolation_pace_metric_temporal
+
+method:
+  name: pace
+ablation_name: pace_metric_temporal
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+epochs: 600
+samples_per_timepoint: 512
+T_steps: 10
+total_epochs_stage1: 80
+lambda_ortho: 1
+lambda_global: 3
+lambda_metric: 1
+k_neighbors_local: 16
+use_stage1_matching: true
+rematch_every: 20
+geopath_lr: 0.003
+
+# Ablation override
+metric_kernel_mode: temporal

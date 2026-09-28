@@ -1,0 +1,19 @@
+# @package _global_
+
+defaults:
+  - override /data: wot_fle_three_interpolation
+  - override /method: mfm
+  - override /model/stage1: mfm_land
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [wot, scnode, schiebinger2019, three_interpolation, mfm, ode]
+
+task_name: wot_fle_three_interpolation_mfm
+
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+samples_per_timepoint: 512
+
+epochs: 600

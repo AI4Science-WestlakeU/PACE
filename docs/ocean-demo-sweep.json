@@ -1,0 +1,2611 @@
+{
+  "date": "2026-09-28",
+  "purpose": "README demo tuning using holdout feedback; not an unbiased benchmark.",
+  "selected_trial": "noise020",
+  "environment": {
+    "python": "3.11.13",
+    "system": "Linux",
+    "cuda": "12.6",
+    "gpu": "NVIDIA H800",
+    "packages": {
+      "torch": "2.7.1",
+      "pytorch-lightning": "1.9.5",
+      "torchdyn": "1.0.6",
+      "POT": "0.9.5",
+      "numpy": "2.2.6",
+      "scipy": "1.16.1"
+    },
+    "source_sha256": {
+      "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/data_preprocess/generate_two_branch_data.py": "5071c71e3065e59f3dc465e337570d4bcb644f49bbf8497e4741298697fc5821",
+      "src/data_preprocess/scnode_wot.py": "33382c7a91216fb2f2dd9cb5375e5314684a6afc3a6da010432a5889c0248f08",
+      "src/dataloaders/__init__.py": "588d37e555c7493a133471a8a0f9e3d3e1819fafde7454c5714cdf2072404537",
+      "src/dataloaders/balanced_timepoint_data.py": "9acb2d9b854cf447a4e00232656b500327b7f40aa234fd6db6cb3629c4722831",
+      "src/dataloaders/cite_data.py": "597bf3fce4bc1682b67ee7cb098c098b86aeecff9041201e747e02dd3702420a",
+      "src/dataloaders/eb_data.py": "a30d326d8051c0ec25aee63dd45714d0700ec14dc74da7f717769f9da18474df",
+      "src/dataloaders/ipsc_data.py": "9487d36aaeb2387189f2a33b127774e1f8590746d7f91e3c31b3633066c342ef",
+      "src/dataloaders/multi_data.py": "1e385ebf6d561a44fdd53370403a8876a8520b88ab6740e634acdecdac503873",
+      "src/dataloaders/oceans_data.py": "c50b411fda197fd125914fc8cf98c9641976d8116ac33553980ff06485068336",
+      "src/dataloaders/scnode_wot_data.py": "0b39270ba039d380c91f13b01173b4ccd43e31ab25825400e2a8eba108bed107",
+      "src/dataloaders/toy_bifurcation_data.py": "4c76a17a1e5f9994a02a07c2e99fbef390dc921c0ca07eb8b6dc2bb12e8f8fa8",
+      "src/inference.py": "c4ed0773f5bd23599cd57f72e50e064c9af2b0e012182d7446652354ace84a6d",
+      "src/methods/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/methods/mfm/__init__.py": "5f8abb2993832d2bb27aec383d1b805dc409b58894a6c725d7006cc196719435",
+      "src/methods/mfm/data_wrapper.py": "b3f1c7a0cc56eb6a3239f71b67da400659923f93b1534282e7abf8c38f2145e2",
+      "src/methods/mfm/ema.py": "ba0dcb70b5818cc7f181773baa169a8a65d27042a225817ecd6b8420e56c726f",
+      "src/methods/mfm/eval_metrics.py": "4622917e3318acd8618d6c51c763dbb20f98e94fac034d304e23f3ac23698678",
+      "src/methods/mfm/flow_matcher.py": "2a41865806f33abe7d4d6713cb0ff97fff47cd82348e23dccc76049b4bc978f8",
+      "src/methods/mfm/flow_train.py": "09c36904a8d5feb02f09d170910819e297d49eb57dfe2f7ff8f6f70900820057",
+      "src/methods/mfm/geo_metrics.py": "467d4de91c4f57ad7e9082f66a148f35f30b0e69df4683bdb57e517fe9ca3a32",
+      "src/methods/mfm/geopath_train.py": "eaefa54b7203771d5d5d046e636164c50be89e982a5a7acf38fd1ecb67d6ec63",
+      "src/methods/mfm/networks.py": "aa50dfb592b3e434d9d91a3ed0b0675ac93c61cd3131deefcea6599197ad739b",
+      "src/methods/mfm/runner.py": "7f5c6c99f5866de387b09543c8841b6852fc9c08e9cba3f3ccab49eb049cf676",
+      "src/methods/pace/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/methods/pace/flow_matcher.py": "0f2faa9c4e3540f0aecb3653baac762d5b63e985c9c0110d0663fa0d7b6d8870",
+      "src/methods/pace/geometry.py": "b12e1756dd32398211eb39ee1f3ab5bbeb387389617d0c8d06787f5513c52a8c",
+      "src/methods/pace/interpolant.py": "7b055666afdf49dc218032f41fd148b30cabc2f71e54312f44e9d960eb4d45b5",
+      "src/methods/pace/matching.py": "8cb827419535a3c68a2363c128fcded63bd67b51a779a549ce0705fccb8c697c",
+      "src/methods/pace/matching_sampler.py": "43324597bb963b9fb6102adbb0f06abb64aa66959762c3762a5a8228f143a255",
+      "src/methods/pace/psi_train.py": "9ef4753a6b2311811444f1476c573ca4e22096de723f21e4ade5b253948fd533",
+      "src/methods/pace/runner.py": "acf7f949ab5d20dddf07feee25cbab2c3ea93f7e05da63ed2ac2992a71fe5f87",
+      "src/plot/__init__.py": "eb79b37d13d9232318caf9f5ce744664e7f234f0f62e2546a7b7e13e90f3353d",
+      "src/plot/_colors.py": "a8e0a2953cec5a24d49531572cb8a256b4ff89ce85939a16e45e96294e815e95",
+      "src/plot/stage1_visualization.py": "b3c570c4ed53ac00a5f03de457e2e8ecd5ede2e82133dc5315d98f50f7ecbb22",
+      "src/plot/stage2_visualization.py": "09c3369deca50dffb0a2c98605633cc9cdb555c6cad5b04c56d8ec760d658add"
+    }
+  },
+  "previous_readme": {
+    "continuous_from_t0": [
+      {
+        "label": 1,
+        "mmd": 0.6736754179000854,
+        "w1": 0.06598973363168067,
+        "w2": 0.0692330306577915,
+        "gw": 0.0014497441264834216
+      },
+      {
+        "label": 3,
+        "mmd": 0.744317352771759,
+        "w1": 0.13239019728676826,
+        "w2": 0.137731631300987,
+        "gw": 0.00562986925446853
+      },
+      {
+        "label": 5,
+        "mmd": 0.7187849879264832,
+        "w1": 0.1368829460797815,
+        "w2": 0.14098466291360248,
+        "gw": 0.008745078062788054
+      },
+      {
+        "label": 7,
+        "mmd": 1.0421525239944458,
+        "w1": 0.3830743199801659,
+        "w2": 0.386914735041242,
+        "gw": 0.01873039131421733
+      },
+      {
+        "label": 8,
+        "mmd": 0.5431196093559265,
+        "w1": 0.18113322565667664,
+        "w2": 0.18951873045570178,
+        "gw": 0.04578659971772014
+      }
+    ],
+    "bracketed": [
+      {
+        "label": 1,
+        "source_label": 0,
+        "mmd": 0.6670895218849182,
+        "w1": 0.06515960301784376,
+        "w2": 0.06845186864305339,
+        "gw": 0.0014518442513937262
+      },
+      {
+        "label": 3,
+        "source_label": 2,
+        "mmd": 0.30262666940689087,
+        "w1": 0.046832614643331424,
+        "w2": 0.05044978520801102,
+        "gw": 0.005356336238882561
+      },
+      {
+        "label": 5,
+        "source_label": 4,
+        "mmd": 0.1975449174642563,
+        "w1": 0.03313184535730764,
+        "w2": 0.04044095934728683,
+        "gw": 0.010461529632937165
+      },
+      {
+        "label": 7,
+        "source_label": 6,
+        "mmd": 0.5848283171653748,
+        "w1": 0.10419624723359808,
+        "w2": 0.10554198451959675,
+        "gw": 0.010933184322932887
+      }
+    ],
+    "integration": {
+      "solver": "Euler",
+      "continuous_grid_points": 801,
+      "bracket_grid_points": 101,
+      "model_time": "label / 8"
+    },
+    "checkpoint": "flow-epoch=099.ckpt",
+    "checkpoint_sha256": "0d80a400ecf1b2bd018a746d38699d0a4c2e4260e4abe01bec2b851551a6c176",
+    "data_sha256": "c30a3e80fd3bcc62ec00e87afb83bcf722bfbd3566afc25bc98a79176951fc5a",
+    "seed": 42
+  },
+  "gpu_control": {
+    "continuous_from_t0": [
+      {
+        "label": 1,
+        "mmd": 0.5312371850013733,
+        "w1": 0.04880346850122887,
+        "w2": 0.0525050723707594,
+        "gw": 0.0015648779556211114
+      },
+      {
+        "label": 3,
+        "mmd": 0.5711607336997986,
+        "w1": 0.08755274387370157,
+        "w2": 0.09670439498702679,
+        "gw": 0.0054459134345202845
+      },
+      {
+        "label": 5,
+        "mmd": 0.5115765333175659,
+        "w1": 0.08017122625532717,
+        "w2": 0.08794561393551566,
+        "gw": 0.010108958334687893
+      },
+      {
+        "label": 7,
+        "mmd": 0.8047206997871399,
+        "w1": 0.2409812669093544,
+        "w2": 0.24819960181075376,
+        "gw": 0.024239919525355202
+      },
+      {
+        "label": 8,
+        "mmd": 0.09342008084058762,
+        "w1": 0.038633383947911236,
+        "w2": 0.05415906947846799,
+        "gw": 0.0393997121147647
+      }
+    ],
+    "bracketed": [
+      {
+        "label": 1,
+        "source_label": 0,
+        "mmd": 0.5228550434112549,
+        "w1": 0.04790758153188738,
+        "w2": 0.051687556995227944,
+        "gw": 0.0014567036212771057
+      },
+      {
+        "label": 3,
+        "source_label": 2,
+        "mmd": 0.2878097891807556,
+        "w1": 0.04543736107544637,
+        "w2": 0.049139932444569864,
+        "gw": 0.00489677261730235
+      },
+      {
+        "label": 5,
+        "source_label": 4,
+        "mmd": 0.1787756234407425,
+        "w1": 0.03165074803988105,
+        "w2": 0.039654173864287254,
+        "gw": 0.010994696477788734
+      },
+      {
+        "label": 7,
+        "source_label": 6,
+        "mmd": 0.41030561923980713,
+        "w1": 0.0750884369837942,
+        "w2": 0.07691316084399383,
+        "gw": 0.010729706819216287
+      }
+    ],
+    "integration": {
+      "solver": "Euler",
+      "continuous_grid_points": 801,
+      "bracket_grid_points": 101,
+      "model_time": "label / 8"
+    },
+    "checkpoint": "flow-epoch=099.ckpt",
+    "checkpoint_sha256": "a94f316956279d30ff208664354fd25c8b972f319c1e22a629ae7b85acf256b5",
+    "data_sha256": "c30a3e80fd3bcc62ec00e87afb83bcf722bfbd3566afc25bc98a79176951fc5a",
+    "seed": 42
+  },
+  "selected_model": {
+    "continuous_from_t0": [
+      {
+        "label": 1,
+        "mmd": 0.8969319462776184,
+        "w1": 0.11132030515419734,
+        "w2": 0.11430908258078155,
+        "gw": 0.0018642745668123889
+      },
+      {
+        "label": 3,
+        "mmd": 0.3124103546142578,
+        "w1": 0.056643399469206226,
+        "w2": 0.0635678722441804,
+        "gw": 0.005991075670163827
+      },
+      {
+        "label": 5,
+        "mmd": 0.4410620629787445,
+        "w1": 0.060617943234565506,
+        "w2": 0.07187308383955998,
+        "gw": 0.011657544160127844
+      },
+      {
+        "label": 7,
+        "mmd": 0.7653157711029053,
+        "w1": 0.15998859750526445,
+        "w2": 0.16238590083627574,
+        "gw": 0.019135939360257818
+      },
+      {
+        "label": 8,
+        "mmd": 0.41815266013145447,
+        "w1": 0.09569041017098943,
+        "w2": 0.10470551022145796,
+        "gw": 0.0588524372105731
+      }
+    ],
+    "bracketed": [
+      {
+        "label": 1,
+        "source_label": 0,
+        "mmd": 0.8956792950630188,
+        "w1": 0.11096698176619169,
+        "w2": 0.11395161189977186,
+        "gw": 0.0018578857210594974
+      },
+      {
+        "label": 3,
+        "source_label": 2,
+        "mmd": 0.2615955173969269,
+        "w1": 0.042897346383380205,
+        "w2": 0.048482907964259726,
+        "gw": 0.004647299057254652
+      },
+      {
+        "label": 5,
+        "source_label": 4,
+        "mmd": 0.23695328831672668,
+        "w1": 0.03720522513571152,
+        "w2": 0.04426734661994392,
+        "gw": 0.005486507081571507
+      },
+      {
+        "label": 7,
+        "source_label": 6,
+        "mmd": 0.5578244924545288,
+        "w1": 0.09402106091514363,
+        "w2": 0.09629006930533612,
+        "gw": 0.012800925242185545
+      }
+    ],
+    "integration": {
+      "solver": "Euler",
+      "continuous_grid_points": 801,
+      "bracket_grid_points": 101,
+      "model_time": "label / 8"
+    },
+    "checkpoint": "flow-epoch=299.ckpt",
+    "checkpoint_sha256": "7f4f6877bcca25c89c199ba0a59657afe9a6ae7907e9bfbb2e21459e3d0c5dd4",
+    "data_sha256": "c30a3e80fd3bcc62ec00e87afb83bcf722bfbd3566afc25bc98a79176951fc5a",
+    "seed": 42
+  },
+  "trials": [
+    {
+      "name": "align100",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=300",
+        "total_epochs_stage1=120",
+        "geopath_lr=0.01",
+        "lambda_global=100.0",
+        "working_dir=results/ocean_sweep/align100"
+      ],
+      "training_seconds": 66.59238696098328,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.3621338903903961,
+            "w1": 0.03490727936937097,
+            "w2": 0.038854896190218376,
+            "gw": 0.0015011884032806388
+          },
+          {
+            "label": 3,
+            "mmd": 0.39267709851264954,
+            "w1": 0.07196294130528812,
+            "w2": 0.08134831763656686,
+            "gw": 0.015846789952620757
+          },
+          {
+            "label": 5,
+            "mmd": 0.456054151058197,
+            "w1": 0.08029519685812567,
+            "w2": 0.08893498399475515,
+            "gw": 0.021061160841887194
+          },
+          {
+            "label": 7,
+            "mmd": 0.9169562458992004,
+            "w1": 0.32317915934700153,
+            "w2": 0.3294668105079947,
+            "gw": 0.03248983032185845
+          },
+          {
+            "label": 8,
+            "mmd": 0.45053887367248535,
+            "w1": 0.17896064015961177,
+            "w2": 0.18513649308327804,
+            "gw": 0.031167767246265993
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.3633946180343628",
+            "w1": "0.03503431545975326",
+            "w2": "0.03885248282228723",
+            "gw": "0.001497834552396256"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.26776984333992004",
+            "w1": "0.04025930311186828",
+            "w2": "0.04481024390926366",
+            "gw": "0.004934885047316963"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.4392325282096863",
+            "w1": "0.061593106851875266",
+            "w2": "0.06458823804230854",
+            "gw": "0.012201390267798571"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.6076462268829346",
+            "w1": "0.11764906598926256",
+            "w2": "0.12142693647740768",
+            "gw": "0.018645712236140373"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=299.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 120,
+        "flow_epochs": 300
+      }
+    },
+    {
+      "name": "align30",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=300",
+        "total_epochs_stage1=120",
+        "geopath_lr=0.01",
+        "lambda_global=30.0",
+        "working_dir=results/ocean_sweep/align30"
+      ],
+      "training_seconds": 67.25067901611328,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.5526897311210632,
+            "w1": 0.05408134277981312,
+            "w2": 0.05821905387794009,
+            "gw": 0.0013909138598129976
+          },
+          {
+            "label": 3,
+            "mmd": 0.3721601665019989,
+            "w1": 0.06854935106323183,
+            "w2": 0.0855999914477747,
+            "gw": 0.015236844344430716
+          },
+          {
+            "label": 5,
+            "mmd": 0.71195387840271,
+            "w1": 0.1497051799837668,
+            "w2": 0.1560501113505343,
+            "gw": 0.01637876376659191
+          },
+          {
+            "label": 7,
+            "mmd": 1.0719510316848755,
+            "w1": 0.4236188262432545,
+            "w2": 0.42674249940900993,
+            "gw": 0.01988301948876868
+          },
+          {
+            "label": 8,
+            "mmd": 0.6519487500190735,
+            "w1": 0.23205260725205276,
+            "w2": 0.23808951305301657,
+            "gw": 0.04244841188838268
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.5520367622375488",
+            "w1": "0.05398324122316798",
+            "w2": "0.05801673546267594",
+            "gw": "0.0013726174322028191"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.11846230179071426",
+            "w1": "0.024802891118032442",
+            "w2": "0.02908573068058638",
+            "gw": "0.005866790488898726"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.2742806673049927",
+            "w1": "0.04867550517801565",
+            "w2": "0.05637057323187053",
+            "gw": "0.006400081461296008"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.7170320153236389",
+            "w1": "0.15528292763508386",
+            "w2": "0.15759778908057717",
+            "gw": "0.014065314183657073"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=299.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 120,
+        "flow_epochs": 300
+      }
+    },
+    {
+      "name": "align30_metric1",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=300",
+        "total_epochs_stage1=120",
+        "geopath_lr=0.01",
+        "lambda_global=30.0",
+        "metric_alpha=1.0",
+        "working_dir=results/ocean_sweep/align30_metric1"
+      ],
+      "training_seconds": 67.07289338111877,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.8081884384155273,
+            "w1": 0.08826970382014643,
+            "w2": 0.09018838037175267,
+            "gw": 0.0014246701338967583
+          },
+          {
+            "label": 3,
+            "mmd": 0.34135574102401733,
+            "w1": 0.062498881053682884,
+            "w2": 0.07471920274922791,
+            "gw": 0.012359812417064667
+          },
+          {
+            "label": 5,
+            "mmd": 0.5556722283363342,
+            "w1": 0.10507249937136869,
+            "w2": 0.11346056279961818,
+            "gw": 0.025556319162687708
+          },
+          {
+            "label": 7,
+            "mmd": 0.889797568321228,
+            "w1": 0.31489206951212223,
+            "w2": 0.3220262699269129,
+            "gw": 0.036959839180184015
+          },
+          {
+            "label": 8,
+            "mmd": 0.43773984909057617,
+            "w1": 0.15961610389504205,
+            "w2": 0.16482506487475396,
+            "gw": 0.03467401235311066
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.8111903667449951",
+            "w1": "0.08878689761449757",
+            "w2": "0.090677288152928",
+            "gw": "0.0014238083897102761"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.2512988746166229",
+            "w1": "0.0414364475375125",
+            "w2": "0.04687590118366885",
+            "gw": "0.004604646444637332"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.15618857741355896",
+            "w1": "0.02918458847866",
+            "w2": "0.035413637909844545",
+            "gw": "0.011539600589892547"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.26607251167297363",
+            "w1": "0.058047447227747025",
+            "w2": "0.06192839517861369",
+            "gw": "0.011198903234825917"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=299.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 120,
+        "flow_epochs": 300
+      }
+    },
+    {
+      "name": "exact_bridge",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=1000",
+        "sigma=0.01",
+        "total_epochs_stage1=200",
+        "geopath_lr=0.003",
+        "lambda_ortho=1.0",
+        "k_neighbors_local=16",
+        "rematch_every=20",
+        "t_probe_steps=10",
+        "matching_method=hungarian",
+        "working_dir=results/ocean_sweep/exact_bridge"
+      ],
+      "training_seconds": 96.33514642715454,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.3876751661300659,
+            "w1": 0.04205953023136333,
+            "w2": 0.046759784483591436,
+            "gw": 0.007160618704536322
+          },
+          {
+            "label": 3,
+            "mmd": 0.8952801823616028,
+            "w1": 0.22583446490603534,
+            "w2": 0.2292534187683809,
+            "gw": 0.018715439039465338
+          },
+          {
+            "label": 5,
+            "mmd": 0.6363244652748108,
+            "w1": 0.1742512490768153,
+            "w2": 0.199544199987161,
+            "gw": 0.04931786978220545
+          },
+          {
+            "label": 7,
+            "mmd": 0.8955726623535156,
+            "w1": 1.4853574860975283,
+            "w2": 1.7081792175065764,
+            "gw": 3.5647882243037325
+          },
+          {
+            "label": 8,
+            "mmd": 0.8879062533378601,
+            "w1": 2.5631417424191487,
+            "w2": 3.0758363665202575,
+            "gw": 9.74995428243854
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.3864544928073883",
+            "w1": "0.04196284913357245",
+            "w2": "0.04653019443766264",
+            "gw": "0.007023970188911565"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "1.0076093673706055",
+            "w1": "0.23755247051919903",
+            "w2": "0.23867236091626284",
+            "gw": "0.004766997445404731"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.6655221581459045",
+            "w1": "0.1076861788929851",
+            "w2": "0.11366240273894558",
+            "gw": "0.0065018447892416075"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.9122875332832336",
+            "w1": "0.2437832386375547",
+            "w2": "0.2470350295918107",
+            "gw": "0.01268376226318994"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=999.ckpt",
+        "sigma": 0.01,
+        "stage1_epochs": 200,
+        "flow_epochs": 1000
+      }
+    },
+    {
+      "name": "gpu_control",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "working_dir=results/ocean_sweep/gpu_control"
+      ],
+      "training_seconds": 40.16630458831787,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.5312373042106628,
+            "w1": 0.0488033986814018,
+            "w2": 0.05250507973402825,
+            "gw": 0.0015648798663770566
+          },
+          {
+            "label": 3,
+            "mmd": 0.5711604952812195,
+            "w1": 0.08755276264908081,
+            "w2": 0.0967043731913915,
+            "gw": 0.005445911305545837
+          },
+          {
+            "label": 5,
+            "mmd": 0.5115761756896973,
+            "w1": 0.08017100951307121,
+            "w2": 0.08794556981152211,
+            "gw": 0.010108951840802457
+          },
+          {
+            "label": 7,
+            "mmd": 0.8047205209732056,
+            "w1": 0.2409813063772948,
+            "w2": 0.24819961512977406,
+            "gw": 0.0242399205794729
+          },
+          {
+            "label": 8,
+            "mmd": 0.09342136234045029,
+            "w1": 0.038633995827891544,
+            "w2": 0.05415915855467901,
+            "gw": 0.03939969882999378
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.5228551626205444",
+            "w1": "0.04790763780139052",
+            "w2": "0.05168755050721454",
+            "gw": "0.0014567035979285712"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.2878097891807556",
+            "w1": "0.04543731947846894",
+            "w2": "0.049139922504131954",
+            "gw": "0.004896771058343815"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.17877596616744995",
+            "w1": "0.03165032814240066",
+            "w2": "0.03965417043726539",
+            "gw": "0.01099470061266908"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.41030561923980713",
+            "w1": "0.07508848198932835",
+            "w2": "0.0769130837188258",
+            "gw": "0.010729712250321348"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=099.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 100
+      }
+    },
+    {
+      "name": "long_flow",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=1000",
+        "working_dir=results/ocean_sweep/long_flow"
+      ],
+      "training_seconds": 80.4967577457428,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.5825759768486023,
+            "w1": 0.0569054741385657,
+            "w2": 0.0614833670441914,
+            "gw": 0.0014136893104080466
+          },
+          {
+            "label": 3,
+            "mmd": 0.5853376984596252,
+            "w1": 0.07579906924149474,
+            "w2": 0.07947025921280293,
+            "gw": 0.007861420645762604
+          },
+          {
+            "label": 5,
+            "mmd": 0.8222823143005371,
+            "w1": 0.13007574367362107,
+            "w2": 0.1336156491795843,
+            "gw": 0.012949437157005705
+          },
+          {
+            "label": 7,
+            "mmd": 1.0832806825637817,
+            "w1": 0.30945251429000425,
+            "w2": 0.3154982914909232,
+            "gw": 0.030220726797647306
+          },
+          {
+            "label": 8,
+            "mmd": 0.4154439866542816,
+            "w1": 0.08451091079460869,
+            "w2": 0.10781684021084859,
+            "gw": 0.06804665626049936
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.5811501741409302",
+            "w1": "0.0567128794983046",
+            "w2": "0.06128269886847129",
+            "gw": "0.0014126248777118497"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.4879014492034912",
+            "w1": "0.07014236876820755",
+            "w2": "0.0744197746583647",
+            "gw": "0.0051859913932792955"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.48047569394111633",
+            "w1": "0.07152347707164448",
+            "w2": "0.07625446858160888",
+            "gw": "0.005887639368507287"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.933881938457489",
+            "w1": "0.20439546568705155",
+            "w2": "0.21157863957266373",
+            "gw": "0.02430646144359812"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=999.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 1000
+      }
+    },
+    {
+      "name": "low_noise",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=1000",
+        "sigma=0.01",
+        "working_dir=results/ocean_sweep/low_noise"
+      ],
+      "training_seconds": 84.15622687339783,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.5841791033744812,
+            "w1": 0.055186994476579466,
+            "w2": 0.059667709909670665,
+            "gw": 0.0015198755476141755
+          },
+          {
+            "label": 3,
+            "mmd": 0.46265846490859985,
+            "w1": 0.10471549313693716,
+            "w2": 0.1311338530980435,
+            "gw": 0.030421523248219215
+          },
+          {
+            "label": 5,
+            "mmd": 0.5684512257575989,
+            "w1": 0.13838745431181643,
+            "w2": 0.15639309366504153,
+            "gw": 0.03567149947172115
+          },
+          {
+            "label": 7,
+            "mmd": 0.7634755373001099,
+            "w1": 0.34458898576731634,
+            "w2": 0.37891242717640555,
+            "gw": 0.12969933076699958
+          },
+          {
+            "label": 8,
+            "mmd": 0.38189947605133057,
+            "w1": 0.14520325808343273,
+            "w2": 0.17819550143504903,
+            "gw": 0.22722045421538903
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.5799741744995117",
+            "w1": "0.05471120415366073",
+            "w2": "0.05914965798823749",
+            "gw": "0.0015798509691225147"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.339944064617157",
+            "w1": "0.0487065055430657",
+            "w2": "0.05213412585638299",
+            "gw": "0.005486894269248588"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.44626209139823914",
+            "w1": "0.06690824695397167",
+            "w2": "0.07236065418239815",
+            "gw": "0.006484395874814913"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.5399764776229858",
+            "w1": "0.11404782172653252",
+            "w2": "0.12085862729668521",
+            "gw": "0.016998353037476856"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=999.ckpt",
+        "sigma": 0.01,
+        "stage1_epochs": 60,
+        "flow_epochs": 1000
+      }
+    },
+    {
+      "name": "moderate150",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=150",
+        "working_dir=results/ocean_sweep/moderate150"
+      ],
+      "training_seconds": 40.859777212142944,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.41486799716949463,
+            "w1": 0.03650585858377855,
+            "w2": 0.04042048910363644,
+            "gw": 0.0014199183736154208
+          },
+          {
+            "label": 3,
+            "mmd": 0.5312503576278687,
+            "w1": 0.07971568520575224,
+            "w2": 0.08790581186127985,
+            "gw": 0.0056663412547915655
+          },
+          {
+            "label": 5,
+            "mmd": 0.6790037155151367,
+            "w1": 0.11963976287861934,
+            "w2": 0.12422586832331466,
+            "gw": 0.012118633532427286
+          },
+          {
+            "label": 7,
+            "mmd": 0.8506110310554504,
+            "w1": 0.26308527025016576,
+            "w2": 0.26869785010836844,
+            "gw": 0.024651220928481803
+          },
+          {
+            "label": 8,
+            "mmd": 0.07906387746334076,
+            "w1": 0.03718306706863799,
+            "w2": 0.054129018263059,
+            "gw": 0.04047215164572524
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.4067630469799042",
+            "w1": "0.035749936149128386",
+            "w2": "0.039737034008210236",
+            "gw": "0.0014206072413366667"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.2537815570831299",
+            "w1": "0.041484417980075336",
+            "w2": "0.04519361195864912",
+            "gw": "0.004758501085929286"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.12166387587785721",
+            "w1": "0.03217540451992504",
+            "w2": "0.04223305742666198",
+            "gw": "0.008491618527663164"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.3819149136543274",
+            "w1": "0.07362222306531019",
+            "w2": "0.07571544362287803",
+            "gw": "0.011822936766772804"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=149.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 150
+      }
+    },
+    {
+      "name": "moderate200",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=200",
+        "working_dir=results/ocean_sweep/moderate200"
+      ],
+      "training_seconds": 40.86647915840149,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.7046509385108948,
+            "w1": 0.06982707715517765,
+            "w2": 0.07226015316772307,
+            "gw": 0.0013259023518011675
+          },
+          {
+            "label": 3,
+            "mmd": 0.5682935118675232,
+            "w1": 0.10940475185267488,
+            "w2": 0.1192534344312227,
+            "gw": 0.009442226203624135
+          },
+          {
+            "label": 5,
+            "mmd": 0.4324241280555725,
+            "w1": 0.08871301982618936,
+            "w2": 0.09894985503520462,
+            "gw": 0.015478928070846368
+          },
+          {
+            "label": 7,
+            "mmd": 0.6656743884086609,
+            "w1": 0.20300685607635233,
+            "w2": 0.21534919746325903,
+            "gw": 0.039140345166010455
+          },
+          {
+            "label": 8,
+            "mmd": 0.16333171725273132,
+            "w1": 0.05594028716252462,
+            "w2": 0.06331090419907005,
+            "gw": 0.033626828768197246
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.6996879577636719",
+            "w1": "0.06914221958953652",
+            "w2": "0.0715940405995402",
+            "gw": "0.0014164134711269585"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.0",
+            "w1": "0.01924160793780241",
+            "w2": "0.023479320593699667",
+            "gw": "0.0057790245856623994"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.10048040747642517",
+            "w1": "0.02575333141155439",
+            "w2": "0.03488033355957817",
+            "gw": "0.007683253719787521"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.5580246448516846",
+            "w1": "0.1012806937031381",
+            "w2": "0.10262919056724644",
+            "gw": "0.01151435389073978"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=199.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 200
+      }
+    },
+    {
+      "name": "noise012_250",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=250",
+        "sigma=0.12",
+        "working_dir=results/ocean_sweep/noise012_250"
+      ],
+      "training_seconds": 45.34783697128296,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.5557907223701477,
+            "w1": 0.053082903486315745,
+            "w2": 0.05676318718524255,
+            "gw": 0.0012403231587732977
+          },
+          {
+            "label": 3,
+            "mmd": 0.35409530997276306,
+            "w1": 0.06391363257703767,
+            "w2": 0.07178829397598446,
+            "gw": 0.012313668745006317
+          },
+          {
+            "label": 5,
+            "mmd": 0.6743587255477905,
+            "w1": 0.13810141450045882,
+            "w2": 0.14278587756169014,
+            "gw": 0.026640243743572052
+          },
+          {
+            "label": 7,
+            "mmd": 0.7372547388076782,
+            "w1": 0.2002272065561098,
+            "w2": 0.20776325727396303,
+            "gw": 0.036305422008451146
+          },
+          {
+            "label": 8,
+            "mmd": 0.278655469417572,
+            "w1": 0.08730024505754813,
+            "w2": 0.09616835898184817,
+            "gw": 0.04320158030181757
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.5510103106498718",
+            "w1": "0.05252438029712213",
+            "w2": "0.05623897027295315",
+            "gw": "0.0012390230012350283"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.18825189769268036",
+            "w1": "0.032618966031985296",
+            "w2": "0.036899548959008946",
+            "gw": "0.00501521515318705"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.3480950593948364",
+            "w1": "0.05415973313853381",
+            "w2": "0.06069542080957036",
+            "gw": "0.008980908801380824"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.5089955925941467",
+            "w1": "0.10083146965517119",
+            "w2": "0.1025876433012204",
+            "gw": "0.011867733397171567"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=249.ckpt",
+        "sigma": 0.12,
+        "stage1_epochs": 60,
+        "flow_epochs": 250
+      }
+    },
+    {
+      "name": "noise015",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=300",
+        "sigma=0.15",
+        "working_dir=results/ocean_sweep/noise015"
+      ],
+      "training_seconds": 35.44984197616577,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.776464581489563,
+            "w1": 0.08606810078259798,
+            "w2": 0.08952595140077398,
+            "gw": 0.0015939115990862367
+          },
+          {
+            "label": 3,
+            "mmd": 0.5968641638755798,
+            "w1": 0.13445238090699194,
+            "w2": 0.1498830489410568,
+            "gw": 0.02023767300226069
+          },
+          {
+            "label": 5,
+            "mmd": 0.42146819829940796,
+            "w1": 0.07469769517328959,
+            "w2": 0.08275716457683263,
+            "gw": 0.014436262593275871
+          },
+          {
+            "label": 7,
+            "mmd": 0.8589953780174255,
+            "w1": 0.20709815641512735,
+            "w2": 0.20857016179909896,
+            "gw": 0.018187109407707153
+          },
+          {
+            "label": 8,
+            "mmd": 0.42778483033180237,
+            "w1": 0.0903172621876841,
+            "w2": 0.1089120860294691,
+            "gw": 0.06516398789412073
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.7730562686920166",
+            "w1": "0.0854274727790071",
+            "w2": "0.08889157840253281",
+            "gw": "0.001583233147622631"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.17010103166103363",
+            "w1": "0.028392661029372268",
+            "w2": "0.03243999636561713",
+            "gw": "0.005930942054319641"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.3242621421813965",
+            "w1": "0.048111290821956615",
+            "w2": "0.05462650176627854",
+            "gw": "0.006073327501646944"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.6074944138526917",
+            "w1": "0.11342957300377317",
+            "w2": "0.1149585345491161",
+            "gw": "0.010626388962450889"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=299.ckpt",
+        "sigma": 0.15,
+        "stage1_epochs": 60,
+        "flow_epochs": 300
+      }
+    },
+    {
+      "name": "noise015_200",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=200",
+        "sigma=0.15",
+        "working_dir=results/ocean_sweep/noise015_200"
+      ],
+      "training_seconds": 45.55019783973694,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.7828403115272522,
+            "w1": 0.08405889117217685,
+            "w2": 0.0866520133101516,
+            "gw": 0.0014887138161048144
+          },
+          {
+            "label": 3,
+            "mmd": 0.6766634583473206,
+            "w1": 0.14611425090514057,
+            "w2": 0.15702720221085648,
+            "gw": 0.015219110050545215
+          },
+          {
+            "label": 5,
+            "mmd": 0.5591350793838501,
+            "w1": 0.12276475685271061,
+            "w2": 0.13305408599239893,
+            "gw": 0.020247366807106808
+          },
+          {
+            "label": 7,
+            "mmd": 0.7597013711929321,
+            "w1": 0.23851614747498487,
+            "w2": 0.24802876443769062,
+            "gw": 0.03711122790179296
+          },
+          {
+            "label": 8,
+            "mmd": 0.10453040152788162,
+            "w1": 0.0439416847678388,
+            "w2": 0.055535273646694104,
+            "gw": 0.0342737788535572
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.7792836427688599",
+            "w1": "0.08337509895146294",
+            "w2": "0.08597626778707579",
+            "gw": "0.001430928966168159"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.13971713185310364",
+            "w1": "0.027797437753834604",
+            "w2": "0.0320144827231469",
+            "gw": "0.004887740406100764"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.15832778811454773",
+            "w1": "0.03014029583291713",
+            "w2": "0.03753140678878803",
+            "gw": "0.009368850025441822"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.43093496561050415",
+            "w1": "0.0691939644297367",
+            "w2": "0.07124873746441554",
+            "gw": "0.010640256069838986"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=199.ckpt",
+        "sigma": 0.15,
+        "stage1_epochs": 60,
+        "flow_epochs": 200
+      }
+    },
+    {
+      "name": "noise018_200",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=200",
+        "sigma=0.18",
+        "working_dir=results/ocean_sweep/noise018_200"
+      ],
+      "training_seconds": 44.18420362472534,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.8553115129470825,
+            "w1": 0.10000592839341979,
+            "w2": 0.10263305915075466,
+            "gw": 0.0018074663582088306
+          },
+          {
+            "label": 3,
+            "mmd": 0.741471529006958,
+            "w1": 0.17379700817033517,
+            "w2": 0.18637051189645698,
+            "gw": 0.0207468506240252
+          },
+          {
+            "label": 5,
+            "mmd": 0.715674638748169,
+            "w1": 0.16330169441665077,
+            "w2": 0.1713620426547516,
+            "gw": 0.020887463302865655
+          },
+          {
+            "label": 7,
+            "mmd": 0.9206374883651733,
+            "w1": 0.31654800702859687,
+            "w2": 0.3221752235216611,
+            "gw": 0.0304979443793476
+          },
+          {
+            "label": 8,
+            "mmd": 0.2217210978269577,
+            "w1": 0.08595341809412783,
+            "w2": 0.09542015896169588,
+            "gw": 0.03373080904081015
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.8526069521903992",
+            "w1": "0.0993498402588942",
+            "w2": "0.1019764023257942",
+            "gw": "0.0017996230171469446"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.30386632680892944",
+            "w1": "0.047100715545794786",
+            "w2": "0.050517437123654516",
+            "gw": "0.004978842117107244"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.2150484025478363",
+            "w1": "0.03614996502077342",
+            "w2": "0.04352513342703529",
+            "gw": "0.006556527849726127"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.39207980036735535",
+            "w1": "0.06060618758705018",
+            "w2": "0.06288847581977003",
+            "gw": "0.010565652883090908"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=199.ckpt",
+        "sigma": 0.18,
+        "stage1_epochs": 60,
+        "flow_epochs": 200
+      }
+    },
+    {
+      "name": "noise020",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=300",
+        "sigma=0.2",
+        "working_dir=results/ocean_sweep/noise020"
+      ],
+      "training_seconds": 46.03188896179199,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.8969319462776184,
+            "w1": 0.11132028615857294,
+            "w2": 0.11430907886490349,
+            "gw": 0.0018642738593940902
+          },
+          {
+            "label": 3,
+            "mmd": 0.31241053342819214,
+            "w1": 0.05664335385799777,
+            "w2": 0.06356785874000033,
+            "gw": 0.005991079673464114
+          },
+          {
+            "label": 5,
+            "mmd": 0.44106245040893555,
+            "w1": 0.060617946951465496,
+            "w2": 0.07187307657765822,
+            "gw": 0.011657549586486769
+          },
+          {
+            "label": 7,
+            "mmd": 0.7653160095214844,
+            "w1": 0.159988678320571,
+            "w2": 0.16238588949496177,
+            "gw": 0.01913593622787315
+          },
+          {
+            "label": 8,
+            "mmd": 0.4181528091430664,
+            "w1": 0.09569037754952843,
+            "w2": 0.10470547171788024,
+            "gw": 0.05885244962148466
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.895679235458374",
+            "w1": "0.11096698747159128",
+            "w2": "0.11395160715061622",
+            "gw": "0.0018578860238549408"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.2615955173969269",
+            "w1": "0.04289734715948234",
+            "w2": "0.04848290170447296",
+            "gw": "0.004647298345366763"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.23695354163646698",
+            "w1": "0.03720528505079718",
+            "w2": "0.04426741024801127",
+            "gw": "0.005486506781043657"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.5578246116638184",
+            "w1": "0.09402112679572795",
+            "w2": "0.09629008026263784",
+            "gw": "0.01280091425299857"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=299.ckpt",
+        "sigma": 0.2,
+        "stage1_epochs": 60,
+        "flow_epochs": 300
+      }
+    },
+    {
+      "name": "noise020_150",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=150",
+        "sigma=0.2",
+        "working_dir=results/ocean_sweep/noise020_150"
+      ],
+      "training_seconds": 42.70279240608215,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.8369070887565613,
+            "w1": 0.09457009744847211,
+            "w2": 0.09699845092996903,
+            "gw": 0.0016569934608765405
+          },
+          {
+            "label": 3,
+            "mmd": 0.8696293234825134,
+            "w1": 0.19722811412066218,
+            "w2": 0.20694967722756516,
+            "gw": 0.013123023193664842
+          },
+          {
+            "label": 5,
+            "mmd": 0.9035305976867676,
+            "w1": 0.22895285046684566,
+            "w2": 0.23388330663413276,
+            "gw": 0.015312607522402445
+          },
+          {
+            "label": 7,
+            "mmd": 1.0223206281661987,
+            "w1": 0.3855562353724832,
+            "w2": 0.38886044202396935,
+            "gw": 0.022565924751516503
+          },
+          {
+            "label": 8,
+            "mmd": 0.3623698353767395,
+            "w1": 0.12229784578084937,
+            "w2": 0.13040393323135255,
+            "gw": 0.04241257204645257
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.8337030410766602",
+            "w1": "0.0938820496205711",
+            "w2": "0.09631594901247396",
+            "gw": "0.0016554866711771606"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.4602758586406708",
+            "w1": "0.07017089102127766",
+            "w2": "0.07285726393401651",
+            "gw": "0.005032111636551491"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.21620634198188782",
+            "w1": "0.03734558996291378",
+            "w2": "0.04397541053741501",
+            "gw": "0.0073273590352399345"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.18148896098136902",
+            "w1": "0.03133555360952274",
+            "w2": "0.035493336288014106",
+            "gw": "0.009944058346435712"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=149.ckpt",
+        "sigma": 0.2,
+        "stage1_epochs": 60,
+        "flow_epochs": 150
+      }
+    },
+    {
+      "name": "short75",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=75",
+        "working_dir=results/ocean_sweep/short75"
+      ],
+      "training_seconds": 37.52210593223572,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.3984129726886749,
+            "w1": 0.03513645376487812,
+            "w2": 0.04016568037522968,
+            "gw": 0.0013702652044110149
+          },
+          {
+            "label": 3,
+            "mmd": 0.6190434098243713,
+            "w1": 0.09629399444056289,
+            "w2": 0.10452108249846023,
+            "gw": 0.005916317620400295
+          },
+          {
+            "label": 5,
+            "mmd": 0.38728445768356323,
+            "w1": 0.06845248365976114,
+            "w2": 0.07694577347385566,
+            "gw": 0.011569132659836055
+          },
+          {
+            "label": 7,
+            "mmd": 0.8548650741577148,
+            "w1": 0.26455056741162475,
+            "w2": 0.2727030822680378,
+            "gw": 0.022290147954443375
+          },
+          {
+            "label": 8,
+            "mmd": 0.3643818199634552,
+            "w1": 0.08954614075320264,
+            "w2": 0.09836888886161999,
+            "gw": 0.04227066867182764
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.3894176781177521",
+            "w1": "0.034343872626777745",
+            "w2": "0.039421136282341986",
+            "gw": "0.001483226789323588"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.3226918578147888",
+            "w1": "0.050011866484760296",
+            "w2": "0.053285322911030664",
+            "gw": "0.005080296488126228"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.5027891993522644",
+            "w1": "0.07937732014305854",
+            "w2": "0.08427183566240899",
+            "gw": "0.01648941456060103"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.5215575695037842",
+            "w1": "0.09856970221441876",
+            "w2": "0.10042016851586212",
+            "gw": "0.011280243274732682"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=074.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 75
+      }
+    },
+    {
+      "name": "silu_flow",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "activation_flow=silu",
+        "epochs=1000",
+        "working_dir=results/ocean_sweep/silu_flow"
+      ],
+      "training_seconds": 84.84472846984863,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.6273252964019775,
+            "w1": 0.06685700458117871,
+            "w2": 0.0728697085191971,
+            "gw": 0.0025594153361619978
+          },
+          {
+            "label": 3,
+            "mmd": 0.6190303564071655,
+            "w1": 0.10636606376181848,
+            "w2": 0.11342129859247288,
+            "gw": 0.007405014100304881
+          },
+          {
+            "label": 5,
+            "mmd": 0.817701518535614,
+            "w1": 0.13174532791851346,
+            "w2": 0.1388119379925807,
+            "gw": 0.011972407037068544
+          },
+          {
+            "label": 7,
+            "mmd": 0.9880796074867249,
+            "w1": 0.2860049790543345,
+            "w2": 0.29498718646472233,
+            "gw": 0.018726542225276113
+          },
+          {
+            "label": 8,
+            "mmd": 0.15532870590686798,
+            "w1": 0.061010083573270445,
+            "w2": 0.0689817556511053,
+            "gw": 0.03211256770658353
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.6251072883605957",
+            "w1": "0.06649872324186133",
+            "w2": "0.07245122222413895",
+            "gw": "0.0025450214426303132"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.6014205813407898",
+            "w1": "0.0860142375946649",
+            "w2": "0.08927669071270884",
+            "gw": "0.005783409374109701"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.4099142253398895",
+            "w1": "0.06390590375910205",
+            "w2": "0.06917246912877989",
+            "gw": "0.00583380927938364"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.7605798840522766",
+            "w1": "0.15011797345302122",
+            "w2": "0.1530507353907946",
+            "gw": "0.017522498699215027"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=999.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 1000
+      }
+    },
+    {
+      "name": "smooth_bridge",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=1000",
+        "sigma=0.01",
+        "total_epochs_stage1=200",
+        "geopath_lr=0.003",
+        "lambda_ortho=1.0",
+        "k_neighbors_local=16",
+        "rematch_every=20",
+        "t_probe_steps=10",
+        "working_dir=results/ocean_sweep/smooth_bridge"
+      ],
+      "training_seconds": 118.72111701965332,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.3967016935348511,
+            "w1": 0.0477643294578737,
+            "w2": 0.05241384554365312,
+            "gw": 0.010148018749746348
+          },
+          {
+            "label": 3,
+            "mmd": 0.9447356462478638,
+            "w1": 0.3118755420049031,
+            "w2": 0.3173266670334175,
+            "gw": 0.03996741770132531
+          },
+          {
+            "label": 5,
+            "mmd": 0.7378218770027161,
+            "w1": 0.23048316365158233,
+            "w2": 0.24392312683730344,
+            "gw": 0.05832714521164248
+          },
+          {
+            "label": 7,
+            "mmd": 0.6900177597999573,
+            "w1": 0.6834212596956138,
+            "w2": 0.7543721946970883,
+            "gw": 1.6494223182042203
+          },
+          {
+            "label": 8,
+            "mmd": 0.7979970574378967,
+            "w1": 1.2627248834013134,
+            "w2": 1.4745077810037905,
+            "gw": 3.2264800361362203
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.3975507616996765",
+            "w1": "0.04792948586652309",
+            "w2": "0.05254045019475139",
+            "gw": "0.010054486900183783"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.9696763753890991",
+            "w1": "0.22705595232210726",
+            "w2": "0.22870351243564657",
+            "gw": "0.006454150261397557"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.7807389497756958",
+            "w1": "0.14841471462267217",
+            "w2": "0.1513029268911907",
+            "gw": "0.015341250596359574"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.5301674008369446",
+            "w1": "0.1081674132854804",
+            "w2": "0.11850230553885267",
+            "gw": "0.027197634967340515"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=999.ckpt",
+        "sigma": 0.01,
+        "stage1_epochs": 200,
+        "flow_epochs": 1000
+      }
+    },
+    {
+      "name": "tanh150",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=150",
+        "activation_flow=tanh",
+        "working_dir=results/ocean_sweep/tanh150"
+      ],
+      "training_seconds": 39.48860692977905,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.7457444667816162,
+            "w1": 0.07909504557447926,
+            "w2": 0.08303589518288902,
+            "gw": 0.0017850742404771707
+          },
+          {
+            "label": 3,
+            "mmd": 0.5080384016036987,
+            "w1": 0.11229389797275265,
+            "w2": 0.13360055827634584,
+            "gw": 0.02619673196599037
+          },
+          {
+            "label": 5,
+            "mmd": 0.544811487197876,
+            "w1": 0.12192787708366407,
+            "w2": 0.13991793500505342,
+            "gw": 0.04574625015361985
+          },
+          {
+            "label": 7,
+            "mmd": 0.5833123922348022,
+            "w1": 0.22638013872930465,
+            "w2": 0.2821209923811806,
+            "gw": 0.15895407349035287
+          },
+          {
+            "label": 8,
+            "mmd": 0.32307711243629456,
+            "w1": 0.10604108125390907,
+            "w2": 0.11722887932158288,
+            "gw": 0.11149315426480944
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.7433679699897766",
+            "w1": "0.07876440567522405",
+            "w2": "0.08265830241200645",
+            "gw": "0.0017795107370570276"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.21211844682693481",
+            "w1": "0.032584682157313506",
+            "w2": "0.03709072083440379",
+            "gw": "0.003926644859982008"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.36757591366767883",
+            "w1": "0.061234533265526726",
+            "w2": "0.06619811291100047",
+            "gw": "0.011379678191371995"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.38304755091667175",
+            "w1": "0.06848528214335979",
+            "w2": "0.07145991147540781",
+            "gw": "0.010967296521606686"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=149.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 150
+      }
+    },
+    {
+      "name": "tanh_flow",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "activation_flow=tanh",
+        "epochs=1000",
+        "working_dir=results/ocean_sweep/tanh_flow"
+      ],
+      "training_seconds": 84.49518370628357,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.6226352453231812,
+            "w1": 0.06597346067009074,
+            "w2": 0.06865464957241126,
+            "gw": 0.001593744580251631
+          },
+          {
+            "label": 3,
+            "mmd": 0.6567761898040771,
+            "w1": 0.09148643651205272,
+            "w2": 0.09404856978334014,
+            "gw": 0.007331295797050854
+          },
+          {
+            "label": 5,
+            "mmd": 0.841338038444519,
+            "w1": 0.15201491238297646,
+            "w2": 0.1571894717821958,
+            "gw": 0.010411184579965092
+          },
+          {
+            "label": 7,
+            "mmd": 1.0003505945205688,
+            "w1": 0.24369906436081398,
+            "w2": 0.2503443248642462,
+            "gw": 0.02754993673165238
+          },
+          {
+            "label": 8,
+            "mmd": 0.651068925857544,
+            "w1": 0.1779688916857112,
+            "w2": 0.19241003907744675,
+            "gw": 0.06138442805296427
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.620561957359314",
+            "w1": "0.06571907547998938",
+            "w2": "0.0683858029634653",
+            "gw": "0.001590086093688356"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.5652446746826172",
+            "w1": "0.0834820204129157",
+            "w2": "0.08667031799199748",
+            "gw": "0.005486471182498911"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.49579858779907227",
+            "w1": "0.07891068586593007",
+            "w2": "0.0836941846719498",
+            "gw": "0.005718665735531551"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.9203364849090576",
+            "w1": "0.21008831025982233",
+            "w2": "0.21782894750090898",
+            "gw": "0.022328081969618087"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=999.ckpt",
+        "sigma": 0.1,
+        "stage1_epochs": 60,
+        "flow_epochs": 1000
+      }
+    },
+    {
+      "name": "tanh_moderate",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "activation_flow=tanh",
+        "epochs=300",
+        "sigma=0.05",
+        "working_dir=results/ocean_sweep/tanh_moderate"
+      ],
+      "training_seconds": 48.70136380195618,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.6692933440208435,
+            "w1": 0.06660576640452082,
+            "w2": 0.07051348859777398,
+            "gw": 0.001428306164248908
+          },
+          {
+            "label": 3,
+            "mmd": 0.417086660861969,
+            "w1": 0.08650448454097168,
+            "w2": 0.10569752319019811,
+            "gw": 0.027529597693755112
+          },
+          {
+            "label": 5,
+            "mmd": 0.5701639652252197,
+            "w1": 0.1349756014827001,
+            "w2": 0.15142603131677704,
+            "gw": 0.0685968356097202
+          },
+          {
+            "label": 7,
+            "mmd": 0.6100258231163025,
+            "w1": 0.2494559487923644,
+            "w2": 0.29935416401407294,
+            "gw": 0.24880640640517118
+          },
+          {
+            "label": 8,
+            "mmd": 0.3973451554775238,
+            "w1": 0.14542725167514106,
+            "w2": 0.16082643167699262,
+            "gw": 0.17066550331667144
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.666573166847229",
+            "w1": "0.06627637947288655",
+            "w2": "0.07012756757945436",
+            "gw": "0.0015227403433452176"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.34127697348594666",
+            "w1": "0.04541349229780405",
+            "w2": "0.049221942806158964",
+            "gw": "0.0050539587409015605"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.22931264340877533",
+            "w1": "0.04106335243318223",
+            "w2": "0.04988824013603904",
+            "gw": "0.0082528404488849"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.5101736187934875",
+            "w1": "0.10539220341875612",
+            "w2": "0.11006793324209142",
+            "gw": "0.01485055781358455"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=299.ckpt",
+        "sigma": 0.05,
+        "stage1_epochs": 60,
+        "flow_epochs": 300
+      }
+    },
+    {
+      "name": "zero_noise",
+      "command": [
+        "python",
+        "train.py",
+        "experiment=oceans_positions_pace_ode",
+        "enable_progress_bar=false",
+        "seed=42",
+        "epochs=1000",
+        "sigma=0.0",
+        "working_dir=results/ocean_sweep/zero_noise"
+      ],
+      "training_seconds": 81.97824430465698,
+      "metrics": {
+        "continuous_from_t0": [
+          {
+            "label": 1,
+            "mmd": 0.5496450066566467,
+            "w1": 0.05548828458707142,
+            "w2": 0.06161831627548784,
+            "gw": 0.0027903443660243147
+          },
+          {
+            "label": 3,
+            "mmd": 0.49282094836235046,
+            "w1": 0.13131103545704198,
+            "w2": 0.16095932070614924,
+            "gw": 0.10422304077783329
+          },
+          {
+            "label": 5,
+            "mmd": 0.5595541596412659,
+            "w1": 0.17957071647486386,
+            "w2": 0.21384032256764396,
+            "gw": 0.18417695847431684
+          },
+          {
+            "label": 7,
+            "mmd": 0.6066328883171082,
+            "w1": 0.3476306885011024,
+            "w2": 0.43691947872545117,
+            "gw": 0.5625605950582718
+          },
+          {
+            "label": 8,
+            "mmd": 0.4981566071510315,
+            "w1": 0.24300169156914625,
+            "w2": 0.2977890370240339,
+            "gw": 0.5146196494169752
+          }
+        ],
+        "bracketed": [
+          {
+            "stage": "stage2",
+            "test_label": "1",
+            "predictor": "ode_rollout",
+            "prev_train_label": "0",
+            "next_train_label": "2",
+            "mmd": "0.5484876036643982",
+            "w1": "0.05523287402130328",
+            "w2": "0.06121399348820114",
+            "gw": "0.0027194341539534834"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "3",
+            "predictor": "ode_rollout",
+            "prev_train_label": "2",
+            "next_train_label": "4",
+            "mmd": "0.25936928391456604",
+            "w1": "0.039033505921923305",
+            "w2": "0.04266767757101991",
+            "gw": "0.004592648905607095"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "5",
+            "predictor": "ode_rollout",
+            "prev_train_label": "4",
+            "next_train_label": "6",
+            "mmd": "0.3406187891960144",
+            "w1": "0.05435724397292694",
+            "w2": "0.06104499379557113",
+            "gw": "0.008677251530493348"
+          },
+          {
+            "stage": "stage2",
+            "test_label": "7",
+            "predictor": "ode_rollout",
+            "prev_train_label": "6",
+            "next_train_label": "8",
+            "mmd": "0.705568253993988",
+            "w1": "0.15666144835943066",
+            "w2": "0.1626570934333672",
+            "gw": "0.01704606044571747"
+          }
+        ],
+        "integration_steps": 801,
+        "checkpoint": "flow-epoch=999.ckpt",
+        "sigma": 0.0,
+        "stage1_epochs": 60,
+        "flow_epochs": 1000
+      }
+    }
+  ]
+}

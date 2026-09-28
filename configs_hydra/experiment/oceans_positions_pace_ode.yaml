@@ -1,0 +1,12 @@
+# @package _global_
+
+defaults:
+  - override /data: oceans_positions
+  - override /method: pace
+  - override /model/stage1: pace_sinkhorn
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [oceans, positions, pace, ode]
+
+task_name: oceans_positions_pace

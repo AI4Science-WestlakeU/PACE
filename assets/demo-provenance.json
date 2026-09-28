@@ -1,0 +1,18 @@
+{
+  "description": "Actual GPU-trained PACE model; selected among 22 runs using holdout feedback for the README demonstration, not an unbiased benchmark or published-table reproduction.",
+  "configuration": "ocean-demo-config.yaml",
+  "command": "python train.py --config-path assets --config-name ocean-demo-config",
+  "seed": 42,
+  "training_accelerator": "gpu",
+  "stage1_epochs": 60,
+  "stage2_epochs": 300,
+  "sigma": 0.2,
+  "checkpoint_sha256": "7f4f6877bcca25c89c199ba0a59657afe9a6ae7907e9bfbb2e21459e3d0c5dd4",
+  "data_sha256": "c30a3e80fd3bcc62ec00e87afb83bcf722bfbd3566afc25bc98a79176951fc5a",
+  "integration_steps": 801,
+  "display_frames": 191,
+  "encoded_gif_frames": 161,
+  "duration_ms": 9550,
+  "time_labels": "Original Ocean labels 0..8; model time is label / 8.",
+  "render_command": "python scripts/render_demo.py results/ocean_demo/results/oceans_positions_dim2_test1-3-5-7/pace --steps 801"
+}

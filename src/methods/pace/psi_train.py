@@ -1,6 +1,6 @@
 """Stage 1 — PACE Psi network training with alternating Hungarian matching.
 
-Wraps the alternating optimisation loop from ``pace runner`` into a
+Wraps the alternating optimisation loop from ``pace.py`` into a
 PyTorch Lightning module:
 
 1. Build initial Hungarian matchings (distance + normal penalty).

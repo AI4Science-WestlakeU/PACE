@@ -1,0 +1,8 @@
+# @package _global_
+# Paper Table 3 / A.8: separate single-holdout run.
+defaults:
+  - ipsc_liu_pace_ode_10d
+  - _self_
+
+train_timepoint_labels: [0, 4, 8, 12, 20, 24]
+test_timepoint_labels: [16]

@@ -1,0 +1,14 @@
+# @package _global_
+# README demonstration selected using holdout feedback, not a paper preset.
+# See docs/ocean-demo-tuning.md for all trials and evaluation protocols.
+defaults:
+  - oceans_positions_pace_ode
+  - _self_
+
+task_name: oceans_positions_pace_demo
+tags: [oceans, positions, pace, demo, holdout_tuned]
+seed: 42
+sigma: 0.2
+epochs: 300
+working_dir: results/ocean_demo
+enable_progress_bar: false

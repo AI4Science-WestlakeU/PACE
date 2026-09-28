@@ -37,7 +37,7 @@ def main(cfg: DictConfig) -> None:
     if test_labels:
         test_str = "-".join(str(t) for t in sorted(test_labels))
         data_name_out = f"{data_name_out}_test{test_str}"
-    output_dir = project_root / "results" / data_name_out / method_name
+    output_dir = project_root / "results" / data_name_out / (cfg.get("ablation_name") or method_name)
     os.makedirs(output_dir, exist_ok=True)
     with open(output_dir / "resolved_config.yaml", "w") as f:
         f.write(OmegaConf.to_yaml(cfg))
@@ -45,9 +45,12 @@ def main(cfg: DictConfig) -> None:
     if method_name == "pace":
         from src.methods.pace.runner import run_pace
         run_pace(cfg)
+    elif method_name == "mfm":
+        from src.methods.mfm.runner import run_mfm
+        run_mfm(cfg)
     else:
         raise ValueError(
-            f"Unknown method '{method_name}'. Supported methods: pace"
+            f"Unknown method '{method_name}'. Supported methods: pace, mfm"
         )
 
 

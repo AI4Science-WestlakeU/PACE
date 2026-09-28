@@ -1,0 +1,19 @@
+# @package _global_
+
+defaults:
+  - override /data: ipsc_liu
+  - override /method: mfm
+  - override /model/stage1: mfm_land
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [ipsc_liu, pca, mfm, ode]
+
+task_name: ipsc_liu_mfm
+
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+samples_per_timepoint: 1024
+
+epochs: 350

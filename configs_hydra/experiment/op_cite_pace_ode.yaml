@@ -1,0 +1,25 @@
+# @package _global_
+
+defaults:
+  - override /data: op_cite
+  - override /method: pace
+  - override /model/stage1: pace_sinkhorn
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [op_cite, pca, pace, ode]
+
+task_name: op_cite_pace
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 64]
+
+epochs: 350
+samples_per_timepoint: 1024
+T_steps: 10
+total_epochs_stage1: 120
+lambda_ortho: 1
+lambda_global: 3
+k_neighbors_local: 15
+use_stage1_matching: true
+rematch_every: 20

@@ -1,0 +1,53 @@
+{
+  "description": "Fresh EB developmental-data PACE run using the unchanged release preset; illustrative population dynamics, not a paper-table reproduction or measured lineage movie.",
+  "training_command": "python train.py experiment=eb_phate_pace_ode seed=42 enable_progress_bar=false working_dir=results/eb_development_demo",
+  "render_command": "python scripts/render_development_demo.py results/eb_development_demo/results/eb_phate_dim2_test3/pace",
+  "configuration": "eb-development-config.yaml",
+  "seed": 42,
+  "training_accelerator": "gpu",
+  "stage1_epochs": 120,
+  "stage2_epochs": 350,
+  "checkpoint_sha256": "b73452553c7b5be472b8da0b795bd113c65d639c513768903fc2af8bd1f0f5f1",
+  "data_sha256": "17623d16dd4fe7b679aad80916d130cb2863a4cd4ee742f139a3c2eed91ba230",
+  "train_labels": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "heldout_labels": [
+    3
+  ],
+  "integration": {
+    "solver": "Euler",
+    "points": 401,
+    "normalized_time": "snapshot label / 4",
+    "source": "selected training snapshot 2",
+    "start_label": 2,
+    "end_label": 4,
+    "resets_to_observations": false
+  },
+  "coordinates": "PHATE coordinates standardized with the original training-only scaler; no display-time refitting.",
+  "display": {
+    "model_particles_integrated": 1024,
+    "model_particles_shown": 768,
+    "selection": "Evenly spaced indices; no selection by prediction quality.",
+    "color": "Developmental snapshot time, not cell type or lineage.",
+    "encoded_frames": 161,
+    "duration_ms": 9850
+  },
+  "interval_rollout_diagnostics": [
+    {
+      "label": 3,
+      "held_out": true,
+      "w2": 0.3055711996907771,
+      "mmd": 0.09292814135551453
+    },
+    {
+      "label": 4,
+      "held_out": false,
+      "w2": 0.6643908681162916,
+      "mmd": 0.1852053999900818
+    }
+  ]
+}

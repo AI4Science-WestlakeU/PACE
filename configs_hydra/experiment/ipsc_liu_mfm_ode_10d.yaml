@@ -1,0 +1,16 @@
+# @package _global_
+
+defaults:
+  - ipsc_liu_mfm_ode
+  - override /data: ipsc_liu_10d
+  - _self_
+
+tags: [ipsc_liu, pca, 10d, mfm, ode]
+
+task_name: ipsc_liu_mfm_10d
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+samples_per_timepoint: null
+
+epochs: 350

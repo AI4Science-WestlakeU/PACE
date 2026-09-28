@@ -1,0 +1,46 @@
+{
+  "environment": {
+    "python": "3.11.12",
+    "system": "Darwin",
+    "machine": "arm64",
+    "packages": {
+      "torch": "2.7.1",
+      "pytorch-lightning": "1.9.5",
+      "torchmetrics": "1.8.2",
+      "torchdyn": "1.0.6",
+      "torchcfm": "1.0.7",
+      "hydra-core": "1.3.2",
+      "numpy": "2.4.6",
+      "scipy": "1.16.3",
+      "POT": "0.9.7.post1",
+      "anndata": "0.12.19",
+      "setuptools": "80.10.2"
+    }
+  },
+  "checks": {
+    "pytest": "62 passed: 59 configurations and 3 bridge/time-scaling/holdout tests",
+    "data_checksums": "8 files verified",
+    "training_smoke": "PACE: 3 bridge epochs with rematching + 2 flow epochs; MFM: 2 + 2 epochs; finite stage2 metrics at all 4 Ocean holdouts",
+    "velocity_evaluation": "8 finite result rows, PACE/MFM on Ocean holdouts",
+    "notebooks": "All 3 notebooks executed successfully; outputs retained",
+    "demo_training": "Two additional fresh H800 WOT runs: 80 bridge + 1000 flow epochs, sigma=0.02; Sinkhorn and Hungarian. Both exited 0. Selected Hungarian using user/holdout feedback; paper preset unchanged.",
+    "syntax": "compileall src scripts train.py",
+    "whitespace": "git diff --check",
+    "data_loaders": "24 distinct data/dimension/split combinations loaded with exact requested dimensions and labels",
+    "checkpoint_inference": "PACE and MFM Stage 2 checkpoints loaded strictly; finite 5-step Euler trajectories",
+    "readme_visual": "Logo, real GIF and first-screen layout inspected in local browser preview",
+    "documentation_links": "All local Markdown and README image links resolve",
+    "demo_inference": "Selected config matches actual training parameters. Strict CPU loading and checkpoint/data/source hashes verified. All three 201-point Euler brackets and endpoints evaluated with W2, MMD, RMS spread ratio, and P95 nearest-observation distance; finite outputs for all 512 source cells.",
+    "demo_artifacts": "Refined three-panel WOT GIF, poster, same-scale snapshot 6/7 comparison, full config, provenance and two-trial report generated. Previous model/assets preserved locally. Browser preview refreshed and visually checked.",
+    "archived_ocean_demo_training": "22 fresh two-stage Ocean runs on NVIDIA H800; selected sigma=0.2, 60 bridge epochs + 300 flow epochs (seed 42) using holdout feedback",
+    "archived_ocean_demo_inference": "Old CPU, GPU control, and selected GPU checkpoints independently evaluated locally on an identical 801-point continuous Euler grid and 101-point bracket grids; selected config and checkpoint hash verified",
+    "archived_ocean_demo_artifacts": "New GIF, t=7 poster, before/after comparison, portable config and complete 22-trial report generated from real model outputs",
+    "archived_initial_biological_demo_training": "Fresh H800 runs: EB 120 bridge + 350 flow epochs; WOT 80 bridge + 600 flow epochs (Stage 1 batch 128). Both seed 42, successful exits; no biological hyperparameter sweep.",
+    "asset_consolidation": "assert/fig1.png and fig1.pdf moved intact into assets/; original directory removed, README references and local preview updated; no asserts directory existed. README/docs links verified."
+  },
+  "not_verified": [
+    "Numerical equality to all published tables",
+    "Full GPU/high-dimensional training suite",
+    "GitHub Actions execution on a remote runner"
+  ]
+}

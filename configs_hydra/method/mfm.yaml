@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - override /model/stage1: mfm_land
+  - override /model/stage2: ode
+
+method:
+  name: mfm
+  stages: 2
+  default_run_name: mfm
+
+stage1_enabled: true
+
+# OT pairing for mini-batch matching
+optimal_transport_method: exact
+
+# EMA (set to null to disable)
+ema_decay: null

@@ -1,179 +1,179 @@
-# PACE
+<div align="center">
+  <img src="assets/pace-logo.png" alt="PACE" width="510" />
+  <h3>Geometry-Aware Bridge Transport<br>for Single-Cell Trajectory Inference</h3>
+  <p>From unpaired snapshots to continuous cell-state dynamics.</p>
+  <p>
+    <a href="https://arxiv.org/abs/2605.18587"><img src="https://img.shields.io/badge/arXiv-2605.18587-b31b1b.svg" alt="arXiv paper"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-102744.svg" alt="MIT code license"></a>
+    <a href="notebooks/01_data_tour.ipynb"><img src="https://img.shields.io/badge/start-notebooks-168B9D.svg" alt="Tutorial notebooks"></a>
+  </p>
+  <p><a href="#quick-start">Quick start</a> · <a href="#learn-by-doing">Notebooks</a> · <a href="docs/experiments.md">Experiments</a> · <a href="data/README.md">Data</a> · <a href="#citation">Citation</a></p>
+</div>
 
-[![arXiv](https://img.shields.io/badge/arXiv-2605.18587-b31b1b.svg)](https://arxiv.org/abs/2605.18587)
+<p align="center">
+  <img src="assets/reprogramming-demo.gif" alt="PACE reconstructions of early, intermediate and late WOT reprogramming intervals" width="1000" />
+  <br><sub>WOT reprogramming: three observed-anchor reconstructions, with snapshots 6, 11 and 16 held out. <a href="docs/development-demo.md">Reproduce the animation</a> · <a href="assets/reprogramming-demo-provenance.json">Run provenance</a>.</sub>
+</p>
 
-PACE is a two-stage flow-matching pipeline for time-resolved single-cell
-trajectory inference.  This directory is a self-contained distribution that
-ships PACE and the embryoid-body PHATE dataset (`data/eb_velocity_v5.npz`).
-The corresponding preprint is available on arXiv:
-[arXiv:2605.18587](https://arxiv.org/abs/2605.18587).
+PACE learns continuous transport between destructive time-course snapshots.
+It estimates local tangent geometry, alternates neural bridge learning with
+geometry-aware coupling updates, then distills the bridges into a velocity
+field that can be integrated as an ODE.
 
-This repository is an active public-release snapshot. The current version
-contains the core PACE implementation, Hydra configurations, EB PHATE example
-data, training scripts, and evaluation utilities. The README and release
-assets will be expanded alongside the paper release with the complete paper
-datasets, preprocessing details, baseline implementations or adapters, and the
-corresponding reproduced baseline results.
+This repository includes **PACE** (called `imfm` in the development code) and
+**Metric Flow Matching (MFM)**, along with the inputs for all **seven paper
+datasets**, experiment configurations, and executable tutorials. Other methods
+compared in the paper are outside this release's implementation scope.
 
-![PACE overview](assert/fig1.png)
+> **Reproducibility status.** The release follows the representations and splits
+> in [the paper](https://arxiv.org/html/2605.18587v2). Current development runs are
+> not all identical to the published tables. See the concrete differences and
+> validation scope in [the reproduction notes](docs/reproducibility.md).
 
-## Current status
+## How PACE works
 
-The code in this repository is sufficient to run the included EB PHATE example
-end-to-end and inspect the produced trajectory, distribution, and velocity
-metrics. Some publication-facing materials are still being organized and will
-be added in future updates:
+<p align="center"><img src="assets/fig1.png" alt="PACE method overview from the paper" width="900" /></p>
 
-- complete datasets and download/preprocessing instructions used in the paper
-- baseline methods, wrappers, and configuration files used for comparison
-- reproduced baseline metrics and plotting scripts for paper tables/figures
-- additional experiment documentation for reproducing all reported results
+1. **Estimate geometry.** Local PCA identifies tangent and normal subspaces;
+   the metric penalizes motion in normal directions.
+2. **Learn bridges and couplings.** Endpoint-preserving neural paths and OT
+   assignments are refined under the same geometry-aware path cost.
+3. **Distill dynamics.** A time-conditioned vector field learns the bridge
+   velocities, yielding a continuous population-level model.
 
-## Layout
+See [the paper-to-code guide](docs/method.md) for the equations, implementation
+locations, and the distinction between PACE and the MFM baseline.
 
-```
-PACE/
-├── train.py                    # Hydra entry point
-├── requirements.txt            # pip freeze of conda env `sc`
-├── assert/                     # paper figures
-│   ├── fig1.pdf
-│   └── fig1.png
-├── configs_hydra/              # Hydra configs
-│   ├── data/eb_phate.yaml
-│   ├── method/pace.yaml
-│   ├── model/stage1/pace_{hungarian,sinkhorn,emd,uot}.yaml
-│   ├── model/stage2/ode.yaml
-│   └── experiment/eb_phate_pace_ode.yaml
-├── data/eb_velocity_v5.npz     # EB PHATE dataset
-├── src/
-│   ├── methods/pace/           # PACE training pipeline
-│   │   └── stage2/             # vendored Stage 2 helpers used by PACE
-│   ├── dataloaders/eb_data.py
-│   └── plot/                   # stage1/stage2 visualizations
-├── scripts/
-│   ├── run_eb_phate.sh                      # run PACE end-to-end
-│   └── eval_holdout_velocity_metrics.py     # holdout velocity metrics
-└── notebooks/eb_phate_pace_test_results.ipynb
-```
+## Quick start
 
-## Install
+Use Python **3.11** in a fresh environment. Run commands from the repository root.
+All seven benchmark inputs are included; no dataset download is needed.
 
 ```bash
-# inside an isolated Python 3.10+ environment
-pip install -r requirements.txt
-```
-
-`requirements.txt` is a full `pip freeze` of the conda env `sc` used during
-development.  Core dependencies:
-
-- `torch`, `pytorch-lightning`, `torchdyn`
-- `hydra-core`, `omegaconf`
-- `numpy`, `scipy`, `scikit-learn`, `pandas`, `matplotlib`
-- `POT` (Python Optimal Transport), `scanpy`, `anndata`
-
-## Run
-
-PACE on EB PHATE (default: 2-D PHATE, 5 timepoints, holdout `[3]`):
-
-```bash
+git clone https://github.com/AI4Science-WestlakeU/PACE.git
 cd PACE
-python train.py experiment=eb_phate_pace_ode
-# or:
-bash scripts/run_eb_phate.sh
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+
+# Small end-to-end CPU run: bridge learning → velocity training → evaluation
+python train.py experiment=oceans_positions_pace_ode trainer=cpu \
+  total_epochs_stage1=3 rematch_every=1 epochs=2 \
+  samples_per_timepoint=24 batch_size=24 stage1_batch_size=24 \
+  T_steps=3 t_probe_steps=3 enable_progress_bar=false \
+  working_dir=results/tutorial
 ```
 
-CPU debug run:
+The short run checks the pipeline; it is not intended to produce converged results.
+For the full configured experiment on a CUDA GPU:
 
 ```bash
-python train.py experiment=eb_phate_pace_ode \
-    trainer=cpu \
-    epochs=2 total_epochs_stage1=2 \
-    samples_per_timepoint=64 \
-    enable_progress_bar=false
+python train.py experiment=oceans_positions_pace_ode
+python train.py experiment=oceans_positions_mfm_ode
+
+# EB PHATE, with snapshot 3 held out
+python train.py experiment=eb_phate_pace_ode
 ```
 
-## Outputs
+Use `trainer=cpu` when CUDA is unavailable. Choose a PyTorch installation
+compatible with your CUDA environment before installing the requirements.
 
-Artefacts land under `results/<data_name>_dim<D>_test<labels>/<method>/`:
+To train the README reprogramming demonstration, use
+`python train.py experiment=wot_fle_reprogramming_demo`. Its configuration,
+rendering command, and an optional embryoid-body example are documented in
+[the biological demo notes](docs/development-demo.md).
 
-- `metrics/distribution_metrics.csv` — MMD / W1 / W2 / GW per stage and
-  predictor (`stage1_*`, `stage2/ode_rollout`, …)
-- `plots/stage1/{interpolation_paths,midpoint_comparison,psi_magnitude,trajectory_overview}.png`
-  (2-D data only)
-- `plots/stage2/*.png` — ODE-rollout trajectories vs ground truth
-- `checkpoints/stage1_psi/` and `checkpoints/stage2_flow/`
+## Learn by doing
 
-By default, Stage 2 uses exact mini-batch OT pairing via the local
-`src.methods.pace.stage2.matching` helper. To reuse the final Stage 1 matchings
-instead, run with `use_stage1_matching=true optimal_transport_method=None`.
+| Notebook | What you will do |
+| --- | --- |
+| [01 · Explore the data](notebooks/01_data_tour.ipynb) | Inspect all seven datasets, visualize time labels, understand training/holdout splits. |
+| [02 · Train PACE and MFM](notebooks/02_train_and_compare.ipynb) | Run a small CPU experiment for each method and compare saved metrics and trajectories. |
+| [03 · Query a learned flow](notebooks/03_inference_and_results.ipynb) | Load a checkpoint, integrate its velocity field, and inspect held-out reconstruction. |
 
-For the default `eb_phate` config the output dir is
-`results/eb_phate_dim2_test3/pace/`.
+```bash
+python -m pip install -r requirements-dev.txt
+jupyter lab notebooks/
+```
 
-## Holdout velocity evaluation
+## Experiments at a glance
 
-After training:
+| Dataset | Representation | Held-out labels | PACE experiment |
+| --- | --- | --- | --- |
+| Ocean | 2D positions | 1, 3, 5, 7 | `oceans_positions_pace_ode` |
+| Two-Branch | 2D positions | 1, 4 | `toy_bifurcation_pace_ode` |
+| EB PHATE | 2D PHATE | 3 | `eb_phate_pace_ode` |
+| Schiebinger2019 | 2D FLE | 6, 11, 16 | `wot_fle_three_interpolation_pace_ode` |
+| iPSC-Liu | 2D PCA | 4, 16  | `ipsc_liu_pace_ode` |
+| iPSC-Liu | 10D / 50D PCA | 4, 8, 12, 16 | `ipsc_liu_pace_ode_{10,50}d_test{t}` |
+| OP-Cite | 100D PCA | 3 | `op_cite_pace_ode_100d` |
+| OP-Multi | 100D PCA | 3 | `op_multi_pace_ode_100d` |
+
+Replace `pace` with `mfm` for the baseline. Names containing braces are templates;
+substitute one dimension and one label. The 10D and 50D iPSC settings each
+aggregate four runs, giving nine benchmark settings in total.
+
+```bash
+# Print the 30 commands covering both methods and the paper's splits
+python scripts/run_paper.py
+# Execute the PACE suite (substantial training workload)
+python scripts/run_paper.py --method pace --run
+# Inspect a resolved configuration without training
+python train.py experiment=op_multi_pace_ode_100d --cfg job --resolve
+```
+
+Additional dimensional variants, WOT forecasting, and five PACE ablations are
+indexed in [the experiment guide](docs/experiments.md).
+
+## Outputs and evaluation
+
+Each run writes to `results/<dataset>_dim<D>_test<labels>/<method>/` under
+`working_dir`:
+
+- `resolved_config.yaml`: the actual configuration used for this run.
+- `checkpoints/stage1_psi/` (PACE) or `checkpoints/stage1_geopath/` (MFM), and
+  `checkpoints/stage2_flow/`: model checkpoints.
+- `metrics/distribution_metrics.csv`: MMD, W1, W2, and GW diagnostics.
+- `plots/`: bridge and ODE-rollout visualizations for 2D experiments.
+
+For paper-style held-out reconstruction, select rows with `stage=stage2` and
+`predictor=ode_rollout`. This starts from the observed training snapshot before
+each holdout; a rollout from the first timepoint is a different diagnostic.
+RNA/simulator velocities are used only for evaluation:
 
 ```bash
 python scripts/eval_holdout_velocity_metrics.py results/eb_phate_dim2_test3
+python scripts/eval_holdout_velocity_metrics.py results/oceans_positions_dim2_test1-3-5-7
 ```
 
-Compares the learned velocity field at each test cell's true position against
-the reference `delta_embedding` velocity from the EB dataset and writes
-`results/eb_phate_dim2_test3/holdout_velocity_metrics.csv` plus
-`results/eb_phate_dim2_test3/pace/metrics/velocity_metrics.csv`.
+## Repository map
 
-## Result summary notebook
-
-`notebooks/eb_phate_pace_test_results.ipynb` collects PACE's
-`distribution_metrics.csv` and `velocity_metrics.csv` under
-`eb_phate_dim2_test3` and renders the saved PNGs inline.
-
-## Stage 1 backend reference
-
-PACE Stage 1 supports four matching backends:
-
-| Stage 1 config             | Matching method            |
-|----------------------------|----------------------------|
-| `pace_hungarian` (default) | exact assignment           |
-| `pace_sinkhorn`            | entropic OT                |
-| `pace_emd`                 | exact OT (network simplex) |
-| `pace_uot`                 | unbalanced OT              |
-
-Override at the command line:
-
-```bash
-python train.py experiment=eb_phate_pace_ode model/stage1=pace_hungarian
+```text
+configs_hydra/   data, method, model, experiment, and ablation configurations
+data/           seven benchmark inputs, checksums, and source notes
+src/methods/    pace/ and mfm/
+src/dataloaders/ shared sampling and training-only standardization
+src/plot/       bridge and rollout visualizations
+notebooks/      three guided tutorials
+scripts/        experiment suite, validation, data export, and demo rendering
+docs/           method mapping, experiments, and reproducibility notes
+assets/         logo, paper figure, and reproducible animations
 ```
-
-## Data
-
-`data/eb_velocity_v5.npz` provides:
-
-- `pcs`            : `(16819, 100)` — PCA components
-- `phate`          : `(16819, 2)`   — 2-D PHATE embedding
-- `delta_embedding`: per-cell PHATE-space velocities
-- `sample_labels`  : 5 timepoints `[0, 1, 2, 3, 4]`
-
-`dim=2` selects PHATE; `dim>2` selects the leading PCA components.
 
 ## Citation
 
-If you find PACE useful, please cite:
+Chenglei Yu and Chuanrui Wang contributed equally.
 
 ```bibtex
-@misc{yu2026pacegeometryawarebridgetransport,
+@article{yu2026pace,
   title={PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference},
-  author={Chenglei Yu* and Chuanrui Wang* and Bangyan Liao and Tailin Wu},
-  year={2026},
-  eprint={2605.18587},
-  archivePrefix={arXiv},
-  primaryClass={q-bio.GN},
-  url={https://arxiv.org/abs/2605.18587},
+  author={Yu, Chenglei and Wang, Chuanrui and Liao, Bangyan and Wu, Tailin},
+  journal={arXiv preprint arXiv:2605.18587},
+  year={2026}
 }
 ```
 
-## License
-
-This project is released under the MIT License. See [LICENSE](LICENSE) for
-details.
+The MFM baseline is adapted from [Metric Flow Matching](https://github.com/kkapusniak/metric-flow-matching)
+(Kapusniak et al., NeurIPS 2024). Please also cite it when using that baseline.
+Code is released under [MIT](LICENSE); see [third-party notices](THIRD_PARTY_NOTICES.md)
+and [dataset provenance](data/README.md) for upstream attribution and data terms.

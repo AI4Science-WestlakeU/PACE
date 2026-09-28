@@ -1,0 +1,11 @@
+# @package _global_
+
+defaults:
+  - override /data: eb_pcs
+  - override /method: mfm
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [eb, pcs, mfm, ode]
+
+task_name: eb_pcs_mfm

@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - override /data: wot_fle_three_forecasting
+  - override /method: pace
+  - override /model/stage1: pace_hungarian
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [wot, scnode, schiebinger2019, three_forecasting, pace, ode]
+
+task_name: wot_fle_three_forecasting_pace
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+epochs: 350
+samples_per_timepoint: 1024
+T_steps: 10
+total_epochs_stage1: 120
+lambda_ortho: 1
+lambda_global: 3
+k_neighbors_local: 64
+use_stage1_matching: true
+rematch_every: 20
+
+# CUDA_VISIBLE_DEVICES=0 python train.py \
+#   experiment=wot_fle_three_interpolation_pace_ode \
+#   load_stage1_ckpt=results/wot_fle_three_interpolation_dim2_test6-11-16/pace/checkpoints/stage1_psi/last.ckpt

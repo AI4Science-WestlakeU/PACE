@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - override /data: op_cite_100d
+  - override /method: mfm
+  - override /model/stage1: mfm_land
+  - override /model/stage2: ode
+  - override /trainer: default
+
+tags: [op_cite, pca, 100d, mfm, ode]
+
+task_name: op_cite_mfm_100d
+
+hidden_dims_geopath: [64, 128, 128, 64]
+hidden_dims_flow: [64, 128, 128, 64]
+samples_per_timepoint: null
+
+epochs: 350

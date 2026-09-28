@@ -3,7 +3,7 @@
 Orchestrates:
     1. Build DataModule
     2. Stage 1: Train psi network with alternating Hungarian matching
-    3. Stage 2: Train velocity field using frozen psi
+    3. Stage 2: Train velocity field using frozen psi (reuses MFM FlowNetTrain)
     4. Test: ODE rollout on held-out frames
 """
 
@@ -21,13 +21,12 @@ import pytorch_lightning as pl
 from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning.callbacks import ModelCheckpoint
 
-from src.methods.pace.stage2.networks import VelocityNet, GeoPathMLP
-from src.methods.pace.stage2.ema import EMA
-from src.methods.pace.stage2.flow_train import FlowNetTrain
-from src.methods.pace.stage2.data_wrapper import PaceDataModuleWrapper
-from src.methods.pace.stage2.flow_matcher import labels_to_timesteps
-from src.methods.pace.stage2.matching import build_ot_sampler
-from src.methods.pace.stage2.eval_metrics import (
+from src.methods.mfm.networks import VelocityNet, GeoPathMLP
+from src.methods.mfm.ema import EMA
+from src.methods.mfm.flow_train import FlowNetTrain
+from src.methods.mfm.data_wrapper import MFMDataModuleWrapper
+from src.methods.mfm.flow_matcher import labels_to_timesteps
+from src.methods.mfm.eval_metrics import (
     build_full_trajectory_rollout_predictions,
     compute_velocity_alignment_metrics,
     evaluate_full_trajectory_rollout_metrics,
@@ -62,7 +61,7 @@ def _set_seed(seed: int) -> None:
 def _build_datamodule(
     cfg: DictConfig,
     test_labels_override: list | None = None,
-) -> PaceDataModuleWrapper:
+) -> MFMDataModuleWrapper:
     data_name = cfg.get("data_name", "")
     plain = OmegaConf.to_container(cfg, resolve=True)
     args = SimpleNamespace(**plain)
@@ -70,15 +69,31 @@ def _build_datamodule(
     if test_labels_override is not None:
         args.test_timepoint_labels = test_labels_override
 
-    if "eb" in data_name:
+    if "oceans" in data_name:
+        from src.dataloaders.oceans_data import OceansDataModule
+        base = OceansDataModule(args)
+    elif "toy_bifurcation" in data_name.lower() or "two_branch" in data_name.lower():
+        from src.dataloaders.toy_bifurcation_data import ToyBifurcationDataModule
+        base = ToyBifurcationDataModule(args)
+    elif "eb" in data_name:
         from src.dataloaders.eb_data import EBDataModule
         base = EBDataModule(args)
+    elif "wot" in data_name.lower():
+        from src.dataloaders.scnode_wot_data import ScNodeWOTDataModule
+        base = ScNodeWOTDataModule(args)
+    elif "cite" in data_name:
+        from src.dataloaders.cite_data import CiteDataModule
+        base = CiteDataModule(args)
+    elif "multi" in data_name:
+        from src.dataloaders.multi_data import MultiDataModule
+        base = MultiDataModule(args)
+    elif "ipsc" in data_name:
+        from src.dataloaders.ipsc_data import IPSCDataModule
+        base = IPSCDataModule(args)
     else:
-        raise ValueError(
-            f"Unknown data_name: {data_name}. PACE distribution only ships with eb_phate."
-        )
+        raise ValueError(f"Unknown data_name: {data_name}")
 
-    return PaceDataModuleWrapper(base)
+    return MFMDataModuleWrapper(base)
 
 
 # ======================================================================
@@ -86,7 +101,7 @@ def _build_datamodule(
 # ======================================================================
 
 def _build_train_anchors(
-    datamodule: PaceDataModuleWrapper,
+    datamodule: MFMDataModuleWrapper,
     device: torch.device,
 ) -> tuple[torch.Tensor, list[int]]:
     """Stack per-timepoint training frames into [T, N, dim] anchor tensor.
@@ -190,7 +205,7 @@ def run_pace(cfg: DictConfig) -> dict:
     # ==================================================================
     stage1_ckpt = cfg.get("load_stage1_ckpt", None)
 
-    # Build the psi network (same architecture as pace runner TimeConditionedPsiNet)
+    # Build the psi network (same architecture as pace.py TimeConditionedPsiNet)
     hidden_geopath = list(cfg.get("hidden_dims_geopath", [64, 64]))
     act_geopath = cfg.get("activation_geopath", "gelu")
     time_geopath = cfg.get("time_geopath", True)
@@ -624,8 +639,7 @@ def run_pace(cfg: DictConfig) -> dict:
         sigma=float(cfg.get("sigma", 0.0)),
     )
 
-    # Stage 2 pairing: either reuse PACE Stage 1 matchings or use the
-    # original Stage 2 mini-batch OT matching hook.
+    # Optionally reuse Stage 1 matchings in Stage 2
     ot_sampler = None
     if cfg.get("use_stage1_matching", False):
         if stage1_matchings:
@@ -652,15 +666,6 @@ def run_pace(cfg: DictConfig) -> dict:
                 matchings=[m.detach().cpu() for m in rebuilt_matchings],
             )
             log.info("Stage 2 will use rebuilt initial matchings")
-    else:
-        ot_sampler = build_ot_sampler(cfg)
-        if ot_sampler is None:
-            log.info("Stage 2 will use raw same-index mini-batch pairing")
-        else:
-            log.info(
-                "Stage 2 will use OT mini-batch matching (method=%s)",
-                cfg.get("optimal_transport_method", "None"),
-            )
 
     # Rebuild datamodule for Stage 2 (train-only, no test labels)
     datamodule_s2 = _build_datamodule(cfg, test_labels_override=[])
@@ -814,7 +819,7 @@ def run_pace(cfg: DictConfig) -> dict:
             plot_rollout_prediction_snapshots,
             plot_test_predictions,
         )
-        from src.methods.pace.stage2.eval_metrics import (
+        from src.methods.mfm.eval_metrics import (
             _run_ode_rollout,
             _find_train_bracket,
         )
