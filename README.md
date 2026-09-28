@@ -3,7 +3,7 @@
   <h1>PACE: Geometry-Aware Bridge Transport<br>for Single-Cell Trajectory Inference</h1>
   <p><strong>Official implementation · NeurIPS 2026 (Poster)</strong></p>
   <p>
-    Chenglei Yu<sup>*1,2</sup>,
+    <a href="https://oyclo.github.io/">Chenglei Yu</a><sup>*1,2</sup>,
     <a href="https://wang-cr.github.io/">Chuanrui Wang</a><sup>*1</sup>,
     Bangyan Liao<sup>1,2</sup> &amp;
     <a href="https://tailin.org/">Tailin Wu</a><sup>†1</sup>
