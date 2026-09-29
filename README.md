@@ -32,7 +32,7 @@ It estimates local tangent geometry, alternates neural bridge learning with
 geometry-aware coupling updates, then distills the bridges into a velocity
 field that can be integrated as an ODE.
 
-This repository includes **PACE** (called `imfm` in the development code) and
+This repository includes **PACE** and
 **Metric Flow Matching (MFM)**, along with the inputs for all **seven paper
 datasets**, experiment configurations, and executable tutorials. Other methods
 compared in the paper are outside this release's implementation scope.

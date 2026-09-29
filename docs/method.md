@@ -1,8 +1,7 @@
 # From the paper to the implementation
 
 Reference: [PACE, arXiv:2605.18587v2](https://arxiv.org/html/2605.18587v2).
-`pace` is the public name of the development method `imfm`; `mfm` denotes
-Metric Flow Matching. They are two distinct methods, not two names for PACE.
+`pace` implements PACE; `mfm` implements the Metric Flow Matching baseline.
 
 | Paper component | Implementation | Configuration |
 | --- | --- | --- |

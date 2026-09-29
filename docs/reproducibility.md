@@ -12,8 +12,7 @@ OT convergence and independent retraining.
 The development source was at commit
 `d8fabaeefe417028ec45ea95055557d27f30f175`, with uncommitted edits to matching,
 Stage 1 configs and timepoint sampling. The import includes those working-tree
-changes. Public modules/classes/config names were normalized from `imfm` to
-`pace`. Only PACE, MFM, their shared helpers, and paper-dataset loaders were
+changes. Only PACE, MFM, their shared helpers, and paper-dataset loaders were
 retained. Unrelated baselines, large raw expression matrices, private paths,
 training logs and research scratch notebooks were omitted.
 
