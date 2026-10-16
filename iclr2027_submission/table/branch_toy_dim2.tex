@@ -1,0 +1,28 @@
+
+\begin{table}[hbtp]
+\centering
+\begin{minipage}{0.75\linewidth}
+\centering
+\caption{Branching toy (2D) results at held-out time points $t\in\{1,4\}$.}
+\label{tab:branch_toy_dim2}
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.82}
+\begin{tabular}{lcccccc}
+\toprule
+Method & \multicolumn{2}{c}{MMD $\downarrow$} & \multicolumn{2}{c}{$\mathcal{W}_1\downarrow$} & \multicolumn{2}{c}{$\mathcal{W}_2\downarrow$} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+ & $t=1$ & $t=4$ & $t=1$ & $t=4$ & $t=1$ & $t=4$ \\
+\midrule
+Action Matching & 0.6129 & 0.2905 & 0.3343 & 0.2732 & 0.3419 & 0.3048 \\
+Aligned CFM & 0.6524 & 0.3439 & 0.3874 & 0.309 & 0.3944 & 0.3371 \\
+CURLY & \underline{0.2664} & \underline{0.0767} & 0.1703 & \underline{0.1797} & 0.2123 & \textbf{0.2087} \\
+DMSB & 1.0232 & 1.1585 & 4.5832 & 2.8358 & 4.5845 & 2.8406 \\
+MFM & 0.3817 & 0.1145 & \underline{0.1686} & 0.1865 & \underline{0.1832} & \underline{0.2116} \\
+OT-CFM & 0.5279 & 0.1244 & 0.2433 & 0.1841 & 0.2509 & 0.2119 \\
+\midrule
+\textbf{\model (ours)} & \textbf{0.1968} & \textbf{0.0146} & \textbf{0.1386} & \textbf{0.1752} & \textbf{0.1686} & 0.2236 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table}

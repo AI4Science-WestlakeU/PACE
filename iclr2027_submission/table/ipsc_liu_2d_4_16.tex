@@ -1,0 +1,30 @@
+\begin{table}[hbtp]
+\centering
+\begin{minipage}{0.85\linewidth}
+\centering
+
+\caption{Per-timepoint results on iPSC-Liu~\citep{liu2020reprogramming} (2D) with held-out time points $t\in\{4,16\}$.}
+\label{tab:ipsc_liu_2d_4_16}
+
+\small
+\setlength{\tabcolsep}{4pt}
+
+\begin{tabular}{lcccccc}
+\toprule
+Method & \multicolumn{2}{c}{MMD $\downarrow$} & \multicolumn{2}{c}{$\mathcal{W}_1\downarrow$} & \multicolumn{2}{c}{$\mathcal{W}_2\downarrow$} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+ & $t=4$ & $t=16$ & $t=4$ & $t=16$ & $t=4$ & $t=16$ \\
+\midrule
+Action Matching & \underline{0.7369} & 0.3090 & 0.9719 & 0.6290 & 1.0726 & \underline{0.8733} \\
+Aligned CFM & 0.8265 & \underline{0.2590} & 0.7781 & 0.5407 & \underline{0.7858} & 0.8781 \\
+CURLY & 0.8156 & 0.3069 & 0.9030 & \underline{0.5341} & 0.9292 & 0.9140 \\
+DMSB & 0.8663 & 0.4248 & \underline{0.7176} & 1.3311 & 0.7986 & 1.4060 \\
+MFM & 0.8334 & 0.2731 & 0.7646 & 0.5667 & 0.7860 & 0.9815 \\
+OT-CFM & 0.7787 & 0.2668 & 0.8695 & 0.5636 & 0.8983 & 0.9539 \\
+\midrule
+\textbf{\model (ours)} & \textbf{0.6808} & \textbf{0.1962} & \textbf{0.5579} & \textbf{0.4126} & \textbf{0.5646} & \textbf{0.6830} \\
+\bottomrule
+\end{tabular}
+
+\end{minipage}
+\end{table}

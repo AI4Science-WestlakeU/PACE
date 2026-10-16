@@ -1,0 +1,34 @@
+\begin{table}[t]
+\centering
+\caption{iPSC-Liu~\citep{liu2020reprogramming} (10D/50D) per-timepoint results across holdouts $t\in\{4,8,12,16\}$.}
+\label{tab:ipsc_liu_dim10_50}
+\small
+\setlength{\tabcolsep}{3pt}
+\resizebox{1\linewidth}{!}{
+\begin{tabular}{llcccccccccccc}
+\toprule
+Dim & Method & \multicolumn{4}{c}{MMD $\downarrow$} & \multicolumn{4}{c}{$\mathcal{W}_1\downarrow$} & \multicolumn{4}{c}{$\mathcal{W}_2\downarrow$} \\
+\cmidrule(lr){3-6} \cmidrule(lr){7-10} \cmidrule(lr){11-14}
+ & & $t=4$ & $t=8$ & $t=12$ & $t=16$ & $t=4$ & $t=8$ & $t=12$ & $t=16$ & $t=4$ & $t=8$ & $t=12$ & $t=16$ \\
+\midrule
+10D & Action Matching & 0.6504 & 0.6959 & 0.5132 & 0.3626 & 3.8458 & 4.1608 & 3.1014 & 4.0123 & 4.2076 & 5.9396 & 3.4279 & 3.9222 \\
+ & Aligned CFM & 0.6245 & \underline{0.5936} & \underline{0.4051} & \textbf{0.2345} & 3.7937 & \underline{3.4433} & \underline{2.5372} & \textbf{1.9877} & 4.2084 & \underline{4.0761} & \underline{2.9973} & \textbf{2.2482} \\
+ & CURLY & \underline{0.5461} & 0.6054 & 0.4936 & 0.5024 & 3.8694 & 3.9773 & 3.1387 & 3.4660 & 4.3490 & 5.5607 & 3.4974 & 3.4336 \\
+ & DMSB & 0.9250 & 0.7057 & 0.7448 & 0.7098 & 10.5837 & 4.1953 & 5.5040 & 4.9522 & 10.6553 & 4.5341 & 5.6287 & 5.0190 \\
+ & MFM & 0.5864 & 0.6674 & 0.5033 & 0.3521 & \underline{3.5972} & 4.0239 & 3.2515 & 2.7539 & \underline{4.0205} & 5.0654 & 3.5968 & 2.6699 \\
+ & OT-CFM & 0.6039 & 0.6339 & 0.4951 & 0.3251 & 3.6543 & 4.0040 & 3.2932 & 2.5884 & 4.0624 & 5.5807 & 3.6325 & \underline{2.5030} \\
+\cmidrule(lr){2-14}
+ & \textbf{\model (ours)} & \textbf{0.5244} & \textbf{0.5153} & \textbf{0.3113} & \underline{0.2871} & \textbf{3.5918} & \textbf{3.2507} & \textbf{2.3185} & \underline{2.5294} & \textbf{3.7485} & \textbf{3.5755} & \textbf{2.7868} & 2.6406 \\
+\midrule
+50D & Action Matching & \textbf{0.3517} & 0.3506 & 0.3278 & 0.2197 & 7.2261 & 8.4554 & 7.9593 & 6.8096 & 7.8273 & 10.3927 & 8.5704 & 7.1567 \\
+ & Aligned CFM & \underline{0.3519} & \textbf{0.2917} & 0.2397 & \underline{0.1663} & \underline{7.0562} & \underline{7.5723} & \underline{7.5947} & 7.0302 & \underline{7.6855} & \underline{8.2791} & \underline{8.2483} & 8.0080 \\
+ & CURLY & 0.3824 & 0.4189 & \underline{0.2235} & 0.2327 & 8.2766 & 9.7010 & 7.6085 & 6.8715 & 8.8476 & 11.2946 & 8.2990 & 7.1972 \\
+ & DMSB & 0.7593 & 0.5730 & 0.4787 & 0.4441 & 14.5899 & 10.4588 & 9.7531 & 8.9456 & 14.7121 & 10.7933 & 10.1192 & 9.3447 \\
+ & MFM & 0.3539 & 0.3467 & 0.2679 & 0.1728 & \textbf{7.0197} & 9.2505 & 8.5746 & \underline{6.3246} & \textbf{7.6665} & 10.5394 & 9.2502 & \textbf{6.7254} \\
+ & OT-CFM & 0.3530 & 0.3458 & 0.2802 & 0.1803 & 7.1278 & 9.0608 & 8.7395 & 6.4288 & 7.7653 & 10.4423 & 9.3687 & 6.8054 \\
+\cmidrule(lr){2-14}
+ & \textbf{\model (ours)} & 0.3609 & \underline{0.3004} & \textbf{0.2193} & \textbf{0.1396} & 7.0656 & \textbf{6.8194} & \textbf{6.8718} & \textbf{6.2581} & 7.6896 & \textbf{7.0798} & \textbf{7.5736} & \underline{6.7914} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,121 @@
+% ============================================================================
+% PACE — ICLR 2027 anonymous submission version
+% Converted from the NeurIPS 2026 submission source
+% (~/research/pr/arxiv_extracted, Overleaf project bczjgfxgdqgjfrmrbgjnnfccswztqpkb)
+% on 2026-09-22. Content files under content/ and table/ are verbatim copies of
+% the submission version; the ONLY content edit is the anonymized code link in
+% content/0_abstract.tex (original line preserved there as a comment).
+% Style files: official ICLR 2027 style (iclr2027_conference.sty/.bst,
+% natbib.sty, fancyhdr.sty), identical to GEOMORPH-paper main branch copies
+% (verified byte-identical to iclr-2027-style-files.zip).
+% ============================================================================
+\documentclass{article} % For LaTeX2e
+\usepackage{iclr2027_conference,times}
+
+\usepackage[utf8]{inputenc} %
+\usepackage[T1]{fontenc}    %
+\usepackage{graphicx}       %
+\usepackage{wrapfig}        %
+\usepackage{enumitem}       %
+\usepackage{booktabs}       %
+\usepackage[hypcap=false]{caption}        %
+\usepackage{amsmath,amssymb,amsthm}  %
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{hypothesis}{Hypothesis}
+\usepackage{nicefrac}       %
+\usepackage{microtype}      %
+\usepackage{xcolor}         %
+\usepackage{empheq}         %
+\usepackage{hyperref}       %
+\usepackage{url}            %
+\usepackage{nameref}        %
+\definecolor{lightteal}{RGB}{220,245,245}
+\newcommand*{\eqbox}[1]{\colorbox{lightteal}{#1}}
+
+% Title history: the NeurIPS 2026 anonymous submission was titled
+% "PACE: Pseudotime Trajectory Inference via Spatiotemporal Tangent-Space Projections"
+% (kept below, commented). The current title follows the latest Overleaf/arXiv state.
+% \title{PACE: Pseudotime Trajectory Inference via Spatiotemporal Tangent-Space Projections}
+\title{PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference}
+
+% Authors must not appear in the submitted version. They are hidden as long as
+% \iclrfinalcopy remains commented out. (ICLR 2027: non-anonymous submissions
+% are rejected without review.)
+% \author{Anonymous}
+
+% Camera-ready author block (matches the arXiv version):
+\author{Chenglei Yu$^{1,2}$\thanks{Equal contribution. \quad \textdagger Corresponding author.}, Chuanrui Wang$^{2}$\footnotemark[1], Bangyan Liao$^{1,2}$ \& Tailin Wu$^{2}\textsuperscript{\textdagger}$  \\
+$^{1}$Zhejiang University\\
+$^{2}$Department of Artificial Intelligence, School of Engineering, Westlake University\\
+\texttt{\{yuchenglei, wangchuanrui, wutailin\}@westlake.edu.cn} \\
+}
+
+\iclrfinalcopy % Camera-ready: shows authors; comment out for anonymous submission.
+
+\begin{document}
+
+\newcommand{\model}{PACE}
+
+\maketitle
+
+\input{content/0_abstract.tex}
+\input{content/1_introduction}
+\input{content/2_related_work}
+\input{content/3_method}
+\input{content/4_experiment}
+\input{content/5_conclusion}
+
+% ----------------------------------------------------------------------------
+% ICLR 2027 statements: placed at the end of the main text, before references.
+% None of these count toward the 9-page main-text limit.
+% ----------------------------------------------------------------------------
+
+\subsection*{AI use statement}
+% REQUIRED by ICLR 2027 (does not count toward the page limit; max 1 page).
+% AUTHORS: verify this text reflects the actual tool usage before submitting.
+In this work, we used generative AI tools for coding assistance (for example,
+debugging and drafting evaluation scripts) and for language polishing of the
+manuscript. We have not used generative AI tools for generating the research
+ideas, the experimental results, or the scientific claims of this work. We
+have reviewed all AI-assisted work; AI-suggested code was verified and tested
+for correctness by the authors. We take responsibility for the final content
+of this work, including text, claims, and artifacts produced with the aid of
+generative AI.
+
+\subsection*{Ethics statement}
+% RECOMMENDED by ICLR 2027 (does not count toward the page limit; max 1 page).
+This work uses publicly available single-cell datasets and synthetic
+benchmarks; it involves no human subjects, no personally identifiable data,
+and no new data collection. We do not foresee direct negative societal impacts
+beyond those generally associated with improved computational models of cell
+dynamics.
+
+\subsection*{Reproducibility statement}
+% RECOMMENDED by ICLR 2027 (does not count toward the page limit).
+We describe dataset sources, representations, preprocessing, and held-out
+split protocols in Appendix~\ref{sec:app:benchmarks}; baseline configurations
+in Appendix~\ref{sec:app:baselines}; and the PACE implementation in
+Appendix~\ref{sec:app:pace-implementation}. Proofs of the theoretical
+statements are given in Appendices~\ref{app:illposed}
+and~\ref{app:optimization-monotonicity}. An anonymized code repository is
+linked in the abstract, and all experiments were run on a single NVIDIA A100
+80GB GPU.
+
+\subsubsection*{Acknowledgments}
+We thank Yuchen Yang, Minsi Ren, Zhuo Xu, Yucheng Luo, and Mingzheng Fang for discussions and for providing feedback on our manuscript.
+We also gratefully acknowledge the support of Hangzhou West Lake Pearl Program; Westlake University Research Center for Industries of the Future; Westlake University Center for High-performance Computing.
+The content is solely the responsibility of the authors and does not necessarily represent the official views of the funding entities.
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+\appendix
+\input{content/6_appendix.tex}
+
+\end{document}

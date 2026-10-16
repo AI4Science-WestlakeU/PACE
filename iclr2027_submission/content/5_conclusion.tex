@@ -1,0 +1,9 @@
+\section{Conclusion}
+% PAGECUT: first two sentences merged for the ICLR page limit. Original:
+% "In this paper, we have introduced PACE, a geometry-aware framework for trajectory inference from destructive single-cell time-course snapshots. PACE replaces fixed Euclidean endpoint costs with an anisotropic path cost induced by a local spatiotemporal metric, then alternates bridge learning with coupling refinement and distills the resulting dynamics into a velocity field."
+We have introduced PACE, a geometry-aware framework for trajectory inference from destructive single-cell time-course snapshots: it replaces fixed Euclidean endpoint costs with an anisotropic path action induced by a local spatiotemporal metric, alternates bridge learning with coupling refinement, and distills the resulting dynamics into a global velocity field.
+Across controlled and biological benchmarks, the results support local geometry as a useful inductive bias for held-out snapshot reconstruction without paired cells, lineage tracing, or velocity supervision; % PAGECUT: clause compressed. Original: "the velocity diagnostics further show that the learned flows recover plausible directionality when external velocity references are available only for evaluation."
+the velocity diagnostics further show plausible flow directionality when external velocity references are available only for evaluation.
+Ablations show that this behavior depends on the combination of anisotropic local costs, neighborhood-restricted geometry, smoothing, and coupling rematching rather than a single implementation detail.
+% PAGECUT: final sentence compressed. Original: "Future work will focus on more robust metric estimation, uncertainty quantification, and partially supervised or multimodal time-course settings."
+Future work: more robust metric estimation, uncertainty quantification, and partially supervised or multimodal time-course settings.
