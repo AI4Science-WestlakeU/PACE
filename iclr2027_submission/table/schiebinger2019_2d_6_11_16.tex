@@ -1,0 +1,25 @@
+\begin{table}[hbtp]
+\centering
+\caption{Per-timepoint results on Schiebinger2019~\citep{schiebinger2019optimal}, holdout $t\in\{6,11,16\}$.}
+\label{tab:schiebinger2019_2d_6_11_16}
+\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{1\linewidth}{!}{
+\begin{tabular}{lccccccccc}
+\toprule
+Method & \multicolumn{3}{c}{MMD $\downarrow$} & \multicolumn{3}{c}{$\mathcal{W}_1\downarrow$} & \multicolumn{3}{c}{$\mathcal{W}_2\downarrow$} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+ & $t=6$ & $t=11$ & $t=16$ & $t=6$ & $t=11$ & $t=16$ & $t=6$ & $t=11$ & $t=16$ \\
+\midrule
+Action Matching & \underline{0.5056} & 0.4940 & 0.2174 & 0.3203 & 0.4982 & 0.4298 & 0.3283 & 0.5337 & 0.5642 \\
+Aligned CFM & 0.5712 & 0.3405 & \textbf{0.0601} & 0.4126 & 0.3173 & 0.2228 & 0.4291 & \underline{0.3737} & \textbf{0.3764} \\
+CURLY & 0.9308 & 1.0201 & 0.3553 & 1.4737 & 1.9135 & 0.7182 & 1.5113 & 1.9386 & 0.9481 \\
+DMSB & 0.5081 & \underline{0.3196} & 0.0813 & \underline{0.3118} & \underline{0.3108} & \underline{0.2096} & \underline{0.3174} & 0.3760 & 0.4051 \\
+MFM & 0.8676 & 0.8858 & 0.3437 & 2.6083 & 1.4602 & 0.7005 & 3.0265 & 1.4793 & 0.8768 \\
+OT-CFM & 1.1550 & 1.0005 & 0.2661 & 3.1652 & 1.8933 & 0.6701 & 3.2608 & 1.9239 & 0.8856 \\
+\midrule
+\textbf{\model (ours)} & \textbf{0.4219} & \textbf{0.1373} & \underline{0.0660} & \textbf{0.2609} & \textbf{0.1590} & \textbf{0.2003} & \textbf{0.2669} & \textbf{0.2037} & \underline{0.3813} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

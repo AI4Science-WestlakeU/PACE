@@ -1,0 +1,30 @@
+
+\begin{table}[hbtp]
+\centering
+\begin{minipage}{0.6\linewidth}
+\centering
+\caption{Per-timepoint results on EB PHATE~\citep{moon2019visualizing} (2D) with held-out $t=3$.}
+\label{tab:eb_phate_2d_3}
+
+\small
+\setlength{\tabcolsep}{3pt}
+
+\begin{tabular}{lccc}
+\toprule
+Method & MMD $\downarrow$ & $\mathcal{W}_1\downarrow$ & $\mathcal{W}_2\downarrow$ \\
+\cmidrule(lr){2-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}
+ & $t=3$ & $t=3$ & $t=3$ \\
+\midrule
+Action Matching & 0.2436 & 0.4553 & 0.5273 \\
+Aligned CFM & \underline{0.1056} & \underline{0.2657} & \underline{0.3243} \\
+CURLY & 0.1384 & 0.3223 & 0.4422 \\
+DMSB & 0.1325 & 0.3053 & 0.4341 \\
+MFM & 0.1518 & 0.3704 & 0.4451 \\
+OT-CFM & 0.1069 & 0.2784 & 0.3622 \\
+\midrule
+\textbf{\model (ours)} & \textbf{0.0674} & \textbf{0.2087} & \textbf{0.2803} \\
+\bottomrule
+\end{tabular}
+
+\end{minipage}
+\end{table}

@@ -1,0 +1,52 @@
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.88}
+\caption{Time-averaged low-dimensional single-cell results. EB~\citep{moon2019visualizing} uses $t=3$, iPSC-Liu~\citep{liu2020reprogramming} uses $t\in\{4,16\}$, and Schiebinger2019~\citep{schiebinger2019optimal} uses $t\in\{6,11,16\}$.}
+\label{tab:single_cell_2d_time_average}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{lccccccccc}
+\toprule
+Method
+& \multicolumn{3}{c}{EB PHATE}
+& \multicolumn{3}{c}{iPSC-Liu}
+& \multicolumn{3}{c}{Schiebinger2019} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+& MMD $\downarrow$ & $\mathcal{W}_1\downarrow$ & $\mathcal{W}_2\downarrow$
+& MMD $\downarrow$ & $\mathcal{W}_1\downarrow$ & $\mathcal{W}_2\downarrow$
+& MMD $\downarrow$ & $\mathcal{W}_1\downarrow$ & $\mathcal{W}_2\downarrow$ \\
+\midrule
+Action Matching
+& 0.2436 & 0.4553 & 0.5273
+& 0.5230 & 0.8005 & 0.9730
+& 0.4057 & 0.4161 & 0.4754 \\
+Aligned CFM
+& \underline{0.1056} & \underline{0.2657} & \underline{0.3243}
+& 0.5428 & \underline{0.6594} & \underline{0.8320}
+& 0.3239 & 0.3175 & 0.3931 \\
+CURLY
+& 0.1384 & 0.3223 & 0.4422
+& 0.5613 & 0.7186 & 0.9216
+& 0.7687 & 1.3684 & 1.4660 \\
+DMSB
+& 0.1325 & 0.3053 & 0.4341
+& 0.6456 & 1.0244 & 1.1023
+& \underline{0.3030} & \underline{0.2774} & \underline{0.3662} \\
+MFM
+& 0.1518 & 0.3704 & 0.4451
+& 0.5533 & 0.6657 & 0.8838
+& 0.6990 & 1.5897 & 1.7942 \\
+OT-CFM
+& 0.1069 & 0.2784 & 0.3622
+& \underline{0.5228} & 0.7166 & 0.9261
+& 0.8072 & 1.9095 & 2.0235 \\
+\midrule
+\textbf{\model (ours)}
+& \textbf{0.0674} & \textbf{0.2087} & \textbf{0.2803}
+& \textbf{0.4385} & \textbf{0.4853} & \textbf{0.6238}
+& \textbf{0.2084} & \textbf{0.2067} & \textbf{0.2840} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

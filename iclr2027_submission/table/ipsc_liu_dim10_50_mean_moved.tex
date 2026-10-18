@@ -1,0 +1,33 @@
+% PAGECUT: this table was a 0.44\linewidth minipage beside the Sec. 4.4 text in the
+% NeurIPS layout. Moved to the appendix (as a float) for the ICLR 9-page limit.
+% It is the time-averaged summary of Table~\ref{tab:ipsc_liu_dim10_50}.
+\begin{table}[hbtp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{iPSC-Liu~\citep{liu2020reprogramming} time-averaged results over holdouts $t\in\{4,8,12,16\}$.}
+\label{tab:ipsc_liu_dim10_50_mean}
+\begin{tabular}{llccc}
+\toprule
+Dim & Method & MMD $\downarrow$ & $\mathcal{W}_1\downarrow$ & $\mathcal{W}_2\downarrow$ \\
+\midrule
+10D & Action Matching & 0.5555 & 3.7801 & 4.3743 \\
+ & Aligned CFM & \underline{0.4644} & \underline{2.9405} & \underline{3.3825} \\
+ & CURLY & 0.5369 & 3.6128 & 4.2102 \\
+ & DMSB & 0.7713 & 6.3088 & 6.4593 \\
+ & MFM & 0.5273 & 3.4066 & 3.8382 \\
+ & OT-CFM & 0.5145 & 3.3850 & 3.9447 \\
+\cmidrule(lr){2-5}
+ & \textbf{PACE (ours)} & \textbf{0.4095} & \textbf{2.9226} & \textbf{3.1879} \\
+\midrule
+50D & Action Matching & 0.3125 & 7.6126 & 8.4868 \\
+ & Aligned CFM & \underline{0.2624} & \underline{7.3133} & \underline{8.0552} \\
+ & CURLY & 0.3144 & 8.1144 & 8.9096 \\
+ & DMSB & 0.5638 & 10.9368 & 11.2423 \\
+ & MFM & 0.2853 & 7.7924 & 8.5454 \\
+ & OT-CFM & 0.2898 & 7.8392 & 8.5954 \\
+\cmidrule(lr){2-5}
+ & \textbf{PACE (ours)} & \textbf{0.2550} & \textbf{6.7537} & \textbf{7.2836} \\
+\bottomrule
+\end{tabular}
+\end{table}

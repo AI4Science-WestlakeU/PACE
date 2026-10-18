@@ -1,0 +1,25 @@
+\begin{table}[hbtp]
+\centering
+\caption{Per-timepoint results on Ocean (2D)~\citep{petrovic2026curly}, holdout $t\in\{1,3,5,7\}$.}
+\label{tab:ocean_2d_1_3_5_7}
+\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{1\linewidth}{!}{
+\begin{tabular}{lcccccccccccc}
+\toprule
+Method & \multicolumn{4}{c}{MMD $\downarrow$} & \multicolumn{4}{c}{$\mathcal{W}_1\downarrow$} & \multicolumn{4}{c}{$\mathcal{W}_2\downarrow$} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+ & $t=1$ & $t=3$ & $t=5$ & $t=7$ & $t=1$ & $t=3$ & $t=5$ & $t=7$ & $t=1$ & $t=3$ & $t=5$ & $t=7$ \\
+\midrule
+Action Matching & \underline{0.7429} & 1.0662 & 0.9465 & 1.1289 & 0.3549 & 0.4823 & 0.2383 & 0.5073 & 0.3662 & 0.4846 & 0.2425 & 0.5143 \\
+Aligned CFM & 0.7989 & 0.8754 & 1.0073 & 0.8272 & 0.0976 & 0.1644 & 0.3024 & 0.2245 & 0.1017 & 0.1673 & 0.3046 & 0.2262 \\
+CURLY & 1.0545 & 0.8373 & 0.5869 & 0.8663 & 0.3766 & 0.1521 & 0.1077 & 0.2638 & 0.3771 & 0.1537 & 0.1102 & 0.2646 \\
+DMSB & 1.1260 & \underline{0.6089} & \underline{0.2542} & \underline{0.4962} & 0.3060 & \underline{0.1097} & \underline{0.0435} & \underline{0.1097} & 0.3065 & \underline{0.1150} & \underline{0.0473} & \underline{0.1142} \\
+MFM & 0.8482 & 0.7859 & 0.6928 & 0.5823 & \underline{0.0960} & 0.1433 & 0.1359 & 0.1279 & \underline{0.0991} & 0.1452 & 0.1385 & 0.1302 \\
+OT-CFM & 0.9410 & 0.8169 & 0.6827 & 0.6305 & 0.1227 & 0.1428 & 0.1289 & 0.1321 & 0.1255 & 0.1459 & 0.1308 & 0.1334 \\
+\midrule
+\textbf{\model (ours)} & \textbf{0.4504} & \textbf{0.2588} & \textbf{0.0735} & \textbf{0.2779} & \textbf{0.0399} & \textbf{0.0398} & \textbf{0.0268} & \textbf{0.0505} & \textbf{0.0440} & \textbf{0.0434} & \textbf{0.0362} & \textbf{0.0534} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

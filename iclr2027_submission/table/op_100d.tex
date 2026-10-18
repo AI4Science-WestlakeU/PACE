@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\caption{OP-Cite and OP-Multi~\citep{lance2022multimodal} (100D) results.}
+\label{tab:op_100d}
+\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{0.75\linewidth}{!}{
+\begin{tabular}{lcccccc}
+\toprule
+Method & \multicolumn{3}{c}{\textsc{OP-Cite} (100D)} & \multicolumn{3}{c}{\textsc{OP-Multi} (100D)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+ & MMD $\downarrow$ & $\mathcal{W}_1\downarrow$ & $\mathcal{W}_2\downarrow$ & MMD $\downarrow$ & $\mathcal{W}_1\downarrow$ & $\mathcal{W}_2\downarrow$ \\
+\midrule
+Action Matching & 0.1753 & \textbf{9.9388} & \textbf{10.0448} & \textbf{0.1622} & 10.7711 & 10.8160 \\
+Aligned CFM & \underline{0.1434} & 10.7009 & 10.8094 & 0.1720 & 10.8330 & 10.8826 \\
+CURLY & 0.2529 & 11.5163 & 11.6015 & 0.2786 & 12.0015 & 12.0440 \\
+MFM & 0.1435 & \underline{10.4301} & \underline{10.5409} & 0.1699 & 10.6274 & 10.6702 \\
+OT-CFM & 0.1448 & 10.4447 & 10.5491 & \underline{0.1662} & \underline{10.6128} & \underline{10.6564} \\
+\midrule
+\textbf{\model (ours)} & \textbf{0.1409} & 10.4574 & 10.5605 & 0.1693 & \textbf{10.5824} & \textbf{10.6293} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

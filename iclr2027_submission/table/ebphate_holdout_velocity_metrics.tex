@@ -1,0 +1,23 @@
+\begingroup
+\centering
+\captionof{table}{EB PHATE~\citep{moon2019visualizing} velocity-alignment diagnostics at the held-out snapshot $t=3$. The RNA-velocity reference is used only for evaluation. Cosine distance is $1-\cos(\hat v, v)$, and normalized $L_2$ compares unit-normalized velocity directions; lower is better.}
+\label{tab:ebphate_holdout_velocity_metrics}
+\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{0.65\linewidth}{!}{
+\begin{tabular}{lcc}
+\toprule
+Method & Cosine distance $\downarrow$ & Normalized $L_2\downarrow$ \\
+\midrule
+Action Matching & \underline{0.4041} & \underline{0.7542} \\
+Aligned CFM & 0.4273 & 0.7707 \\
+CURLY & 0.6325 & 0.9693 \\
+MFM & 0.6930 & 1.0261 \\
+OT-CFM & 0.5571 & 0.8807 \\
+\midrule
+\textbf{\model (ours)} & \textbf{0.3287} & \textbf{0.6630} \\
+\bottomrule
+\end{tabular}
+}
+\par
+\endgroup

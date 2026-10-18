@@ -1,0 +1,20 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Optimal transport and flow-based trajectory inference.}
+Optimal transport provides a natural framework for coupling unpaired snapshot distributions in single-cell analysis \citep{schiebinger2019optimal,lavenant2021towards}. Recent neural extensions such as TrajectoryNet \citep{tong2020trajectorynet}, Wasserstein Lagrangian Flows \citep{neklyudov2023action}, and Conditional Flow Matching (CFM) \citep{tong2023conditional, lipman2023flow} learn continuous dynamics by regressing vector fields along interpolants between coupled endpoints. Schrodinger bridge methods \citep{debortoli2021diffusion,shi2023diffusion,chen2023deep} add stochasticity or entropic regularization to the transport problem, while Curly Flow Matching \citep{petrovic2026curly} extends the framework to non-gradient dynamics using approximate velocity information. These methods typically infer couplings from Euclidean proximity or OT distances in the observed space, which can misalign trajectories when cells at the same experimental time occupy different pseudotime stages.
+
+\paragraph{Geometry-aware generative models.}
+The manifold hypothesis has motivated data-dependent Riemannian metrics in ambient spaces~\citep{hauberg2012geometric,arvanitidis2017latent}, flow matching on known manifolds or general geometries~\citep{chen2024flow}, and manifold-aware OT flows for single-cell trajectories~\citep{huguet2022manifold}.
+Metric Flow Matching (MFM)~\citep{kapusniak2024metric} is closest to our setting: it uses task-independent \emph{support-aware} metrics such as LAND~\citep{arvanitidis2017latent} and RBF to pull geodesics toward the data support.
+PACE differs in both the source and use of geometry.
+In asynchronous reprogramming, density support alone does not determine plausible cross-time transitions, % PAGECUT: dropped trailing clause "and Euclidean proximity can couple incompatible programs" for the ICLR page limit.
+since a high-density intermediate may connect to either progressed or refractory fates.
+PACE instead builds a time- and state-dependent, \emph{direction-aware} metric from local spatiotemporal tangent subspaces estimated from destructive snapshots, penalizing motion orthogonal to plausible developmental directions.
+The resulting metric action is used both to learn interpolant paths and to refine cross-time couplings, whereas MFM typically assumes the endpoint pairing is fixed before interpolant learning.
+
+
+
+
+
+
