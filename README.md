@@ -23,8 +23,8 @@
 </div>
 
 <p align="center">
-  <img src="assets/reprogramming-demo.gif" alt="PACE reconstructions of early, intermediate and late WOT reprogramming intervals" width="1000" />
-  <br><sub>WOT reprogramming: three observed-anchor reconstructions, with snapshots 6, 11 and 16 held out. <a href="docs/development-demo.md">Reproduce the animation</a> · <a href="assets/reprogramming-demo-provenance.json">Run provenance</a>.</sub>
+  <img src="assets/reprogramming-two-panel.gif" alt="PACE trajectories on WOT reprogramming data from day 10 to 12 and from day 15 to 17, passing held-out days 11 and 16" width="1000" />
+  <br><sub>WOT reprogramming (Schiebinger et al., 2019). Left: day 10 → 12 · Right: day 15 → 17 · Days 11 and 16 held out. <a href="docs/development-demo.md">Reproduce</a> · <a href="assets/reprogramming-demo-provenance.json">Provenance</a></sub>
 </p>
 
 PACE learns continuous transport between destructive time-course snapshots.

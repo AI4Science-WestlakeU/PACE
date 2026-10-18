@@ -1,9 +1,11 @@
 # Biological trajectory demonstrations
 
-The README now shows **Schiebinger2019 / WOT reprogramming** in its provided 2D
-FLE embedding. Three panels show the same PACE velocity model at early,
+The demonstrations use **Schiebinger2019 / WOT reprogramming** in its provided
+2D FLE embedding. Three panels show the same PACE velocity model at early,
 intermediate and late intervals. Each starts from an observed training snapshot:
 **5→7**, **10→12**, and **15→17**. The middle snapshots **6, 11, 16** are held out.
+The README animation shows the **10→12** and **15→17** intervals of the same
+rollouts as accumulating trajectory lines.
 
 ![WOT reconstruction at the three held-out snapshots](../assets/reprogramming-demo.png)
 
@@ -40,6 +42,7 @@ candidate runs and the previous model are recorded in the
 python train.py experiment=wot_fle_reprogramming_demo
 python scripts/render_reprogramming_demo.py results/reprogramming_demo/results/wot_fle_three_interpolation_dim2_test6-11-16/pace --selection-note "Demo configuration selected using holdout feedback; see docs/reprogramming-refinement.json."
 python scripts/evaluate_reprogramming_demo.py results/reprogramming_demo/results/wot_fle_three_interpolation_dim2_test6-11-16/pace
+python scripts/render_reprogramming_two_panel.py results/reprogramming_demo/results/wot_fle_three_interpolation_dim2_test6-11-16/pace
 ```
 
 - [Compact experiment preset](../configs_hydra/experiment/wot_fle_reprogramming_demo.yaml)
