@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>document.documentElement.classList.add('js')</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PACE · Geometry-Aware Bridge Transport</title>
+  <meta name="description" content="PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference. NeurIPS 2026.">
+  <meta property="og:title" content="PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference">
+  <meta property="og:description" content="Continuous cell-state dynamics from destructive time-course snapshots. NeurIPS 2026.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#08111f">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="preload" href="data/wot.json" as="fetch" crossorigin>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <canvas id="flow" aria-hidden="true"></canvas>
+
+  <nav class="nav">
+    <a class="mark" href="#top" aria-label="PACE home"><img src="assets/swoosh-dark.png" alt=""><span>PACE</span></a>
+    <ul>
+      <li class="hide-sm"><a href="#method">Method</a></li>
+      <li class="hide-sm"><a href="#results">Results</a></li>
+      <li><a href="https://arxiv.org/abs/2605.18587">Paper</a></li>
+      <li><a href="https://github.com/AI4Science-WestlakeU/PACE">Code</a></li>
+      <li><a href="#cite">Cite</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="venue mono"><i></i>NeurIPS 2026</div>
+      <h1><img src="assets/pace-mark-dark.png" alt="PACE" width="960" height="224"></h1>
+      <p class="title"><em>Geometry-aware</em> bridge transport for single-cell trajectory inference</p>
+      <p class="authors">
+        <a href="https://oyclo.github.io/">Chenglei Yu</a><sup>*1,2</sup>,
+        <a href="https://wang-cr.github.io/">Chuanrui Wang</a><sup>*1</sup>,
+        <a href="https://bangyan101.github.io/">Bangyan Liao</a><sup>1,2</sup>,
+        <a href="https://tailin.org/">Tailin Wu</a><sup>†1</sup>
+      </p>
+      <p class="affil mono"><sup>1</sup>Westlake University &nbsp;<sup>2</sup>Zhejiang University &nbsp;·&nbsp; *equal contribution &nbsp;†corresponding</p>
+      <div class="links">
+        <a class="btn primary" href="https://arxiv.org/pdf/2605.18587">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13"/></svg>Paper</a>
+        <a class="btn" href="https://arxiv.org/abs/2605.18587">arXiv 2605.18587</a>
+        <a class="btn" href="https://github.com/AI4Science-WestlakeU/PACE">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .2a8 8 0 0 0-2.5 15.6c.4 0 .5-.2.5-.4v-1.5c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.6 7.6 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.8-3.6 4 .3.3.6.8.6 1.5v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 .2"/></svg>Code</a>
+        <a class="btn" href="#cite">BibTeX</a>
+      </div>
+    </div>
+    <div class="stage" id="stage"></div>
+  </div>
+
+  <div class="hud">
+    <p class="caption mono"><b>Real PACE rollouts</b> on mouse reprogramming (Schiebinger et al., 2019), FLE embedding. Snapshots 6, 11, 16 are held out; rings mark their cells.</p>
+    <div class="player">
+      <div class="chips" role="group" aria-label="Interval">
+        <button class="chip" data-focus="-1" aria-pressed="true">All</button>
+        <button class="chip" data-focus="0" aria-pressed="false">5→7</button>
+        <button class="chip" data-focus="1" aria-pressed="false">10→12</button>
+        <button class="chip" data-focus="2" aria-pressed="false">15→17</button>
+      </div>
+      <button class="play" id="play" aria-label="Pause">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><rect x="1" y="0" width="3" height="10"/><rect x="6" y="0" width="3" height="10"/></svg>
+      </button>
+      <div class="track" id="track" role="slider" aria-label="Interval progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <div class="tick" style="left:0"></div><div class="tick mid" style="left:50%"></div><div class="tick" style="left:100%"></div>
+        <div class="fill"></div><div class="head"></div>
+      </div>
+      <div class="readout mono" id="readout">day —</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="block" id="problem">
+    <div class="wrap">
+      <p class="label reveal">Problem</p>
+      <p class="lede reveal">Sequencing destroys the cell. Every time point is a new, unpaired population, so <em>which cell became which</em>, and along what path, is never observed.</p>
+      <div class="split">
+        <div class="reveal">
+          <h3>Euclidean coupling misreads asynchrony</h3>
+          <p>Optimal-transport and flow methods usually pair cells by Euclidean proximity at clock time. Cells collected on the same day can sit at different developmental stages, so nearby is not the same as next.</p>
+        </div>
+        <div class="reveal">
+          <h3>PACE prices motion by local geometry</h3>
+          <p>Moving along the locally supported cell-state manifold is cheap; moving across it is expensive. Couplings, paths, and the velocity field are all chosen under this one path cost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block method" id="method">
+    <div class="wrap">
+      <p class="label reveal">Method</p>
+      <p class="lede reveal">Three coupled steps, one geometry-aware action.</p>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="n mono">01 / Metric</span>
+          <h3>Anisotropic geometry</h3>
+          <p>Local PCA on spatiotemporal neighbourhoods gives tangent and normal subspaces. The metric charges velocity along the normals.</p>
+          <div class="eq" data-tex="G(x,t)=I+\alpha\sum_r \omega_r(x,t)\,P_N^{(r)}"></div>
+        </div>
+        <div class="step reveal">
+          <span class="n mono">02 / Transport</span>
+          <h3>Bridges ⇄ couplings</h3>
+          <p>Endpoint-preserving neural bridges and cross-time OT couplings are refined in turn under the induced path action.</p>
+          <div class="eq" data-tex="\gamma_\theta(\tau)=(1-\tau)\,x+\tau\,y+\tau(1-\tau)\,\psi_\theta"></div>
+          <div class="eq" data-tex="c^{\text{path}}_{ij}=\int_0^1 u^{\top} G\big(\gamma_\theta(\tau)\big)\,u\;d\tau"></div>
+        </div>
+        <div class="step reveal">
+          <span class="n mono">03 / Dynamics</span>
+          <h3>Velocity distillation</h3>
+          <p>The bridges are distilled into one time-conditioned velocity field over cell states, integrated as an ODE at test time.</p>
+          <div class="eq" data-tex="\min_\phi\;\mathbb{E}\,\Big\|\,v_\phi(\gamma_\theta,t)-\tfrac{1}{\Delta t_k}\,\partial_\tau\gamma_\theta\Big\|^2"></div>
+        </div>
+      </div>
+      <figure class="figure reveal">
+        <div class="frame"><img src="assets/fig1.webp" alt="PACE overview: unpaired snapshots, local anisotropic metric, geometry-aware bridge transport, and the three stages bridge update, coupling refinement and velocity field learning" width="2488" height="1182" loading="lazy"></div>
+        <figcaption class="mono">Figure 1 · Overview of PACE.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" id="results">
+    <div class="wrap">
+      <p class="label reveal">Results</p>
+      <div class="stats reveal">
+        <div class="stat">
+          <div class="big">23.7<sup>%</sup></div>
+          <p>lower MMD, W<sub>1</sub> and W<sub>2</sub> on average than the strongest competing baseline, across 7 datasets and 9 held-out reconstruction experiments.</p>
+        </div>
+        <div class="stat">
+          <div class="big">15.4<sup>%</sup></div>
+          <p>better RNA-velocity alignment on embryoid-body differentiation. Velocity is used only for evaluation.</p>
+        </div>
+      </div>
+      <p class="note mono reveal">No cell pairing, lineage tracing or RNA-velocity supervision during training.</p>
+
+      <div class="chart-card reveal">
+        <div class="chart-head">
+          <div>
+            <h3>Held-out snapshot reconstruction</h3>
+            <p class="mono" id="chart-sub">&nbsp;</p>
+          </div>
+        </div>
+        <div class="controls">
+          <div class="seg datasets" id="datasets" role="group" aria-label="Dataset"></div>
+          <div class="seg" id="metrics" role="group" aria-label="Metric"></div>
+        </div>
+        <div class="bars" id="bars" role="table" aria-label="Held-out reconstruction error by method"></div>
+        <div class="delta mono" id="delta"></div>
+        <p class="note mono">Lower is better. Time-averaged over held-out snapshots; values from the paper's tables (Ocean and Two-Branch averaged from per-snapshot tables). DMSB is not reported at 100D.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block cite" id="cite">
+    <div class="wrap">
+      <p class="label">Citation</p>
+      <div class="bib">
+        <button class="copy" id="copy">Copy</button>
+<pre id="bibtex"><span class="k">@inproceedings</span>{yu2026pace,
+  <span class="f">title</span>     = {PACE: Geometry-Aware Bridge Transport for Single-Cell Trajectory Inference},
+  <span class="f">author</span>    = {Yu, Chenglei and Wang, Chuanrui and Liao, Bangyan and Wu, Tailin},
+  <span class="f">booktitle</span> = {Advances in Neural Information Processing Systems},
+  <span class="f">year</span>      = {2026},
+  <span class="f">note</span>      = {Poster},
+  <span class="f">url</span>      = {https://arxiv.org/abs/2605.18587}
+}</pre>
+      </div>
+      <p class="thanks">Code is released under the MIT license. The MFM baseline is adapted from Metric Flow Matching (Kapusniak et al., 2024).</p>
+    </div>
+  </section>
+</main>
+
+<footer class="mono">
+  <span>© 2026 PACE authors · Westlake University · Zhejiang University</span>
+  <span><a href="https://arxiv.org/abs/2605.18587">arXiv</a> &nbsp;·&nbsp; <a href="https://github.com/AI4Science-WestlakeU/PACE">GitHub</a> &nbsp;·&nbsp; <a href="#top">Top ↑</a></span>
+</footer>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="js/hero.js"></script>
+<script defer src="js/results.js"></script>
+<script defer src="js/page.js"></script>
+</body>
+</html>
