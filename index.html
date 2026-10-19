@@ -101,31 +101,37 @@
     <div class="wrap">
       <p class="label reveal">Method</p>
       <p class="lede reveal">Three coupled steps, one geometry-aware action.</p>
+      <figure class="overview reveal" id="overview">
+        <div class="ov-tabs" role="tablist" aria-label="Method stage">
+          <button class="ov-tab" role="tab" type="button" aria-controls="ov"><span class="n">00</span>Snapshots</button>
+          <button class="ov-tab" role="tab" type="button" aria-controls="ov"><span class="n">01</span>Metric</button>
+          <button class="ov-tab" role="tab" type="button" aria-controls="ov"><span class="n">02</span>Transport</button>
+          <button class="ov-tab" role="tab" type="button" aria-controls="ov"><span class="n">03</span>Dynamics</button>
+        </div>
+        <svg id="ov" viewBox="0 0 760 340" role="img" aria-label="Schematic of PACE on three unpaired snapshots along a curved manifold: correspondences are unknown; a local metric makes tangent motion cheap and normal motion costly; straight Euclidean pairings are replaced by re-matched bridges that follow the manifold; a learned velocity field carries cells forward."></svg>
+        <figcaption class="ov-foot mono"><span id="ov-cap"></span><span class="ov-meta">Schematic · <a href="assets/fig1.webp">paper figure ↗</a></span></figcaption>
+      </figure>
       <div class="steps">
-        <div class="step reveal">
+        <div class="step reveal" data-stage="1">
           <span class="n mono">01 / Metric</span>
           <h3>Anisotropic geometry</h3>
           <p>Local PCA on spatiotemporal neighbourhoods gives tangent and normal subspaces. The metric charges velocity along the normals.</p>
           <div class="eq" data-tex="G(x,t)=I+\alpha\sum_r \omega_r(x,t)\,P_N^{(r)}"></div>
         </div>
-        <div class="step reveal">
+        <div class="step reveal" data-stage="2">
           <span class="n mono">02 / Transport</span>
           <h3>Bridges ⇄ couplings</h3>
           <p>Endpoint-preserving neural bridges and cross-time OT couplings are refined in turn under the induced path action.</p>
           <div class="eq" data-tex="\gamma_\theta(\tau)=(1-\tau)\,x+\tau\,y+\tau(1-\tau)\,\psi_\theta"></div>
           <div class="eq" data-tex="c^{\text{path}}_{ij}=\int_0^1 u^{\top} G\big(\gamma_\theta(\tau)\big)\,u\;d\tau"></div>
         </div>
-        <div class="step reveal">
+        <div class="step reveal" data-stage="3">
           <span class="n mono">03 / Dynamics</span>
           <h3>Velocity distillation</h3>
           <p>The bridges are distilled into one time-conditioned velocity field over cell states, integrated as an ODE at test time.</p>
           <div class="eq" data-tex="\min_\phi\;\mathbb{E}\,\Big\|\,v_\phi(\gamma_\theta,t)-\tfrac{1}{\Delta t_k}\,\partial_\tau\gamma_\theta\Big\|^2"></div>
         </div>
       </div>
-      <figure class="figure reveal">
-        <div class="frame"><img src="assets/fig1.webp" alt="PACE overview: unpaired snapshots, local anisotropic metric, geometry-aware bridge transport, and the three stages bridge update, coupling refinement and velocity field learning" width="2488" height="1182" loading="lazy"></div>
-        <figcaption class="mono">Figure 1 · Overview of PACE.</figcaption>
-      </figure>
     </div>
   </section>
 
@@ -190,6 +196,7 @@
 
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="js/hero.js"></script>
+<script defer src="js/overview.js"></script>
 <script defer src="js/results.js"></script>
 <script defer src="js/page.js"></script>
 </body>
