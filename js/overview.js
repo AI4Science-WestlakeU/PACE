@@ -15,7 +15,7 @@
   const C = { t: ['#93a9cd', '#4f6fa6', '#10264a'], red: '#d1343f', ink: '#0f1d36', muted: '#8a92a0' };
   const STAGES = [
     { ms: 3600, cap: 'Unpaired snapshots: which cell became which is never observed.' },
-    { ms: 4000, cap: 'Local tangent directions are cheap to move along; normal directions are costly.' },
+    { ms: 4000, cap: 'Local PCA on each snapshot gives a tangent (cheap to move along) and a normal (costly).' },
     { ms: 6000, cap: 'Straight Euclidean pairings cut across the bend. PACE re-couples cells along bridges that follow the manifold.' },
     { ms: 5600, cap: 'The bridges are distilled into one velocity field and integrated as an ODE.' },
   ];
@@ -112,15 +112,24 @@
 
   // ---------- stage 1: anisotropic metric ----------
   const gMetric = el('g', { class: 'layer' }, svg);
-  [0.16, 0.33, 0.5, 0.67, 0.84].forEach((s, idx) => {
-    const q = at(s), ang = Math.atan2(q.ty, q.tx) * 180 / Math.PI;
-    el('ellipse', { cx: f1(q.x), cy: f1(q.y), rx: 34, ry: 10, transform: `rotate(${f1(ang)} ${f1(q.x)} ${f1(q.y)})`, class: 'glyph' }, gMetric);
-    const tip = [q.x + q.tx * 48, q.y + q.ty * 48], ntip = [q.x + q.nx * 26, q.y + q.ny * 26];
-    el('line', { x1: f1(q.x), y1: f1(q.y), x2: f1(tip[0]), y2: f1(tip[1]), class: 'arrow-ink', 'marker-end': 'url(#ov-ink)' }, gMetric);
-    el('line', { x1: f1(q.x), y1: f1(q.y), x2: f1(ntip[0]), y2: f1(ntip[1]), class: 'arrow-muted', 'marker-end': 'url(#ov-muted)' }, gMetric);
+  // The metric only exists where cells were observed: one local PCA per snapshot.
+  cells.forEach((group, idx) => {
+    const mx = group.reduce((a, c) => a + c.x, 0) / group.length;
+    const my = group.reduce((a, c) => a + c.y, 0) / group.length;
+    let sxx = 0, sxy = 0, syy = 0;
+    for (const c of group) { const dx = c.x - mx, dy = c.y - my; sxx += dx * dx; sxy += dx * dy; syy += dy * dy; }
+    const theta = 0.5 * Math.atan2(2 * sxy, sxx - syy); // leading principal axis
+    const flow = at((RANGES[idx][0] + RANGES[idx][1]) / 2); // orient the axis along the time direction
+    let tx = Math.cos(theta), ty = Math.sin(theta);
+    if (tx * flow.tx + ty * flow.ty < 0) { tx = -tx; ty = -ty; }
+    const nx = ty, ny = -tx;
+    el('ellipse', { cx: f1(mx), cy: f1(my), rx: 40, ry: 11, transform: `rotate(${f1(Math.atan2(ty, tx) * 180 / Math.PI)} ${f1(mx)} ${f1(my)})`, class: 'glyph' }, gMetric);
+    const tip = [mx + tx * 54, my + ty * 54], ntip = [mx + nx * 28, my + ny * 28];
+    el('line', { x1: f1(mx), y1: f1(my), x2: f1(tip[0]), y2: f1(tip[1]), class: 'arrow-ink', 'marker-end': 'url(#ov-ink)' }, gMetric);
+    el('line', { x1: f1(mx), y1: f1(my), x2: f1(ntip[0]), y2: f1(ntip[1]), class: 'arrow-muted', 'marker-end': 'url(#ov-muted)' }, gMetric);
     if (idx === 1) {
-      label(gMetric, tip[0] + 10, tip[1] + 18, 'tangent · low cost', 'note ink minor');
-      label(gMetric, ntip[0] - 6, ntip[1] - 8, 'normal · high cost', 'note minor', 'end');
+      label(gMetric, tip[0] + 12, tip[1] + 6, 'tangent · low cost', 'note ink minor');
+      label(gMetric, ntip[0] - 8, ntip[1] - 4, 'normal · high cost', 'note minor', 'end');
     }
   });
   label(gMetric, 50, 40, 'G(x,t) = I + α·P_N', 'note');
