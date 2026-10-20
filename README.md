@@ -5,7 +5,7 @@
   <p>
     <a href="https://oyclo.github.io/">Chenglei Yu</a><sup>*1,2</sup>,
     <a href="https://wang-cr.github.io/">Chuanrui Wang</a><sup>*1</sup>,
-    Bangyan Liao<sup>1,2</sup> &amp;
+    <a href="https://bangyan101.github.io/">Bangyan Liao</a><sup>1,2</sup> &amp;
     <a href="https://tailin.org/">Tailin Wu</a><sup>†1</sup>
   </p>
   <p>
@@ -16,10 +16,11 @@
   <p>
     <img src="https://img.shields.io/badge/NeurIPS_2026-Poster-68478D.svg" alt="NeurIPS 2026 Poster">
     <a href="https://arxiv.org/abs/2605.18587"><img src="https://img.shields.io/badge/arXiv-2605.18587-b31b1b.svg" alt="arXiv paper"></a>
+    <a href="https://ai4science-westlakeu.github.io/PACE/"><img src="https://img.shields.io/badge/project-page-D1343F.svg" alt="Project page"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-102744.svg" alt="MIT code license"></a>
     <a href="notebooks/01_data_tour.ipynb"><img src="https://img.shields.io/badge/start-notebooks-168B9D.svg" alt="Tutorial notebooks"></a>
   </p>
-  <p><a href="#quick-start">Quick start</a> · <a href="#learn-by-doing">Notebooks</a> · <a href="docs/experiments.md">Experiments</a> · <a href="data/README.md">Data</a> · <a href="#citation">Citation</a></p>
+  <p><a href="https://ai4science-westlakeu.github.io/PACE/">Project page</a> · <a href="#quick-start">Quick start</a> · <a href="#learn-by-doing">Notebooks</a> · <a href="docs/experiments.md">Experiments</a> · <a href="data/README.md">Data</a> · <a href="#citation">Citation</a></p>
 </div>
 
 <p align="center">
